@@ -37,13 +37,7 @@ public:
 
     // this function maybe time consuming.
     // consider using async method here.
-    inline virtual void setPixmap(const QPixmap &newPixmap) {
-        if((&newPixmap) == (&mPixmap))
-            return;
-
-        mPixmap = newPixmap;
-        recalculate();
-    }
+    virtual void setPixmap(const QPixmap &newPixmap);
 
     inline void recalculate() {
         mSubPixmapRects.clear();

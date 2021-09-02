@@ -29,10 +29,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        util/QPixmapProvider.h
-        util/QPixmapProvider.cpp
-        util/QPixmapGirdSplitter.h
-        util/QPixmapGirdSplitter.cpp
+        util/QPixmapProvider.h util/QPixmapProvider.cpp
+        util/QPixmapGirdSplitter.h util/QPixmapGirdSplitter.cpp
+        util/QPixmapAutoSplitter.h util/QPixmapAutoSplitter.cpp
         asset.qrc
 )
 

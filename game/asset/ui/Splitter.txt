@@ -1,0 +1,2 @@
+QPixmapAutoSplitter
+	- splitThreshold = 2
