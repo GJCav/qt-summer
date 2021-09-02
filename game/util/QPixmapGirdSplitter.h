@@ -1,16 +1,16 @@
-#ifndef QPIXMAPPROVIDER_H
-#define QPIXMAPPROVIDER_H
+#ifndef QPIXMAPGIRDSPLITTER_H
+#define QPIXMAPGIRDSPLITTER_H
+
+#include "QPixmapProvider.h"
 
 #include <QPixmap>
 #include <QString>
 
-class QPixmapProvider
+class QPixmapGirdSplitter : public QPixmapProvider
 {
 public:
-    QPixmapProvider(QString srcPath);
-
-    QPixmap pixmapAt(int row, int col) const;
-    const QRect pixmapRectAt(int row, int col) const;
+    QPixmapGirdSplitter();
+    QPixmapGirdSplitter(QString path);
 
     int offsetX() const;
     int offsetY() const;
@@ -27,13 +27,16 @@ public:
     void setHeight(int newHeight);
 
 private:
-    const QPixmap mPixmap;
     int mOffsetX = 0;
     int mOffsetY = 0;
     int mGapX = 0;
     int mGapY = 0;
     int mWidth = 0;
     int mHeight = 0;
+
+    // QPixmapProvider interface
+protected:
+    void calculateRects() override;
 };
 
-#endif // QPIXMAPPROVIDER_H
+#endif // QPIXMAPGIRDSPLITTER_H
