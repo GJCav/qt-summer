@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/picture">
+        <file alias="ui.png">asset/ui/Steampunk&amp;FantasyUIPack.png</file>
+    </qresource>
+</RCC>

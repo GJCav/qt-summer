@@ -29,8 +29,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
+        QPixmapProvider.h
+        QPixmapProvider.cpp
+        asset.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
