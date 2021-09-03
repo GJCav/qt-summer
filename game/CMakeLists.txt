@@ -34,6 +34,7 @@ set(PROJECT_SOURCES
         util/QPixmapAutoSplitter.h util/QPixmapAutoSplitter.cpp
         util/QPixmapFileSeq.h util/QPixmapFileSeq.cpp
         asset.qrc
+        util/AsepriteObject.h util/AsepriteObject.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

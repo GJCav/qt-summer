@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/picture">
-        <file alias="ui.png">asset/ui/Steampunk&amp;FantasyUIPack.png</file>
+    <qresource prefix="/picture"/>
+    <qresource prefix="/">
+        <file>asset/Meow Knight/grey.png</file>
+        <file>asset/Meow Knight/Meow_Knight.json</file>
     </qresource>
 </RCC>
