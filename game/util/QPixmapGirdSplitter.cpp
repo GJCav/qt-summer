@@ -7,6 +7,7 @@ QPixmapGirdSplitter::QPixmapGirdSplitter()
 QPixmapGirdSplitter::QPixmapGirdSplitter(QString srcPath)
 {
     setPixmap(QPixmap(srcPath));
+    recalculate();
 }
 
 int QPixmapGirdSplitter::offsetX() const
@@ -41,17 +42,23 @@ int QPixmapGirdSplitter::height() const
 
 void QPixmapGirdSplitter::setOffsetX(int newOffsetX)
 {
+    if(mOffsetX == newOffsetX) return;
     mOffsetX = newOffsetX;
+    recalculate();
 }
 
 void QPixmapGirdSplitter::setOffsetY(int newOffsetY)
 {
+    if(mOffsetY == newOffsetY) return;
     mOffsetY = newOffsetY;
+    recalculate();
 }
 
 void QPixmapGirdSplitter::setGapX(int newGapX)
 {
+    if(mGapX == newGapX) return;
     mGapX = newGapX;
+    recalculate();
 }
 
 void QPixmapGirdSplitter::setGapY(int newGapY)
@@ -61,12 +68,16 @@ void QPixmapGirdSplitter::setGapY(int newGapY)
 
 void QPixmapGirdSplitter::setWidth(int newWidth)
 {
+    if(mWidth == newWidth) return;
     mWidth = newWidth;
+    recalculate();
 }
 
 void QPixmapGirdSplitter::setHeight(int newHeight)
 {
+    if(mHeight == newHeight) return;
     mHeight = newHeight;
+    recalculate();
 }
 
 

@@ -10,6 +10,7 @@ QPixmapAutoSplitter::QPixmapAutoSplitter()
 QPixmapAutoSplitter::QPixmapAutoSplitter(QString srcPath)
 {
     setPixmap(QPixmap(srcPath));
+    recalculate();
 }
 
 void QPixmapAutoSplitter::setSplitThreshold(int newSplitThreshold)
@@ -60,6 +61,8 @@ QRect QPixmapAutoSplitter::floodFillSearch(const QPoint pos, StateMap &state, co
 
 void QPixmapAutoSplitter::calculateRects()
 {
+    if(mPixmap.isNull()) return;
+
     StateMap state;
     for(int i = 0;i < mPixmap.height();i++){
         state.push_back(std::vector<int>(mPixmap.width(), -1));

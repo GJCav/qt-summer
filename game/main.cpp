@@ -1,5 +1,6 @@
 #include "util/QPixmapGirdSplitter.h"
 #include "util/QPixmapAutoSplitter.h"
+#include "util/QPixmapFileSeq.h"
 
 #include <QApplication>
 #include <QtCore>
@@ -9,20 +10,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QPixmapAutoSplitter provider(":/picture/ui.png");
-    provider.setSplitThreshold(2);
-
-//    QGraphicsPixmapItem *item = new QGraphicsPixmapItem;
-//    item->setPixmap(provider.subPixmapAt(5));
-//    item->setScale(4);
-
-//    QGraphicsScene scene;
-//    scene.addItem(item);
-
-//    QGraphicsView view(&scene);
-//    view.show();
-
-    provider.preview()->show();
+    QPixmapFileSeq seq(":/picture/asset/Meow Knight/blue-idle", 1, 7, ".png");
+    seq.preview()->show();
 
     return a.exec();
 }

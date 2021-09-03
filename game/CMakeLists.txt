@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         util/QPixmapProvider.h util/QPixmapProvider.cpp
         util/QPixmapGirdSplitter.h util/QPixmapGirdSplitter.cpp
         util/QPixmapAutoSplitter.h util/QPixmapAutoSplitter.cpp
+        util/QPixmapFileSeq.h util/QPixmapFileSeq.cpp
         asset.qrc
 )
 
