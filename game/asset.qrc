@@ -3,5 +3,6 @@
     <qresource prefix="/">
         <file>asset/Meow Knight/grey.png</file>
         <file>asset/Meow Knight/Meow_Knight.json</file>
+        <file>asset/ui/GUI.png</file>
     </qresource>
 </RCC>

@@ -11,6 +11,8 @@ void initResource();
 QGraphicsView* gameView();
 QGraphicsScene* gameScene();
 
+
+
 }
 
 #endif // R_H

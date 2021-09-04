@@ -8,10 +8,13 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
 SOURCES += \
     R.cpp \
     item/MeowKnightItem.cpp \
     main.cpp \
+    test/TestWindow.cpp \
+    ui/TexturePanel.cpp \
     util/AsepriteObject.cpp \
     util/QPixmapAutoSplitter.cpp \
     util/QPixmapFileSeq.cpp \
@@ -21,6 +24,8 @@ SOURCES += \
 HEADERS += \
     R.h \
     item/MeowKnightItem.h \
+    test/TestWindow.h \
+    ui/TexturePanel.h \
     util/AsepriteObject.h \
     util/QPixmapAutoSplitter.h \
     util/QPixmapFileSeq.h \
@@ -28,6 +33,7 @@ HEADERS += \
     util/QPixmapProvider.h
 
 FORMS += \
+    test/TestWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
