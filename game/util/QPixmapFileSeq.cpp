@@ -90,7 +90,7 @@ void QPixmapFileSeq::calculateRects()
 QGraphicsView *QPixmapFileSeq::preview(QWidget *parent)
 {
     QGraphicsScene *scene = new QGraphicsScene;
-    QGraphicsView *view = new QGraphicsView;
+    QGraphicsView *view = new QGraphicsView(parent);
     view->setScene(scene);
 
 

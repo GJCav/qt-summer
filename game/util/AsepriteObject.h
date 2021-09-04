@@ -20,7 +20,7 @@ public:
 
     // current frame infomation
     const QPixmap& pixmap() const;
-    const int duration() const;
+    int duration() const;
     const QString tag() const { return mCurTag;}
     int currentFrameIndex() const {return mCurFrameIndex - mTags[mCurTag].from;}
     bool isBeginFrame() const { return mCurFrameIndex == mTags[mCurTag].from;}

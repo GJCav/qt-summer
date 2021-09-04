@@ -105,7 +105,7 @@ const QPixmap &AsepriteObject::pixmap() const
     return mFramePixmaps[mCurFrameIndex];
 }
 
-const int AsepriteObject::duration() const
+int AsepriteObject::duration() const
 {
     return mFrames[mCurFrameIndex].duration;
 }

@@ -137,6 +137,9 @@ void MeowKnightItem::playAnimation(const QString &name)
 
 void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     QPen pen(Qt::red);
     pen.setCosmetic(true);
     painter->setPen(pen);
