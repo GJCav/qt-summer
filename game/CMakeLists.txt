@@ -35,6 +35,8 @@ set(PROJECT_SOURCES
         util/QPixmapFileSeq.h util/QPixmapFileSeq.cpp
         asset.qrc
         util/AsepriteObject.h util/AsepriteObject.cpp
+        item/MeowKnightItem.h item/MeowKnightItem.cpp
+        R.h R.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
