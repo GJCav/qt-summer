@@ -8,6 +8,7 @@
 class LevelCellItem : public QGraphicsItem
 {
 public:
+    constexpr static int ZValue = 0;
     struct CellType{
         constexpr static int None = 0;
 

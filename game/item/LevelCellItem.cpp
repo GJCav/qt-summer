@@ -8,6 +8,7 @@ LevelCellItem::LevelCellItem(const int type, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
     setCellType(type);
+    this->setZValue(ZValue);
 }
 
 int LevelCellItem::cellType() const
@@ -93,6 +94,8 @@ QRectF LevelCellItem::boundingRect() const
 
 void LevelCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
     auto txt = texture();
     painter->drawPixmap(
         boundingRect(),

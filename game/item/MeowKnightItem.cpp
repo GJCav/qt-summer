@@ -211,7 +211,7 @@ void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 
 void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
 {
-    return;
+    //return;
     switch(event->key()){
     case Qt::Key_R: playAnimation(AnimationName::Run); break;
     case Qt::Key_I: playAnimation(AnimationName::Idle); break;
