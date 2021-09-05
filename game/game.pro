@@ -14,6 +14,9 @@ SOURCES += \
     item/MeowKnightItem.cpp \
     main.cpp \
     test/TestWindow.cpp \
+    ui/DarkPanel.cpp \
+    ui/LightDarkPanel.cpp \
+    ui/LightWoodPanel.cpp \
     ui/TexturePanel.cpp \
     util/AsepriteObject.cpp \
     util/QPixmapAutoSplitter.cpp \
@@ -25,6 +28,9 @@ HEADERS += \
     R.h \
     item/MeowKnightItem.h \
     test/TestWindow.h \
+    ui/DarkPanel.h \
+    ui/LightDarkPanel.h \
+    ui/LightWoodPanel.h \
     ui/TexturePanel.h \
     util/AsepriteObject.h \
     util/QPixmapAutoSplitter.h \

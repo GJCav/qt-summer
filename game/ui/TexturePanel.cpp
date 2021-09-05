@@ -7,10 +7,6 @@
 TexturePanel::TexturePanel(QWidget *parent) : QWidget(parent)
 {
     this->setLayout(new QVBoxLayout);
-    QPixmap map(":/asset/ui/GUI.png");
-    setCornerPixmap(map.copy(49, 97, 10, 10));
-    setBorderPixmap(map.copy(49, 107, 10, 10));
-    setBackgroundPixmap(map.copy(59, 107, 10, 10));
 }
 
 const QPixmap &TexturePanel::cnrLeftTop() const
@@ -198,16 +194,6 @@ void TexturePanel::paintEvent(QPaintEvent *event)
         area.height()-mMarginTop-mMarginBottom
     );
 
-    brush.setTexture(mBdrTop);
-    painter.setBrush(brush);
-    painter.drawRect(
-                mCnrLeftTop.width(),
-                0,
-                area.width()-mCnrLeftTop.width()-mCnrRightTop.width(),
-                mMarginTop
-            );
-
-
     brush.setTexture(mBdrLeft);
     painter.setBrush(brush);
     painter.drawRect(
@@ -217,36 +203,47 @@ void TexturePanel::paintEvent(QPaintEvent *event)
         area.height()-mMarginTop-mMarginBottom
     );
 
-    painter.save();
-    painter.setBrushOrigin(area.width()-mMarginRight, mMarginTop);
-    brush.setTexture(mBdrRight);
+    brush.setTexture(mBdrTop);
     painter.setBrush(brush);
     painter.drawRect(
-        0,
-        0,
+                mCnrLeftTop.width(),
+                0,
+                area.width()-mCnrLeftTop.width()-mCnrRightTop.width(),
+                mMarginTop
+            );
+
+    painter.save();
+    brush.setTexture(mBdrRight);
+    painter.setBrush(brush);
+    painter.setBrushOrigin(area.width()-mMarginRight, mMarginTop);
+    painter.drawRect(
+        area.width()-mMarginRight,
+        mMarginTop,
         mMarginRight,
         area.height()-mMarginTop-mMarginBottom
     );
     painter.restore();
 
+
     painter.save();
-    painter.setBrushOrigin(mMarginLeft, area.height()-mMarginBottom);
     brush.setTexture(mBdrBottom);
     painter.setBrush(brush);
+    painter.setBrushOrigin(mMarginLeft, area.height()-mMarginBottom);
     painter.drawRect(
-        0,
-        0,
+        mMarginLeft,
+        area.height()-mMarginBottom,
         area.width()-mMarginLeft-mMarginRight,
         mMarginBottom
     );
     painter.restore();
 
-    QBrush redBrush(Qt::red);
-    painter.setBrush(redBrush);
-    painter.drawEllipse(mMarginLeft - 3, mMarginTop - 3, 6, 6);
-    painter.drawEllipse(area.width() - mMarginRight - 3, mMarginTop - 3, 6, 6);
-    painter.drawEllipse(mMarginLeft - 3, area.height()-mMarginBottom-3, 6, 6);
-    painter.drawEllipse(area.width() - mMarginRight - 3, area.height()-mMarginBottom-3, 6, 6);
+
+//    QBrush redBrush(Qt::red);
+//    painter.setBrush(redBrush);
+//    painter.drawEllipse(mMarginLeft - 3, mMarginTop - 3, 6, 6);
+//    painter.drawEllipse(area.width() - mMarginRight - 3, mMarginTop - 3, 6, 6);
+//    painter.drawEllipse(mMarginLeft - 3, area.height()-mMarginBottom-3, 6, 6);
+//    painter.drawEllipse(area.width() - mMarginRight - 3, area.height()-mMarginBottom-3, 6, 6);
 }
 
 

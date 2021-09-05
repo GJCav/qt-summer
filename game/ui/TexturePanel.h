@@ -34,9 +34,7 @@ public:
     // convenience methods
     void setCornerPixmap(const QPixmap &newCnrLeftTop);
     void setBorderPixmap(const QPixmap &newBdrLeft);
-
     void addWidget(QWidget *widget);
-
 
 signals:
 

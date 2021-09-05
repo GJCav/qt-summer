@@ -31,12 +31,19 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,5">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="LightDarkPanel" name="ld" native="true"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,5">
+       <item>
+        <widget class="LightWoodPanel" name="lwp" native="true"/>
        </item>
        <item>
-        <widget class="TexturePanel" name="tp" native="true"/>
+        <widget class="DarkPanel" name="tp" native="true"/>
        </item>
       </layout>
      </item>
@@ -46,9 +53,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TexturePanel</class>
+   <class>LightWoodPanel</class>
    <extends>QWidget</extends>
-   <header>ui/TexturePanel.h</header>
+   <header>ui/LightWoodPanel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DarkPanel</class>
+   <extends>QWidget</extends>
+   <header>ui/DarkPanel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LightDarkPanel</class>
+   <extends>QWidget</extends>
+   <header>ui/LightDarkPanel.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

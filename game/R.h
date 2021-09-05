@@ -7,12 +7,11 @@
 
 namespace R{
 
+extern const QPixmap *GUIPixmap;
+
 void initResource();
 QGraphicsView* gameView();
 QGraphicsScene* gameScene();
-
-
-
 }
 
 #endif // R_H
