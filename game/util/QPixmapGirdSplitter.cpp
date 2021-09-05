@@ -89,10 +89,10 @@ void QPixmapGirdSplitter::calculateRects()
     const int imgHeight = mPixmap.height();
     int x = mOffsetX;
     int y = mOffsetY;
-    while(y + mHeight < imgHeight){
+    while(y + mHeight <= imgHeight){
         mSubPixmapRects.append({x, y, mWidth, mHeight});
         x += mWidth + mGapX;
-        if(x + mWidth >= imgWidth){
+        if(x + mWidth > imgWidth){
             x = mOffsetX;
             y += mHeight + mGapY;
         }

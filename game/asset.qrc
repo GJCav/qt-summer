@@ -4,5 +4,13 @@
         <file>asset/Meow Knight/grey.png</file>
         <file>asset/Meow Knight/Meow_Knight.json</file>
         <file>asset/ui/GUI.png</file>
+        <file>asset/Pixel Art Top Down/TX Plant.png</file>
+        <file>asset/Pixel Art Top Down/TX Props.png</file>
+        <file>asset/Pixel Art Top Down/TX Shadow Plant.png</file>
+        <file>asset/Pixel Art Top Down/TX Shadow.png</file>
+        <file>asset/Pixel Art Top Down/TX Struct.png</file>
+        <file>asset/Pixel Art Top Down/TX Tileset Grass.png</file>
+        <file>asset/Pixel Art Top Down/TX Tileset Stone Ground.png</file>
+        <file>asset/Pixel Art Top Down/TX Tileset Wall.png</file>
     </qresource>
 </RCC>

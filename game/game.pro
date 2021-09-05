@@ -11,7 +11,10 @@ CONFIG += c++17
 
 SOURCES += \
     R.cpp \
+    item/LevelCellItem.cpp \
     item/MeowKnightItem.cpp \
+    item/PropItem.cpp \
+    model/Level.cpp \
     main.cpp \
     test/TestWindow.cpp \
     ui/DarkPanel.cpp \
@@ -26,7 +29,10 @@ SOURCES += \
 
 HEADERS += \
     R.h \
+    item/LevelCellItem.h \
     item/MeowKnightItem.h \
+    item/PropItem.h \
+    model/Level.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
     ui/LightDarkPanel.h \
