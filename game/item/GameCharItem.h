@@ -14,7 +14,7 @@ public:
     virtual bool idle() = 0;
     virtual bool moveTo(const QPointF pos) = 0;
     virtual bool attack() = 0;
-    virtual bool takeDamage() = 0;
+    virtual bool takeDamage(const qreal hurt) = 0;
     virtual bool death() = 0;
     virtual bool dodge() = 0;
     virtual void setTowards(bool towardRight = true) = 0;

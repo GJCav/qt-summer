@@ -1,5 +1,6 @@
 #include "MeowKnightItem.h"
 #include "R.h"
+#include "PopupTextItem.h"
 
 #include <QtCore>
 #include <QtGui>
@@ -21,7 +22,7 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
 
     // selection indicator
     mSltIdrItem = new SelectIndicatorItem(this);
-    mSltIdrItem->setParentItem(this);
+    //mSltIdrItem->setParentItem(this);
     mSltIdrItem->setPos({8, 0});
     mSltIdrItem->setVisible(false);
 
@@ -180,13 +181,18 @@ bool MeowKnightItem::attack()
     return true;
 }
 
-bool MeowKnightItem::takeDamage()
+bool MeowKnightItem::takeDamage(const qreal hurt)
 {
     if(animating()) return false;
     setAnimating(true);
     connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
         setAnimating(false);
     }, Qt::SingleShotConnection);
+
+    auto popTxt = new PopupTextItem(QString::number(-hurt), Qt::red, this);
+    popTxt->setPos(0, -8);
+
+    popTxt->start();
     playAnimation(AnimationName::TakeDamage);
     return true;
 }
@@ -376,7 +382,7 @@ void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_A: attack(); break;
     case Qt::Key_S: playAnimation(AnimationName::AttackWithSkill); break;
     case Qt::Key_D: dodge(); break;
-    case Qt::Key_T: takeDamage(); break;
+    case Qt::Key_T: takeDamage(10); break;
     case Qt::Key_K: death(); break;
     case Qt::Key_F:
 //        QTransform t = transform();
@@ -405,7 +411,7 @@ QVariant MeowKnightItem::itemChange(GraphicsItemChange change, const QVariant &v
 {
     if(change == ItemPositionChange && scene()){
         QPoint newPos = value.toPoint();
-        setZValue(ZValue+newPos.y()+mBoundingRect.height() * scale());
+        setZValue(ZValue+newPos.y()+ shape().boundingRect().height() * scale());
     }
 
     if(change == ItemSelectedHasChanged && scene()){

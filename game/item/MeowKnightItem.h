@@ -66,7 +66,7 @@ public:
     bool moveTo(const QPointF pos) override;
     bool dodge() override;
     bool attack() override;
-    bool takeDamage() override;
+    bool takeDamage(const qreal hurt) override;
     bool death() override;
     void setTowards(bool towardRight = true) override;
 

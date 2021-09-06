@@ -31,6 +31,8 @@ public:
     virtual void healed(const qreal power);
     virtual void moveTo(const QPoint pos); // this plays animation, but setPos doesnt.
     virtual void setPos(QRect pos);
+    virtual void die();
+    virtual void dodge();
 
 public slots:
     virtual void selected(bool slt);
