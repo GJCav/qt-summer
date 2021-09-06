@@ -10,6 +10,7 @@
 namespace R{
 
 extern const QPixmap *GUIPixmap;
+extern const QPixmap *IconPixmap;
 
 namespace Level{
 extern const QPixmap *PlantPixmap;
@@ -27,6 +28,7 @@ extern QPixmapGirdSplitter *GrassWithStoneTextureProvider;
 
 void initLevelResource();
 }
+
 
 void initResource();
 QGraphicsView* gameView();

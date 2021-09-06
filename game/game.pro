@@ -23,6 +23,7 @@ SOURCES += \
     main.cpp \
     test/TestWindow.cpp \
     ui/DarkPanel.cpp \
+    ui/HUD.cpp \
     ui/LightDarkPanel.cpp \
     ui/LightWoodPanel.cpp \
     ui/TexturePanel.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     model/Level.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
+    ui/HUD.h \
     ui/LightDarkPanel.h \
     ui/LightWoodPanel.h \
     ui/TexturePanel.h \
@@ -55,7 +57,8 @@ HEADERS += \
     util/QPixmapProvider.h
 
 FORMS += \
-    test/TestWindow.ui
+    test/TestWindow.ui \
+    ui/HUD.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -64,3 +67,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     asset.qrc
+
+DISTFILES += \
+    asset/icon/Transparent Icons & Drop Shadow.png

@@ -6,7 +6,7 @@
 
 TexturePanel::TexturePanel(QWidget *parent) : QWidget(parent)
 {
-    this->setLayout(new QVBoxLayout);
+    //this->setLayout(new QVBoxLayout);
 }
 
 const QPixmap &TexturePanel::cnrLeftTop() const
@@ -142,10 +142,6 @@ void TexturePanel::setBorderPixmap(const QPixmap &newBdr)
     mBdrBottom = newBdr.transformed(t);
 }
 
-void TexturePanel::addWidget(QWidget *widget)
-{
-    layout()->addWidget(widget);
-}
 
 void TexturePanel::recalculateSize()
 {
@@ -164,8 +160,8 @@ void TexturePanel::recalculateSize()
     mMarginTop = qMax(mCnrLeftTop.height(), mCnrRightTop.height());
     mMarginRight = qMax(mCnrRightTop.width(), mCnrRightBottom.width());
     mMarginBottom = qMax(mCnrLeftBottom.height(), mCnrRightBottom.width());
-    auto lyt = layout();
-    lyt->setContentsMargins(mMarginLeft, mMarginTop, mMarginRight, mMarginBottom);
+    //auto lyt = layout();
+    //lyt->setContentsMargins(mMarginLeft, mMarginTop, mMarginRight, mMarginBottom);
 
     updateGeometry();
     update();

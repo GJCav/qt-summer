@@ -7,6 +7,7 @@
 #include "item/PropItem.h"
 #include "model/GameCharacter.h"
 #include "item/SelectIndicatorItem.h"
+#include "ui/HUD.h"
 #include <QApplication>
 #include <QtCore>
 #include <QtWidgets>
@@ -16,9 +17,6 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     R::initResource();
-
-//    TestWindow w;
-//    w.show();
 
     QGraphicsScene scene;
     Level level;
@@ -41,17 +39,17 @@ int main(int argc, char *argv[])
 
     GameCharacter ch(&meow);
 
-//    SelectIndicatorItem sltItem(nullptr);
-//    sltItem.setScale(5);
-//    scene.addItem(&sltItem);
-//    sltItem.setPos(300, 400);
-
+    HUD *hud = new HUD;
+    QGraphicsProxyWidget p;
+    p.setWidget(hud);
+    scene.addItem(&p);
 
     QGraphicsView view;
     view.setScene(&scene);
     view.setSceneRect({0, 0, 1024, 768});
 
     view.show();
+
 
     return a.exec();
 }

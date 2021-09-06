@@ -21,16 +21,14 @@ void PopupTextItem::start()
     floatUp->setTargetObject(this);
     floatUp->setPropertyName("y");
     floatUp->setStartValue(y());
-    floatUp->setKeyValueAt(0.2, y());
     floatUp->setEndValue(y()-FloatUpDistance);
     floatUp->setDuration(AnimationDuration);
     floatUp->setEasingCurve(QEasingCurve::InCubic);
 
     auto fadeOut = new QPropertyAnimation();
     fadeOut->setTargetObject(this);
-    fadeOut->setPropertyName("opactiy");
+    fadeOut->setPropertyName("opacity");
     fadeOut->setStartValue(1);
-    fadeOut->setKeyValueAt(0.2, 1);
     fadeOut->setEndValue(0);
     fadeOut->setDuration(AnimationDuration);
     fadeOut->setEasingCurve(QEasingCurve::InCubic);
