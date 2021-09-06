@@ -1,16 +1,16 @@
 #ifndef GAMECHARACTER_H
 #define GAMECHARACTER_H
 
-#include "CharAction.h"
 #include <QObject>
 #include <QVector>
 #include <QGraphicsObject>
 #include <QPoint>
 
+class CharAction;
+
 class GameCharacter : public QObject
 {
     Q_OBJECT
-
 public:
     struct CharacterRole {
         constexpr static int None = 0;
@@ -26,26 +26,38 @@ public:
 public:
     explicit GameCharacter(QObject *parent = nullptr);
 
-    virtual void attacked(const qreal power){};
-    virtual void healed(const qreal power){};
-    virtual void moveTo(const QPoint pos){}; // this plays animation, but setPos doesnt.
-
-    virtual void selected(){};
+    virtual void attacked(const qreal power);
+    virtual void healed(const qreal power);
+    virtual void moveTo(const QPoint pos); // this plays animation, but setPos doesnt.
+    virtual void selected();
 
 signals:
 
 protected:
-    //virtual QVector<CharAction> requestActionMenu();
+    virtual QVector<CharAction*> requestActionMenu();
 
 private:
     qreal mRole;
     qreal mHealth;
     qreal mSpeed;
     qreal mDefensivePower;
-    //QVector<CharAction> mActions;
+    QVector<CharAction*> mActions;
     QGraphicsObject *mCharItem;
 
     QPoint mPos; // position on the GameScene;
+
+};
+
+
+class CharAction : public QObject{
+    Q_OBJECT
+public:
+    CharAction(QObject *parent = nullptr);
+
+protected:
+    int mTargetCount = 0;
+    GameCharacter* source;
+    QVector<GameCharacter*> target;
 
 };
 

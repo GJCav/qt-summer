@@ -15,7 +15,6 @@ SOURCES += \
     item/LevelCellItem.cpp \
     item/MeowKnightItem.cpp \
     item/PropItem.cpp \
-    model/CharAction.cpp \
     model/GameCharacter.cpp \
     model/GameScene.cpp \
     model/Level.cpp \
@@ -37,7 +36,6 @@ HEADERS += \
     item/LevelCellItem.h \
     item/MeowKnightItem.h \
     item/PropItem.h \
-    model/CharAction.h \
     model/GameCharacter.h \
     model/GameScene.h \
     model/Level.h \
