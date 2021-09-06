@@ -12,7 +12,7 @@ PopupTextItem::PopupTextItem(const QString& str, const QColor color, QGraphicsOb
     font.setPointSizeF(4);
     setFont(font);
 
-
+    mAniGroup = new QParallelAnimationGroup();
 }
 
 void PopupTextItem::start()
@@ -35,7 +35,6 @@ void PopupTextItem::start()
     fadeOut->setDuration(AnimationDuration);
     fadeOut->setEasingCurve(QEasingCurve::InCubic);
 
-    mAniGroup = new QParallelAnimationGroup();
     mAniGroup->addAnimation(floatUp);
     mAniGroup->addAnimation(fadeOut);
 

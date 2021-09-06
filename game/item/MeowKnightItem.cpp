@@ -197,6 +197,21 @@ bool MeowKnightItem::takeDamage(const qreal hurt)
     return true;
 }
 
+bool MeowKnightItem::healed(const qreal heal)
+{
+    if(animating()) return false;
+    setAnimating(true);
+
+    auto popTxt = new PopupTextItem(QString::number(heal), Qt::green, this);
+    auto ani = popTxt->animation();
+    connect(ani, &QParallelAnimationGroup::finished, this, [this](){
+        this->setAnimating(false);
+    });
+    popTxt->setPos(0, -8);
+    popTxt->start();
+    return true;
+}
+
 bool MeowKnightItem::death()
 {
     if(animating()) return false;

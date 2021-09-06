@@ -30,7 +30,7 @@ public:
     virtual void attacked(const qreal power);
     virtual void healed(const qreal power);
     virtual void moveTo(const QPoint pos); // this plays animation, but setPos doesnt.
-    virtual void setPos(QRect pos);
+    virtual void setPos(const QPoint pos);
     virtual void die();
     virtual void dodge();
 
@@ -44,7 +44,7 @@ protected:
 
 private:
     qreal mRole = CharacterRole::None;
-    qreal mHealth = 20;
+    qreal mHealth = 30;
     qreal mSpeed = 2;
     qreal mDefensivePower = 0;
     qreal mLucky = 5; // mLucky / 100 == dodge(miss) percentage

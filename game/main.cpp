@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     MeowKnightItem meow("grey");
     scene.addItem(&meow);
     meow.setPos(0, 0);
-    meow.setScale(4);
+    meow.setScale(3.5);
 
     GameCharacter ch(&meow);
 

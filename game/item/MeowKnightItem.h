@@ -67,6 +67,7 @@ public:
     bool dodge() override;
     bool attack() override;
     bool takeDamage(const qreal hurt) override;
+    bool healed(const qreal heal) override;
     bool death() override;
     void setTowards(bool towardRight = true) override;
 
