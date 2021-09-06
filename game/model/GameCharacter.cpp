@@ -29,7 +29,7 @@ void GameCharacter::setPos(QRect pos)
 
 void GameCharacter::selected(bool slt)
 {
-    qDebug() << "slt "<< slt;
+
 }
 
 QVector<CharAction *> GameCharacter::requestActionMenu()

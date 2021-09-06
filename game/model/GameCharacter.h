@@ -41,10 +41,11 @@ protected:
     virtual QVector<CharAction*> requestActionMenu();
 
 private:
-    qreal mRole;
-    qreal mHealth;
-    qreal mSpeed;
-    qreal mDefensivePower;
+    qreal mRole = CharacterRole::None;
+    qreal mHealth = 20;
+    qreal mSpeed = 2;
+    qreal mDefensivePower = 0;
+    qreal mLucky = 5; // mLucky / 100 == dodge(miss) percentage
     QVector<CharAction*> mActions;
     GameCharItem *mCharItem;
 

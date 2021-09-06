@@ -19,6 +19,12 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
     // animation
     playAnimation(AnimationName::Idle);
 
+    // selection indicator
+    mSltIdrItem = new SelectIndicatorItem(this);
+    mSltIdrItem->setParentItem(this);
+    mSltIdrItem->setPos({8, 0});
+    mSltIdrItem->setVisible(false);
+
     // debug only
     this->setFlag(QGraphicsItem::ItemIsFocusable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -288,10 +294,6 @@ void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->scale(-1, 1);
     }
 
-    QPen pen(Qt::red);
-    pen.setCosmetic(true);
-    painter->setPen(pen);
-    painter->drawRect(mBoundingRect);
     if(mCurAnimation == AnimationName::Idle){
         painter->drawPixmap(0, 0, mAseObj->pixmap());
     }else if(mCurAnimation == AnimationName::Run){
@@ -356,7 +358,11 @@ void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->drawPixmap(0, 0, mAseObj->pixmap());
     }
 
-    painter->drawEllipse(-3, -3, 6, 6);
+//    QPen pen(Qt::red);
+//    pen.setCosmetic(true);
+//    painter->setPen(pen);
+//    painter->drawRect(mBoundingRect);
+//    painter->drawEllipse(-3, -3, 6, 6);
 }
 
 void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
@@ -401,23 +407,20 @@ QVariant MeowKnightItem::itemChange(GraphicsItemChange change, const QVariant &v
         QPoint newPos = value.toPoint();
         setZValue(ZValue+newPos.y()+mBoundingRect.height() * scale());
     }
+
+    if(change == ItemSelectedHasChanged && scene()){
+        if(value.toBool() && mEnableSelectIndicator){
+            mSltIdrItem->setVisible(true);
+        }else{
+            mSltIdrItem->setVisible(false);
+        }
+    }
     return GameCharItem::itemChange(change, value);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+QPainterPath MeowKnightItem::shape() const
+{
+    QPainterPath path;
+    path.addRect({0, 0, 16, 16});
+    return path;
+}

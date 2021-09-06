@@ -2,6 +2,7 @@
 #define MEOWKNIGHT_H
 
 #include "util/AsepriteObject.h"
+#include "SelectIndicatorItem.h"
 #include "GameCharItem.h"
 #include <QString>
 #include <QTimer>
@@ -11,6 +12,7 @@ class MeowKnightItem : public GameCharItem
 {
     Q_OBJECT
     Q_PROPERTY(bool animating READ animating WRITE setAnimating NOTIFY animatingChanged)
+    Q_PROPERTY(bool enableSelectIndicator MEMBER mEnableSelectIndicator)
 
 signals:
     void animatingChanged(bool a);
@@ -69,8 +71,10 @@ public:
     void setTowards(bool towardRight = true) override;
 
 
-    // QGraphicsItem interface
+
 protected:
+    // QGraphicsItem interface
+    QPainterPath shape() const override;
 
     // for debug only
     void keyReleaseEvent(QKeyEvent *event) override;
@@ -81,13 +85,20 @@ protected:
 
 private:
     QString mColor = "grey";
+
     AsepriteObject *mAseObj = nullptr;
     QString mCurAnimation;
     bool mAutoStop = true;
     bool mPlaying = true;
-    QRect mBoundingRect;
     QTimer *mTimer;
+
+    QRect mBoundingRect;
+
     bool mTowardRight = true;
+
+    SelectIndicatorItem* mSltIdrItem;
+    bool mEnableSelectIndicator = true;
+
 
     void nextFrame();
     bool needAutoStop();

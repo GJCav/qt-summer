@@ -6,6 +6,7 @@
 #include "model/Level.h"
 #include "item/PropItem.h"
 #include "model/GameCharacter.h"
+#include "item/SelectIndicatorItem.h"
 #include <QApplication>
 #include <QtCore>
 #include <QtWidgets>
@@ -39,6 +40,11 @@ int main(int argc, char *argv[])
     meow.setScale(4);
 
     GameCharacter ch(&meow);
+
+//    SelectIndicatorItem sltItem(nullptr);
+//    sltItem.setScale(5);
+//    scene.addItem(&sltItem);
+//    sltItem.setPos(300, 400);
 
 
     QGraphicsView view;
