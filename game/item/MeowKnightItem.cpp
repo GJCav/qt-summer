@@ -1,20 +1,29 @@
 #include "MeowKnightItem.h"
 #include "R.h"
 
-MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsItem* parent)
-    : QGraphicsItem(parent), mColor(color)
+#include <QtCore>
+#include <QtGui>
+#include <QtWidgets>
+
+MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
+    : GameCharItem(parent), mColor(color)
 {
     mAseObj = loadMeowAseprite(color);
     mTimer = new QTimer();
     mTimer->setSingleShot(true);
     mTimer->callOnTimeout([this](){nextFrame();});
 
-    playAnimation(AnimationName::Idle);
 
+    // auto update z-index
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
-    //this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    //this->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    // animation
+    playAnimation(AnimationName::Idle);
+
+
+
+    // debug only
+    this->setFlag(QGraphicsItem::ItemIsFocusable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 }
 
@@ -64,6 +73,137 @@ void MeowKnightItem::setPlaying(bool newPlaying)
     }
 }
 
+bool MeowKnightItem::idle()
+{
+    if(animating()) return false;
+    playAnimation(AnimationName::Idle);
+    return true;
+}
+
+bool MeowKnightItem::moveTo(const QPointF target)
+{
+    if(mAnimating) return false;
+    QPointF curPos = pos();
+    mTowardRight = target.x() > curPos.x();
+
+    QPropertyAnimation *mMoveXAnimation = new QPropertyAnimation(this);
+    mMoveXAnimation->setTargetObject(this);
+    mMoveXAnimation->setPropertyName("x");
+
+    QPropertyAnimation *mMoveYAnimation = new QPropertyAnimation(this);
+    mMoveYAnimation->setTargetObject(this);
+    mMoveYAnimation->setPropertyName("y");
+
+    mMoveXAnimation->setStartValue(curPos.x());
+    mMoveXAnimation->setEndValue(target.x());
+    mMoveXAnimation->setDuration(MOVE_DURATION);
+    mMoveXAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+
+    mMoveYAnimation->setStartValue(curPos.y());
+    mMoveYAnimation->setEndValue(target.y());
+    mMoveYAnimation->setDuration(MOVE_DURATION);
+    mMoveYAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    group->addAnimation(mMoveXAnimation);
+    group->addAnimation(mMoveYAnimation);
+    connect(group, &QAnimationGroup::finished, [this, group](){
+        this->setAnimating(false);
+        group->deleteLater();
+        this->playAnimation(AnimationName::Idle);
+    });
+    setAnimating(true);
+    playAnimation(AnimationName::Run);
+    group->start();
+
+    return true;
+}
+
+bool MeowKnightItem::dodge()
+{
+    if(animating()) return false;
+
+    QGraphicsTextItem *miss = new QGraphicsTextItem("miss", this);
+    miss->setDefaultTextColor(Qt::yellow);
+    QFont font;
+    font.setFamily("Microsoft YaHei");
+    font.setPointSizeF(4);
+    miss->setFont(font);
+    miss->setPos(-2, -8);
+
+    constexpr static QPointF beginPos = {-2, -8};
+    constexpr static QPointF endPos = {-2, -13};
+    constexpr static int duration = 300;
+
+    auto opacityAni = new QPropertyAnimation(this);
+    opacityAni->setTargetObject(miss);
+    opacityAni->setPropertyName("opacity");
+    opacityAni->setStartValue(1);
+    opacityAni->setEndValue(0);
+    opacityAni->setKeyValueAt(0.3, 1);
+    opacityAni->setDuration(duration);
+    opacityAni->setEasingCurve(QEasingCurve::InCubic);
+
+    auto moveAni = new QPropertyAnimation(this);
+    moveAni->setTargetObject(miss);
+    moveAni->setPropertyName("pos");
+    moveAni->setStartValue(beginPos);
+    moveAni->setEndValue(endPos);
+    moveAni->setKeyValueAt(0.3, beginPos);
+    moveAni->setDuration(duration);
+
+    auto group = new QParallelAnimationGroup(this);
+    group->addAnimation(moveAni);
+    group->addAnimation(opacityAni);
+    connect(group, &QParallelAnimationGroup::finished, [this, group](){
+        group->deleteLater();
+        setAnimating(false);
+    });
+    setAnimating(true);
+    group->start();
+    playAnimation(AnimationName::Dodge);
+
+    return true;
+}
+
+bool MeowKnightItem::attack()
+{
+    if(animating()) return false;
+    setAnimating(true);
+    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
+        setAnimating(false);
+    }, Qt::SingleShotConnection);
+    playAnimation(AnimationName::Attack);
+    return true;
+}
+
+bool MeowKnightItem::takeDamage()
+{
+    if(animating()) return false;
+    setAnimating(true);
+    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
+        setAnimating(false);
+    }, Qt::SingleShotConnection);
+    playAnimation(AnimationName::TakeDamage);
+    return true;
+}
+
+bool MeowKnightItem::death()
+{
+    if(animating()) return false;
+    setAnimating(true);
+    playAnimation(AnimationName::Death);
+    QTimer::singleShot(mAseObj->getAnimationTime(AnimationName::Death), this, [this](){
+        setAnimating(false);
+    });
+    return true;
+}
+
+void MeowKnightItem::setTowards(bool towardRight)
+{
+    mTowardRight = towardRight;
+}
+
 void MeowKnightItem::nextFrame()
 {
     if(!mPlaying) return;
@@ -71,6 +211,7 @@ void MeowKnightItem::nextFrame()
     update();
 
     if(needAutoStop()){
+        emit animationAutoStopped(mCurAnimation);
         auto next = nextAnimation();
         if(next != nullptr){
             playAnimation(next);
@@ -113,26 +254,27 @@ void MeowKnightItem::playAnimation(const QString &name)
     mCurAnimation = name;
 
     mAseObj->useTag(mCurAnimation);
-    prepareGeometryChange();
-    if(mCurAnimation == AnimationName::Idle){
-        mBoundingRect = {0, 0, 16, 16};
-    }else if(mCurAnimation == AnimationName::Run){
-        mBoundingRect = {0, -1, 16, 17};
-    }else if(mCurAnimation == AnimationName::Jump){
-        mBoundingRect = {0, 0, 16, 20};
-    }else if(mCurAnimation == AnimationName::Attack){
-        mBoundingRect = {-5, -8, 41, 24};
-    }else if(mCurAnimation == AnimationName::AttackWithSkill){
-        mBoundingRect = {-16, -16, 48, 32};
-    }else if(mCurAnimation == AnimationName::Dodge){
-        mBoundingRect = {-16, 0, 32, 16};
-    }else if(mCurAnimation == AnimationName::TakeDamage){
-        mBoundingRect = {0, 0, 16, 16};
-    }else if(mCurAnimation == AnimationName::Death){
-        mBoundingRect = {0, 0, 32, 16};
-    }else{
-        Q_ASSERT_X(false, "MeowKnightItem::playAnimation", "Unsupport animation.");
-    }
+//    prepareGeometryChange();
+//    if(mCurAnimation == AnimationName::Idle){
+//        mBoundingRect = {0, 0, 16, 16};
+//    }else if(mCurAnimation == AnimationName::Run){
+//        mBoundingRect = {0, -1, 16, 17};
+//    }else if(mCurAnimation == AnimationName::Jump){
+//        mBoundingRect = {0, 0, 16, 20};
+//    }else if(mCurAnimation == AnimationName::Attack){
+//        mBoundingRect = {-5, -8, 41, 24};
+//    }else if(mCurAnimation == AnimationName::AttackWithSkill){
+//        mBoundingRect = {-16, -16, 48, 32};
+//    }else if(mCurAnimation == AnimationName::Dodge){
+//        mBoundingRect = {-16, 0, 32, 16};
+//    }else if(mCurAnimation == AnimationName::TakeDamage){
+//        mBoundingRect = {0, 0, 16, 16};
+//    }else if(mCurAnimation == AnimationName::Death){
+//        mBoundingRect = {0, 0, 32, 16};
+//    }else{
+//        Q_ASSERT_X(false, "MeowKnightItem::playAnimation", "Unsupport animation.");
+//    }
+    mBoundingRect = {-16, -16, 3*16, 2*16};
     update();
     mTimer->start(mAseObj->duration());
 }
@@ -141,6 +283,13 @@ void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+
+    if(mTowardRight){
+
+    }else{
+        painter->translate(16, 0);
+        painter->scale(-1, 1);
+    }
 
     QPen pen(Qt::red);
     pen.setCosmetic(true);
@@ -209,20 +358,43 @@ void MeowKnightItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     }else if(mCurAnimation == AnimationName::Death){
         painter->drawPixmap(0, 0, mAseObj->pixmap());
     }
+
+    painter->drawEllipse(-3, -3, 6, 6);
 }
 
 void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
 {
     //return;
+
     switch(event->key()){
     case Qt::Key_R: playAnimation(AnimationName::Run); break;
-    case Qt::Key_I: playAnimation(AnimationName::Idle); break;
+    case Qt::Key_I: idle(); break;
     case Qt::Key_J: playAnimation(AnimationName::Jump); break;
-    case Qt::Key_A: playAnimation(AnimationName::Attack); break;
+    case Qt::Key_A: attack(); break;
     case Qt::Key_S: playAnimation(AnimationName::AttackWithSkill); break;
-    case Qt::Key_D: playAnimation(AnimationName::Dodge); break;
-    case Qt::Key_T: playAnimation(AnimationName::TakeDamage); break;
-    case Qt::Key_K: playAnimation(AnimationName::Death); break;
+    case Qt::Key_D: dodge(); break;
+    case Qt::Key_T: takeDamage(); break;
+    case Qt::Key_K: death(); break;
+    case Qt::Key_F:
+//        QTransform t = transform();
+//        t.scale(-1, 1);
+//        setTransformOriginPoint(8, 0);
+//        setTransform(t);
+//        setTransformOriginPoint(0, 0);
+        mTowardRight = !mTowardRight;
+        update();
+        break;
+    case Qt::Key_Right:{
+        QPointF p = pos();
+        moveTo({p.x() + 60, p.y() + 30});
+        break;
+    }
+
+    case Qt::Key_Left:{
+        QPointF p = pos();
+        moveTo({p.x() - 60, p.y() - 30});
+        break;
+    }
     }
 }
 

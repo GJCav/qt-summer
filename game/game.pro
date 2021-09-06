@@ -11,9 +11,13 @@ CONFIG += c++17
 
 SOURCES += \
     R.cpp \
+    item/GameCharItem.cpp \
     item/LevelCellItem.cpp \
     item/MeowKnightItem.cpp \
     item/PropItem.cpp \
+    model/CharAction.cpp \
+    model/GameCharacter.cpp \
+    model/GameScene.cpp \
     model/Level.cpp \
     main.cpp \
     test/TestWindow.cpp \
@@ -29,9 +33,13 @@ SOURCES += \
 
 HEADERS += \
     R.h \
+    item/GameCharItem.h \
     item/LevelCellItem.h \
     item/MeowKnightItem.h \
     item/PropItem.h \
+    model/CharAction.h \
+    model/GameCharacter.h \
+    model/GameScene.h \
     model/Level.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
