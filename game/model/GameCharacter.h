@@ -1,6 +1,7 @@
 #ifndef GAMECHARACTER_H
 #define GAMECHARACTER_H
 
+#include "item/GameCharItem.h"
 #include <QObject>
 #include <QVector>
 #include <QGraphicsObject>
@@ -24,12 +25,15 @@ public:
 
 
 public:
-    explicit GameCharacter(QObject *parent = nullptr);
+    explicit GameCharacter(GameCharItem* item, QObject *parent = nullptr);
 
     virtual void attacked(const qreal power);
     virtual void healed(const qreal power);
     virtual void moveTo(const QPoint pos); // this plays animation, but setPos doesnt.
-    virtual void selected();
+    virtual void setPos(QRect pos);
+
+public slots:
+    virtual void selected(bool slt);
 
 signals:
 
@@ -42,7 +46,7 @@ private:
     qreal mSpeed;
     qreal mDefensivePower;
     QVector<CharAction*> mActions;
-    QGraphicsObject *mCharItem;
+    GameCharItem *mCharItem;
 
     QPoint mPos; // position on the GameScene;
 
@@ -58,7 +62,6 @@ protected:
     int mTargetCount = 0;
     GameCharacter* source;
     QVector<GameCharacter*> target;
-
 };
 
 #endif // GAMECHARACTER_H

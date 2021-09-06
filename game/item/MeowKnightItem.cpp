@@ -13,14 +13,11 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
     mTimer->setSingleShot(true);
     mTimer->callOnTimeout([this](){nextFrame();});
 
-
     // auto update z-index
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
     // animation
     playAnimation(AnimationName::Idle);
-
-
 
     // debug only
     this->setFlag(QGraphicsItem::ItemIsFocusable, true);
@@ -404,7 +401,7 @@ QVariant MeowKnightItem::itemChange(GraphicsItemChange change, const QVariant &v
         QPoint newPos = value.toPoint();
         setZValue(ZValue+newPos.y()+mBoundingRect.height() * scale());
     }
-    return QGraphicsItem::itemChange(change, value);
+    return GameCharItem::itemChange(change, value);
 }
 
 

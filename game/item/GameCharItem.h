@@ -18,6 +18,14 @@ public:
     virtual bool death() = 0;
     virtual bool dodge() = 0;
     virtual void setTowards(bool towardRight = true) = 0;
+
+signals:
+    void selectedChange(bool selected);
+
+    // QGraphicsItem interface
+protected:
+    // remember to call this if subclass overrides this.
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 };
 
 #endif // GAMECHARITEM_H

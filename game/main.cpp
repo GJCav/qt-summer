@@ -5,6 +5,7 @@
 #include "util/QPixmapGirdSplitter.h"
 #include "model/Level.h"
 #include "item/PropItem.h"
+#include "model/GameCharacter.h"
 #include <QApplication>
 #include <QtCore>
 #include <QtWidgets>
@@ -36,6 +37,9 @@ int main(int argc, char *argv[])
     scene.addItem(&meow);
     meow.setPos(0, 0);
     meow.setScale(4);
+
+    GameCharacter ch(&meow);
+
 
     QGraphicsView view;
     view.setScene(&scene);
