@@ -13,5 +13,6 @@
         <file>asset/Pixel Art Top Down/TX Tileset Stone Ground.png</file>
         <file>asset/Pixel Art Top Down/TX Tileset Wall.png</file>
         <file>asset/icon/Transparent Icons &amp; Drop Shadow.png</file>
+        <file>asset/ui/Button.png</file>
     </qresource>
 </RCC>

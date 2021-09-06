@@ -9,6 +9,7 @@ QGraphicsView *defaultView;
 namespace R{
 
 const QPixmap *GUIPixmap;
+const QPixmap *BtnPixmap;
 const QPixmap *IconPixmap;
 
 namespace Level{
@@ -62,6 +63,7 @@ void initResource()
     defaultView->setSceneRect(0, 0, 800, 600);
 
     GUIPixmap = new QPixmap(":/asset/ui/GUI.png");
+    BtnPixmap = new QPixmap(":/asset/ui/Button.png");
     IconPixmap = new QPixmap(":/asset/icon/Transparent Icons & Drop Shadow.png");
 
     Level::initLevelResource();

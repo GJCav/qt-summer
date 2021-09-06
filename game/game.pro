@@ -17,13 +17,16 @@ SOURCES += \
     item/PopupTextItem.cpp \
     item/PropItem.cpp \
     item/SelectIndicatorItem.cpp \
+    item/hud/ButtonItem.cpp \
+    item/hud/IconItem.cpp \
     model/GameCharacter.cpp \
     model/GameScene.cpp \
+    model/HUD.cpp \
     model/Level.cpp \
     main.cpp \
     test/TestWindow.cpp \
     ui/DarkPanel.cpp \
-    ui/HUD.cpp \
+    ui/HUDDesign.cpp \
     ui/LightDarkPanel.cpp \
     ui/LightWoodPanel.cpp \
     ui/TexturePanel.cpp \
@@ -41,12 +44,15 @@ HEADERS += \
     item/PopupTextItem.h \
     item/PropItem.h \
     item/SelectIndicatorItem.h \
+    item/hud/ButtonItem.h \
+    item/hud/IconItem.h \
     model/GameCharacter.h \
     model/GameScene.h \
+    model/HUD.h \
     model/Level.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
-    ui/HUD.h \
+    ui/HUDDesign.h \
     ui/LightDarkPanel.h \
     ui/LightWoodPanel.h \
     ui/TexturePanel.h \
@@ -58,7 +64,7 @@ HEADERS += \
 
 FORMS += \
     test/TestWindow.ui \
-    ui/HUD.ui
+    ui/HUDDesign.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

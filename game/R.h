@@ -10,6 +10,7 @@
 namespace R{
 
 extern const QPixmap *GUIPixmap;
+extern const QPixmap *BtnPixmap;
 extern const QPixmap *IconPixmap;
 
 namespace Level{
