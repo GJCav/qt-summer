@@ -11,8 +11,10 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsItem* parent)
 
     playAnimation(AnimationName::Idle);
 
-    this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    this->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+
+    //this->setFlag(QGraphicsItem::ItemIsFocusable, true);
+    //this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 }
 
@@ -222,6 +224,15 @@ void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_T: playAnimation(AnimationName::TakeDamage); break;
     case Qt::Key_K: playAnimation(AnimationName::Death); break;
     }
+}
+
+QVariant MeowKnightItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if(change == ItemPositionChange && scene()){
+        QPoint newPos = value.toPoint();
+        setZValue(ZValue+newPos.y()+mBoundingRect.height() * scale());
+    }
+    return QGraphicsItem::itemChange(change, value);
 }
 
 

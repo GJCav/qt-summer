@@ -8,6 +8,8 @@
 class MeowKnightItem : public QGraphicsItem
 {
 public:
+    constexpr static int ZValue = 200;
+
     MeowKnightItem(const QString& color, QGraphicsItem* parent = nullptr);
     ~MeowKnightItem();
 
@@ -61,6 +63,11 @@ protected:
 
     // for debug only
     void keyReleaseEvent(QKeyEvent *event) override;
+
+    // update zvalue
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 };
+
+
 
 #endif // MEOWKNIGHT_H

@@ -8,7 +8,6 @@ LevelCellItem::LevelCellItem(const int type, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
     setCellType(type);
-    this->setZValue(ZValue);
 }
 
 int LevelCellItem::cellType() const

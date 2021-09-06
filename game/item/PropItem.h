@@ -37,6 +37,11 @@ public:
     const QPixmap &propTexture() const;
     const QPixmap &shadowTextrue() const;
 
+
+
+    // QGraphicsItem interface
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 };
 
 #endif // PROPITEM_H

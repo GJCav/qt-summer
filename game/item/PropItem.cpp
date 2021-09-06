@@ -11,6 +11,8 @@ PropItem::PropItem(int type, QGraphicsItem* parent)
     setZValue(ZValue);
     setPropType(type);
 
+    setFlag(ItemSendsGeometryChanges);
+
     // debug only
     setFlag(QGraphicsItem::ItemIsMovable);
 
@@ -55,6 +57,15 @@ const QPixmap &PropItem::propTexture() const
 const QPixmap &PropItem::shadowTextrue() const
 {
     return mShadowTextrue;
+}
+
+QVariant PropItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if(change == ItemPositionChange && scene()){
+        QPoint newPos = value.toPoint();
+        setZValue(ZValue+newPos.y());
+    }
+    return QGraphicsItem::itemChange(change, value);
 }
 
 
