@@ -4,8 +4,10 @@
 #include <QGraphicsItem>
 #include <QPoint>
 
-class PropItem : public QGraphicsItem
+class PropItem : public QObject, public QGraphicsItem
 {
+    Q_OBJECT
+
 public:
     constexpr static int ZValue = 200;
 
@@ -15,15 +17,15 @@ public:
         constexpr static int Magic = 200;
     };
 
-    PropItem(int propType = 0, QGraphicsItem* parent = nullptr);
+    PropItem(int propType = 0, QGraphicsItem* parent = nullptr, QObject* objParent = nullptr);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     int propType() const;
     void setPropType(int newPropType);
 
-
-
+signals:
+    void clicked(PropItem* src);
 
 private:
     QPixmap mPropTexture;
@@ -37,11 +39,11 @@ public:
     const QPixmap &propTexture() const;
     const QPixmap &shadowTextrue() const;
 
-
-
     // QGraphicsItem interface
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // PROPITEM_H

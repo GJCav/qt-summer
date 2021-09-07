@@ -27,8 +27,8 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
     mSltIdrItem->setVisible(false);
 
     // debug only
-    this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    this->setFlag(QGraphicsItem::ItemIsMovable, true);
+    //this->setFlag(QGraphicsItem::ItemIsFocusable, true);
+    //this->setFlag(QGraphicsItem::ItemIsMovable, true);
 }
 
 MeowKnightItem::~MeowKnightItem()
@@ -88,7 +88,7 @@ bool MeowKnightItem::moveTo(const QPointF target)
 {
     if(mAnimating) return false;
     QPointF curPos = pos();
-    mTowardRight = target.x() > curPos.x();
+    mTowardRight = target.x() >= curPos.x();
 
     QPropertyAnimation *mMoveXAnimation = new QPropertyAnimation(this);
     mMoveXAnimation->setTargetObject(this);
@@ -444,4 +444,17 @@ QPainterPath MeowKnightItem::shape() const
     QPainterPath path;
     path.addRect({0, 0, 16, 16});
     return path;
+}
+
+
+void MeowKnightItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    event->accept();
+    GameCharItem::mousePressEvent(event);
+}
+
+void MeowKnightItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED(event);
+    emit clicked(this);
 }

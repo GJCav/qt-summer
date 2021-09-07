@@ -5,8 +5,8 @@
 
 using PropType = PropItem::PropType;
 
-PropItem::PropItem(int type, QGraphicsItem* parent)
-    : QGraphicsItem(parent)
+PropItem::PropItem(int type, QGraphicsItem* parent, QObject* objParent)
+    : QObject(objParent), QGraphicsItem(parent)
 {
     setZValue(ZValue);
     setPropType(type);
@@ -14,7 +14,7 @@ PropItem::PropItem(int type, QGraphicsItem* parent)
     setFlag(ItemSendsGeometryChanges);
 
     // debug only
-    setFlag(QGraphicsItem::ItemIsMovable);
+    //setFlag(QGraphicsItem::ItemIsMovable);
 
 }
 
@@ -92,4 +92,15 @@ void PropItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         txt,
         txt.rect()
     );
+}
+
+
+void PropItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    event->accept();
+}
+
+void PropItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit clicked(this);
 }

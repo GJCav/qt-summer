@@ -4,11 +4,12 @@
 #include <QGraphicsObject>
 #include <QObject>
 
+
 class PopupMsgItem : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    PopupMsgItem();
+    PopupMsgItem(QGraphicsItem* parent = nullptr);
 };
 
 #endif // POPUPMSGITEM_H

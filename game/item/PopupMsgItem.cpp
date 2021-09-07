@@ -1,6 +1,7 @@
 #include "PopupMsgItem.h"
 
-PopupMsgItem::PopupMsgItem()
+PopupMsgItem::PopupMsgItem(QGraphicsItem* parent)
+    : QGraphicsObject(parent)
 {
 
 }

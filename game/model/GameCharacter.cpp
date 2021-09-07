@@ -1,15 +1,23 @@
 #include "GameCharacter.h"
 #include "item/PopupTextItem.h"
+#include "R.h"
+#include "GameCharAction.h"
 #include <QtGlobal>
 #include <QtCore>
 #include <QtGui>
 #include <QtConcurrent/QtConcurrent>
 
-GameCharacter::GameCharacter(GameCharItem* item, QObject *parent) : QObject(parent)
+GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
+    : QObject(game)
 {
+    mRole = role;
     mCharItem = item;
+    mCharItem->setScale(3.5);
     mCharItem->setFlag(QGraphicsItem::ItemIsSelectable);
     connect(mCharItem, &GameCharItem::selectedChange, this, &GameCharacter::selected);
+    connect(mCharItem, &GameCharItem::clicked, this, &GameCharacter::click);
+
+    initDefaultAction();
 }
 
 void GameCharacter::attacked(const qreal power)
@@ -63,16 +71,78 @@ void GameCharacter::dodge()
     mCharItem->dodge();
 }
 
+QVector<QPixmap> GameCharacter::requestIcons()
+{
+    QVector<QPixmap> rtn;
+    for(int i = 0;i < 5;i++){
+        rtn.append(R::IconPixmap->copy(32*i, 0, 32, 32));
+    }
+    return rtn;
+}
+
+void GameCharacter::setCharRole(const int role)
+{
+    mRole = role;
+}
+
 void GameCharacter::selected(bool slt)
 {
+
 }
 
-QVector<CharAction *> GameCharacter::requestActionMenu()
+void GameCharacter::click(GameCharItem *src)
 {
-    return {};
+    Q_UNUSED(src);
+    emit clicked(this);
 }
 
-CharAction::CharAction(QObject *parent) : QObject(parent)
+qreal GameCharacter::health() const
 {
+    return mHealth;
+}
 
+qreal GameCharacter::speed() const
+{
+    return mSpeed;
+}
+
+qreal GameCharacter::defensivePower() const
+{
+    return mDefensivePower;
+}
+
+qreal GameCharacter::lucky() const
+{
+    return mLucky;
+}
+
+GameScene *GameCharacter::game() const
+{
+    return mGame;
+}
+
+void GameCharacter::initDefaultAction()
+{
+    mMoveAct = new GameCharAction("移动", this);
+    mAttackAct = new GameCharAction("攻击", this);
+}
+
+QVector<GameCharAction *> GameCharacter::requestActionMenu()
+{
+    return {mMoveAct, mAttackAct};
+}
+
+const QString &GameCharacter::name() const
+{
+    return mName;
+}
+
+void GameCharacter::setName(const QString &newName)
+{
+    mName = newName;
+}
+
+GameCharItem *GameCharacter::charItem() const
+{
+    return mCharItem;
 }

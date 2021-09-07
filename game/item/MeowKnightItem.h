@@ -18,6 +18,7 @@ signals:
     void animatingChanged(bool a);
     void animationAutoStopped(const QString name);
 
+
 public:
     constexpr static int ZValue = 200;
 
@@ -80,6 +81,11 @@ protected:
     // for debug only
     void keyReleaseEvent(QKeyEvent *event) override;
 
+    // click event
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+
     // update zvalue
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
@@ -108,7 +114,5 @@ private:
     // animation
     bool mAnimating = false;
 };
-
-
 
 #endif // MEOWKNIGHT_H

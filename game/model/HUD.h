@@ -4,6 +4,8 @@
 #include "item/hud/IconItem.h"
 #include "item/hud/ButtonItem.h"
 #include "ui/LightWoodPanel.h"
+#include "GameScene.h"
+#include "model/GameCharAction.h"
 #include <QObject>
 #include <QVector>
 #include <QLabel>
@@ -22,11 +24,14 @@ public:
     constexpr static int ActBtnHeight = 50;
     constexpr static int ActBtnGap = 10;
 
-    HUD(QGraphicsScene *scene, QObject *parent = nullptr);
+    HUD(GameScene *scene);
     ~HUD();
 
+    inline void setTitle(const QString& s) {mTitleLabel->setText(s);}
+
     void setIcons(const QVector<QPixmap>& iconPixmaps);
-    void setActBtns(const QVector<QAction*>& actions);
+    void setActBtns(const QVector<GameCharAction*>& actions);
+
     inline void setStatusName(const QString& s) {mStatusName->setPlainText(s);}
     inline void setStatusHealth(const QString& s) {mStatusHealth->setPlainText(s);}
     inline void setStatusSpeed(const QString& s) {mStatusSpeed->setPlainText(s);}
@@ -40,13 +45,23 @@ public:
     inline void setStatusLucky(int n) { setStatusLucky(QString::number(n));}
     inline void setStatusAttack(int n) { setStatusAttack(QString::number(n));}
 
+    void toggleHUD();
+    inline bool visible() const { return mVisible;}
+    inline bool actActBtnVisible() const {return mActBtnVisible;}
+    inline void toggleActBtn() {
+        mActBtnVisible = !mActBtnVisible;
+        mActBtnGroup->setVisible(mActBtnVisible & mVisible);
+    };
 
 private:
-    QGraphicsScene *mScene;
+    bool mVisible = true;
+    bool mActBtnVisible = true;
+
+    GameScene *mGame;
 
     QGraphicsProxyWidget* mTitleProxy;
     LightWoodPanel* mTitlePanel;
-    QLabel *titleLabel;
+    QLabel *mTitleLabel;
 
     QGraphicsItemGroup *mIconGroup = nullptr;
     QVector<QPixmap> mIconPixmaps;
@@ -68,6 +83,7 @@ private:
     void initStatusPanel();
 
     QGraphicsDropShadowEffect* createShadow(int offsetX = 5, int offsetY = 5, int blur = 20);
+    void deleteItemGroup(QGraphicsItemGroup* group);
 
 };
 

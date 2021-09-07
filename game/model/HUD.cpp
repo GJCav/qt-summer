@@ -5,10 +5,10 @@
 #include <QtGui>
 #include <QtWidgets>
 
-HUD::HUD(QGraphicsScene *scene, QObject *parent)
-    : QObject(parent)
+HUD::HUD(GameScene *scene)
+    : QObject(scene)
 {
-    mScene = scene;
+    mGame = scene;
     initHud();
 }
 
@@ -18,8 +18,7 @@ HUD::~HUD()
 
 void HUD::setIcons(const QVector<QPixmap>& iconPixmaps)
 {
-    if(mIconGroup != nullptr)
-        mScene->destroyItemGroup(mIconGroup);
+    deleteItemGroup(mIconGroup);
     mIcons.clear();
 
     mIconPixmaps = iconPixmaps;
@@ -34,42 +33,62 @@ void HUD::setIcons(const QVector<QPixmap>& iconPixmaps)
         });
 
         mIcons.append(icon);
-        mIconGroup->addToGroup(icon);
     }
     mIconGroup->setZValue(ZValue);
     mIconGroup->setGraphicsEffect(createShadow());
 
-    mScene->addItem(mIconGroup);
+    mGame->addItem(mIconGroup);
 }
 
-void HUD::setActBtns(const QVector<QAction *>& actions)
+void HUD::setActBtns(const QVector<GameCharAction *>& actions)
 {
-    if(mActBtnGroup != nullptr){
-        mScene->destroyItemGroup(mActBtnGroup);
-    }
+    deleteItemGroup(mActBtnGroup);
 
     mActBtnGroup = new QGraphicsItemGroup;
     mActBtnGroup->setHandlesChildEvents(false);
     for(int i = 0;i < actions.size();i++){
         auto btn = new ButtonItem(mActBtnGroup);
+
         btn->setBckPixmap(R::BtnPixmap->copy(133, 0, 130, 50));
         btn->setText(actions[i]->text());
         btn->setColor(Qt::white);
         btn->setFontPoint(24);
         btn->setY((ActBtnHeight + ActBtnGap) * i);
 
-        mActBtnGroup->addToGroup(btn);
         connect(btn, &ButtonItem::clicked, actions[i], &QAction::trigger);
     }
     mActBtnGroup->setZValue(ZValue);
     mActBtnGroup->setPos(ActBtnPos);
     mActBtnGroup->setGraphicsEffect(createShadow());
 
-    mScene->addItem(mActBtnGroup);
+    mGame->addItem(mActBtnGroup);
+}
+
+void HUD::toggleHUD()
+{
+    if(mVisible){
+        mTitleProxy->setVisible(false);
+        mIconGroup->setVisible(false);
+        mActBtnGroup->setVisible(false);
+        mStatusProxy->setVisible(false);
+        mVisible = false;
+    }else{
+        mTitleProxy->setVisible(true);
+        mIconGroup->setVisible(true);
+        mActBtnGroup->setVisible(true);
+        mStatusProxy->setVisible(true);
+        mVisible = true;
+    }
 }
 
 void HUD::initHud()
 {
+    mActBtnGroup = new QGraphicsItemGroup();
+    mGame->addItem(mActBtnGroup);
+
+    mIconGroup = new QGraphicsItemGroup();
+    mGame->addItem(mIconGroup);
+
     initTitleBar();
     initStatusPanel();
 }
@@ -93,10 +112,10 @@ void HUD::initTitleBar()
     pal.setColor(QPalette::Window, c);
     mTitlePanel->setPalette(pal);
 
-    titleLabel = new QLabel();
-    titleLabel->setText("标题栏");
+    mTitleLabel = new QLabel();
+    mTitleLabel->setText("标题栏");
 
-    lyt->addWidget(titleLabel);
+    lyt->addWidget(mTitleLabel);
 
 
     mTitleProxy = new QGraphicsProxyWidget();
@@ -105,7 +124,7 @@ void HUD::initTitleBar()
     mTitleProxy->setZValue(ZValue);
     mTitleProxy->setGraphicsEffect(createShadow());
 
-    mScene->addItem(mTitleProxy);
+    mGame->addItem(mTitleProxy);
 }
 
 void HUD::initStatusPanel()
@@ -224,7 +243,7 @@ void HUD::initStatusPanel()
     mStatusProxy->setZValue(ZValue);
     mStatusProxy->setGraphicsEffect(createShadow());
 
-    mScene->addItem(mStatusProxy);
+    mGame->addItem(mStatusProxy);
 }
 
 QGraphicsDropShadowEffect *HUD::createShadow(int offsetX, int offsetY, int blur)
@@ -234,4 +253,15 @@ QGraphicsDropShadowEffect *HUD::createShadow(int offsetX, int offsetY, int blur)
     shadow->setColor(QColor(0, 0, 0, 128));
     shadow->setBlurRadius(blur);
     return shadow;
+}
+
+void HUD::deleteItemGroup(QGraphicsItemGroup* group)
+{
+    if(group == nullptr) return;
+    auto list = group->childItems();
+    mGame->destroyItemGroup(group);
+    for(int i = 0;i < list.size();i++){
+        mGame->removeItem(list[i]);
+        delete list[i];
+    }
 }

@@ -22,11 +22,13 @@ public:
 
 signals:
     void selectedChange(bool selected);
+    void clicked(GameCharItem* self);
 
     // QGraphicsItem interface
 protected:
     // remember to call this if subclass overrides this.
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
 };
 
 #endif // GAMECHARITEM_H

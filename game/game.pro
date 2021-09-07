@@ -20,7 +20,9 @@ SOURCES += \
     item/SelectIndicatorItem.cpp \
     item/hud/ButtonItem.cpp \
     item/hud/IconItem.cpp \
+    model/GameCharAction.cpp \
     model/GameCharacter.cpp \
+    model/GameProp.cpp \
     model/GameScene.cpp \
     model/HUD.cpp \
     model/Level.cpp \
@@ -48,7 +50,9 @@ HEADERS += \
     item/SelectIndicatorItem.h \
     item/hud/ButtonItem.h \
     item/hud/IconItem.h \
+    model/GameCharAction.h \
     model/GameCharacter.h \
+    model/GameProp.h \
     model/GameScene.h \
     model/HUD.h \
     model/Level.h \
