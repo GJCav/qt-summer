@@ -64,7 +64,7 @@ void initResource()
 
     GUIPixmap = new QPixmap(":/asset/ui/GUI.png");
     BtnPixmap = new QPixmap(":/asset/ui/Button.png");
-    IconPixmap = new QPixmap(":/asset/icon/Transparent Icons & Drop Shadow.png");
+    IconPixmap = new QPixmap(":/asset/icon/Transparent Icons.png");
 
     Level::initLevelResource();
 }

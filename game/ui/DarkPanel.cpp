@@ -17,6 +17,6 @@ DarkPanel::DarkPanel(QWidget *parent) : TexturePanel(parent)
     bkg = bkg.scaled(bkg.width()*ratio, bkg.height()*ratio);
     this->setBackgroundPixmap(bkg);
 
-    const int margin = 7 * ratio;
-    layout()->setContentsMargins(margin, margin, margin, margin);
+    //const int margin = 7 * ratio;
+    //layout()->setContentsMargins(margin, margin, margin, margin);
 }

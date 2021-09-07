@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QLabel>
 #include <QGraphicsItemGroup>
+#include <QGraphicsDropShadowEffect>
 
 class HUD : public QObject
 {
@@ -26,6 +27,19 @@ public:
 
     void setIcons(const QVector<QPixmap>& iconPixmaps);
     void setActBtns(const QVector<QAction*>& actions);
+    inline void setStatusName(const QString& s) {mStatusName->setPlainText(s);}
+    inline void setStatusHealth(const QString& s) {mStatusHealth->setPlainText(s);}
+    inline void setStatusSpeed(const QString& s) {mStatusSpeed->setPlainText(s);}
+    inline void setStatusDefensive(const QString& s){mStatusDefensive->setPlainText(s);}
+    inline void setStatusLucky(const QString& s) {mStatusLucky->setPlainText(s);}
+    inline void setStatusAttack(const QString& s) {mStatusAttack->setPlainText(s);}
+    inline void setStatusName(int n) {setStatusName(QString::number(n));}
+    inline void setStatusHealth(int n) {setStatusHealth(QString::number(n));}
+    inline void setStatusSpeed(int n) {setStatusSpeed(QString::number(n));}
+    inline void setStatusDefensive(int n) {setStatusDefensive(QString::number(n));}
+    inline void setStatusLucky(int n) { setStatusLucky(QString::number(n));}
+    inline void setStatusAttack(int n) { setStatusAttack(QString::number(n));}
+
 
 private:
     QGraphicsScene *mScene;
@@ -41,8 +55,19 @@ private:
     QGraphicsItemGroup *mActBtnGroup = nullptr;
     //QVector<ButtonItem*> actionBtns;
 
+    QGraphicsProxyWidget* mStatusProxy;
+    QGraphicsTextItem* mStatusName;
+    QGraphicsTextItem* mStatusHealth;
+    QGraphicsTextItem* mStatusSpeed;
+    QGraphicsTextItem* mStatusDefensive;
+    QGraphicsTextItem* mStatusLucky;
+    QGraphicsTextItem* mStatusAttack;
+
     void initHud();
     void initTitleBar();
+    void initStatusPanel();
+
+    QGraphicsDropShadowEffect* createShadow(int offsetX = 5, int offsetY = 5, int blur = 20);
 
 };
 

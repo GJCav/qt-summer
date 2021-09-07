@@ -7,7 +7,7 @@
 class DarkPanel : public TexturePanel
 {
 public:
-    DarkPanel(QWidget *parent);
+    DarkPanel(QWidget *parent = nullptr);
 };
 
 #endif // DARKPANEL_H
