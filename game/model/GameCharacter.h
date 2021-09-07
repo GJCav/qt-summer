@@ -3,6 +3,7 @@
 
 #include "item/GameCharItem.h"
 #include "GameScene.h"
+
 #include <QObject>
 #include <QVector>
 #include <QGraphicsObject>
@@ -10,6 +11,7 @@
 #include <QAction>
 
 class GameCharAction;
+class MoveAct;
 
 class GameCharacter : public QObject
 {
@@ -40,6 +42,7 @@ public:
     inline void setPos(int x, int y) {setPos({x, y});}
     virtual void die();
     virtual void dodge();
+    virtual void setTowards(bool towardRight);
 
     virtual QVector<QPixmap> requestIcons();
     virtual QVector<GameCharAction*> requestActionMenu();
@@ -76,7 +79,7 @@ private:
     QPoint mPos; // position on the GameScene;
 
     // default actions
-    GameCharAction* mMoveAct;
+    MoveAct* mMoveAct;
     GameCharAction* mAttackAct;
 
     void initDefaultAction();

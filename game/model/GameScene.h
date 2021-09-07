@@ -15,8 +15,12 @@ class HUD;
 class GameScene : public QGraphicsScene
 {
     Q_OBJECT;
+
 public:
     constexpr static int CellSize = LevelCellItem::CellSize;
+    constexpr static int GameWidth = 16;
+    constexpr static int GameHeight = 12;
+
     explicit GameScene(QObject *parent = nullptr);
 
     void init(); //remember to call this;
@@ -28,6 +32,21 @@ public:
     void addProp(GameProp* item);
     void addChar(GameCharacter* ch);
 
+    GameProp* propAt(const QPoint h) const;
+    GameCharacter* charAt(const QPoint h) const;
+
+    inline int curTurn() {return mTurn;}
+
+public slots:
+    void nextTurn();
+    void selectMoveDestination(const QPoint origin, const int len, const int min=0); // min < dest <= len
+
+private slots:
+    void charClick(GameCharacter* src);
+
+signals:
+    void charClicked(GameCharacter* target);
+    void moveDestSelected(QPoint pos);
 
 protected:
     Level *mLevel = nullptr;
@@ -43,6 +62,7 @@ protected:
      *   3: 敌方回合。不显示右侧操作按钮。
      */
     int mState = 0;
+    int mTurn = 0; // 回合编号
 
     virtual void charClickedEvent(GameCharacter* src);
 
@@ -51,13 +71,14 @@ protected:
     virtual void initChars();
     virtual void initHUD();
 
-private slots:
-    void charClicked(GameCharacter* src);
-
-
     // QGraphicsScene interface
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+
+private:
+    QGraphicsItemGroup* mSltIndicate = nullptr;
+
+    void deleteItemGroup(QGraphicsItemGroup* group);
 };
 
 #endif // GAMESCENE_H

@@ -16,6 +16,7 @@ MeowKnightItem::MeowKnightItem(const QString &color, QGraphicsObject* parent)
 
     // auto update z-index
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    connect(this, &MeowKnightItem::yChanged, this, &MeowKnightItem::zChangeSlot);
 
     // animation
     playAnimation(AnimationName::Idle);
@@ -264,6 +265,16 @@ const char *MeowKnightItem::nextAnimation()
     return AnimationName::Idle;
 }
 
+void MeowKnightItem::updateZValue(int y)
+{
+    setZValue(ZValue+ y + shape().boundingRect().height() * scale());
+}
+
+void MeowKnightItem::zChangeSlot()
+{
+    updateZValue(y());
+}
+
 QRectF MeowKnightItem::boundingRect() const
 {
     return mBoundingRect;
@@ -425,8 +436,7 @@ void MeowKnightItem::keyReleaseEvent(QKeyEvent *event)
 QVariant MeowKnightItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if(change == ItemPositionChange && scene()){
-        QPoint newPos = value.toPoint();
-        setZValue(ZValue+newPos.y()+ shape().boundingRect().height() * scale());
+        updateZValue(value.toPoint().y());
     }
 
     if(change == ItemSelectedHasChanged && scene()){

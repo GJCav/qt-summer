@@ -17,7 +17,7 @@ QPoint GameProp::pos() const
 void GameProp::setPos(QPoint newPos)
 {
     mPos = newPos;
-    mPropItem->setPos(mPos.x()*CellSize, mPos.y()*CellSize);
+    mPropItem->setPos(mPos.x()*CellSize, mPos.y()*CellSize + CellSize);
 }
 
 PropItem *GameProp::propItem() const

@@ -113,6 +113,11 @@ private:
 
     // animation
     bool mAnimating = false;
+
+    void updateZValue(int y);
+
+private slots:
+    void zChangeSlot();
 };
 
 #endif // MEOWKNIGHT_H

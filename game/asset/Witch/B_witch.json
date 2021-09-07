@@ -1,0 +1,408 @@
+{ "frames": [
+   {
+    "filename": "B_witch 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 2.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 3.aseprite",
+    "frame": { "x": 0, "y": 48, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 4.aseprite",
+    "frame": { "x": 32, "y": 48, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 5.aseprite",
+    "frame": { "x": 64, "y": 48, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 6.aseprite",
+    "frame": { "x": 0, "y": 96, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 7.aseprite",
+    "frame": { "x": 32, "y": 96, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 8.aseprite",
+    "frame": { "x": 64, "y": 96, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 9.aseprite",
+    "frame": { "x": 0, "y": 144, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 10.aseprite",
+    "frame": { "x": 32, "y": 144, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 11.aseprite",
+    "frame": { "x": 64, "y": 144, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 12.aseprite",
+    "frame": { "x": 0, "y": 192, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 13.aseprite",
+    "frame": { "x": 32, "y": 192, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 14.aseprite",
+    "frame": { "x": 0, "y": 240, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 15.aseprite",
+    "frame": { "x": 48, "y": 240, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 16.aseprite",
+    "frame": { "x": 0, "y": 288, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 17.aseprite",
+    "frame": { "x": 48, "y": 288, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 18.aseprite",
+    "frame": { "x": 0, "y": 336, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 19.aseprite",
+    "frame": { "x": 48, "y": 336, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 20.aseprite",
+    "frame": { "x": 0, "y": 384, "w": 64, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 21.aseprite",
+    "frame": { "x": 0, "y": 432, "w": 96, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 96, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 22.aseprite",
+    "frame": { "x": 0, "y": 480, "w": 112, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 112, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 23.aseprite",
+    "frame": { "x": 0, "y": 528, "w": 112, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 112, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 24.aseprite",
+    "frame": { "x": 0, "y": 576, "w": 96, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 96, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 25.aseprite",
+    "frame": { "x": 0, "y": 624, "w": 96, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 96, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 26.aseprite",
+    "frame": { "x": 0, "y": 672, "w": 96, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 96, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 27.aseprite",
+    "frame": { "x": 0, "y": 720, "w": 96, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 96, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 28.aseprite",
+    "frame": { "x": 0, "y": 768, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 29.aseprite",
+    "frame": { "x": 32, "y": 768, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 30.aseprite",
+    "frame": { "x": 64, "y": 768, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 31.aseprite",
+    "frame": { "x": 0, "y": 816, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 32.aseprite",
+    "frame": { "x": 32, "y": 816, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 33.aseprite",
+    "frame": { "x": 64, "y": 816, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 34.aseprite",
+    "frame": { "x": 0, "y": 864, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 35.aseprite",
+    "frame": { "x": 32, "y": 864, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 36.aseprite",
+    "frame": { "x": 64, "y": 864, "w": 32, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 0, "w": 32, "h": 48 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 37.aseprite",
+    "frame": { "x": 0, "y": 912, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 38.aseprite",
+    "frame": { "x": 32, "y": 912, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 39.aseprite",
+    "frame": { "x": 64, "y": 912, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 40.aseprite",
+    "frame": { "x": 0, "y": 944, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 41.aseprite",
+    "frame": { "x": 32, "y": 944, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "B_witch 42.aseprite",
+    "frame": { "x": 64, "y": 944, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 32 },
+    "sourceSize": { "w": 111, "h": 48 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.15-x64",
+  "image": "B_witch.png",
+  "format": "RGBA8888",
+  "size": { "w": 112, "h": 2064 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle", "from": 0, "to": 5, "direction": "forward" },
+   { "name": "Run", "from": 6, "to": 13, "direction": "forward" },
+   { "name": "Charge_Loop", "from": 14, "to": 18, "direction": "forward" },
+   { "name": "Attack", "from": 19, "to": 27, "direction": "forward" },
+   { "name": "Take_damage", "from": 28, "to": 30, "direction": "forward" },
+   { "name": "Death", "from": 31, "to": 42, "direction": "forward" }
+  ],
+  "slices": [
+  ]
+ }
+}

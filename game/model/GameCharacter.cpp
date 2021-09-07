@@ -2,6 +2,7 @@
 #include "item/PopupTextItem.h"
 #include "R.h"
 #include "GameCharAction.h"
+#include "action/MoveAct.h"
 #include <QtGlobal>
 #include <QtCore>
 #include <QtGui>
@@ -11,6 +12,8 @@ GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
     : QObject(game)
 {
     mRole = role;
+    mGame = game;
+
     mCharItem = item;
     mCharItem->setScale(3.5);
     mCharItem->setFlag(QGraphicsItem::ItemIsSelectable);
@@ -71,6 +74,11 @@ void GameCharacter::dodge()
     mCharItem->dodge();
 }
 
+void GameCharacter::setTowards(bool towardRight)
+{
+    mCharItem->setTowards(towardRight);
+}
+
 QVector<QPixmap> GameCharacter::requestIcons()
 {
     QVector<QPixmap> rtn;
@@ -123,8 +131,9 @@ GameScene *GameCharacter::game() const
 
 void GameCharacter::initDefaultAction()
 {
-    mMoveAct = new GameCharAction("移动", this);
-    mAttackAct = new GameCharAction("攻击", this);
+    mMoveAct = new MoveAct(this, this);
+    mAttackAct = new GameCharAction(this, this);
+    mAttackAct->setText("攻击");
 }
 
 QVector<GameCharAction *> GameCharacter::requestActionMenu()

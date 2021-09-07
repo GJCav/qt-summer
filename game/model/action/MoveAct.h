@@ -1,0 +1,23 @@
+#ifndef MOVEACT_H
+#define MOVEACT_H
+
+#include "model/GameCharAction.h"
+#include "model/GameCharacter.h"
+#include "model/GameScene.h"
+#include <QObject>
+
+class MoveAct : public GameCharAction
+{
+    Q_OBJECT
+public:
+    explicit MoveAct(GameCharacter* actor, QObject *parent = nullptr);
+
+private slots:
+    void targetSelected(QPoint pos);
+
+    // GameCharAction interface
+protected:
+    void process() override;
+};
+
+#endif // MOVEACT_H

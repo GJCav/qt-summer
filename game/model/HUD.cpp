@@ -47,8 +47,9 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
     mActBtnGroup = new QGraphicsItemGroup;
     mActBtnGroup->setHandlesChildEvents(false);
     for(int i = 0;i < actions.size();i++){
-        auto btn = new ButtonItem(mActBtnGroup);
+        if(!actions[i]->isEnabled()) continue;
 
+        auto btn = new ButtonItem(mActBtnGroup);
         btn->setBckPixmap(R::BtnPixmap->copy(133, 0, 130, 50));
         btn->setText(actions[i]->text());
         btn->setColor(Qt::white);
@@ -56,6 +57,8 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
         btn->setY((ActBtnHeight + ActBtnGap) * i);
 
         connect(btn, &ButtonItem::clicked, actions[i], &QAction::trigger);
+
+        actions[i]->setButtonItem(btn);
     }
     mActBtnGroup->setZValue(ZValue);
     mActBtnGroup->setPos(ActBtnPos);

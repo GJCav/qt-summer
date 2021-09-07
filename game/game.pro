@@ -11,10 +11,10 @@ CONFIG += c++17
 
 SOURCES += \
     R.cpp \
+    item/CellIndicatorItem.cpp \
     item/GameCharItem.cpp \
     item/LevelCellItem.cpp \
     item/MeowKnightItem.cpp \
-    item/PopupMsgItem.cpp \
     item/PopupTextItem.cpp \
     item/PropItem.cpp \
     item/SelectIndicatorItem.cpp \
@@ -27,6 +27,8 @@ SOURCES += \
     model/HUD.cpp \
     model/Level.cpp \
     main.cpp \
+    model/action/AttackAct.cpp \
+    model/action/MoveAct.cpp \
     test/TestWindow.cpp \
     ui/DarkPanel.cpp \
     ui/HUDDesign.cpp \
@@ -41,10 +43,10 @@ SOURCES += \
 
 HEADERS += \
     R.h \
+    item/CellIndicatorItem.h \
     item/GameCharItem.h \
     item/LevelCellItem.h \
     item/MeowKnightItem.h \
-    item/PopupMsgItem.h \
     item/PopupTextItem.h \
     item/PropItem.h \
     item/SelectIndicatorItem.h \
@@ -56,6 +58,8 @@ HEADERS += \
     model/GameScene.h \
     model/HUD.h \
     model/Level.h \
+    model/action/AttackAct.h \
+    model/action/MoveAct.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
     ui/HUDDesign.h \

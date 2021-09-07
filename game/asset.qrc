@@ -16,5 +16,8 @@
         <file>asset/ui/Button.png</file>
         <file>asset/icon/Transparent Icons.png</file>
         <file>asset/icon/test.png</file>
+        <file>asset/Witch/B_witch.json</file>
+        <file>asset/Witch/B_witch.png</file>
+        <file>asset/Meow Knight/yellow.png</file>
     </qresource>
 </RCC>
