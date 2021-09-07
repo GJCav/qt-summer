@@ -18,7 +18,6 @@ ButtonItem::ButtonItem(QGraphicsItem *parent)
 
     mTextShadowItem->setPos(ShadowDistance, ShadowDistance);
 
-
     QFont f;
     f.setFamily("Microsoft YaHei UI");
     mTextItem->setFont(f);
@@ -36,6 +35,8 @@ ButtonItem::ButtonItem(QGraphicsItem *parent)
 
     setAcceptHoverEvents(true);
 
+    connect(this, &QGraphicsObject::enabledChanged, this, &ButtonItem::reactEnabledChange);
+    connect(this, &QGraphicsObject::visibleChanged, this, [this](){ mHoverAni->stop();});
 }
 
 const QPixmap &ButtonItem::bckPixmap() const
@@ -95,6 +96,14 @@ void ButtonItem::vAlignText()
     mTextShadowItem->setX(mTextItem->x()+ShadowDistance);
 }
 
+void ButtonItem::reactEnabledChange()
+{
+    bool enable = isEnabled();
+    auto f = mTextItem->font();
+    f.setStrikeOut(!enable);
+    mTextItem->setFont(f);
+}
+
 
 QRectF ButtonItem::boundingRect() const
 {
@@ -106,7 +115,7 @@ void ButtonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->drawPixmap(0, 0, mBckPixmap);
+    painter->drawPixmap(mBdnRect, mBckPixmap, mBckPixmap.rect());
 }
 
 
@@ -118,13 +127,15 @@ QVariant ButtonItem::itemChange(GraphicsItemChange change, const QVariant &value
 
 void ButtonItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    mOrgPos = pos();
-    mHoverAni->setStartValue(mOrgPos.x());
-    mHoverAni->setKeyValueAt(0.25, mOrgPos.x()-mAniDistance);
-    mHoverAni->setKeyValueAt( 0.5, mOrgPos.x());
-    mHoverAni->setKeyValueAt(0.75, mOrgPos.x()+mAniDistance);
-    mHoverAni->setKeyValueAt(   1, mOrgPos.x());
-    mHoverAni->start();
+    if(isEnabled()){
+        mOrgPos = pos();
+        mHoverAni->setStartValue(mOrgPos.x());
+        mHoverAni->setKeyValueAt(0.25, mOrgPos.x()-mAniDistance);
+        mHoverAni->setKeyValueAt( 0.5, mOrgPos.x());
+        mHoverAni->setKeyValueAt(0.75, mOrgPos.x()+mAniDistance);
+        mHoverAni->setKeyValueAt(   1, mOrgPos.x());
+        mHoverAni->start();
+    }
     QGraphicsObject::hoverEnterEvent(event);
 }
 
@@ -137,7 +148,7 @@ void ButtonItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void ButtonItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked();
+    if(isEnabled()) emit clicked();
     QGraphicsObject::mouseReleaseEvent(event);
 }
 

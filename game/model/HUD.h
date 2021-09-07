@@ -52,6 +52,21 @@ public:
         mActBtnVisible = !mActBtnVisible;
         mActBtnGroup->setVisible(mActBtnVisible & mVisible);
     };
+    inline void setActBtnVisible(bool vis){
+        mActBtnVisible = vis;
+        mActBtnGroup->setVisible(mActBtnVisible & mVisible);
+    }
+
+    //ButtonItem *endTurnBtn() const;
+
+
+    bool allowEndTurn() const;
+    void setAllowEndTurn(bool newAllowEndTurn);
+    inline bool endTurnVisible() {return mEndTurnBtn->isVisible();}
+    inline void ssetEndTurnVisible(bool v) {mEndTurnBtn->setVisible(v);}
+
+signals:
+    void clickedEndTurn();
 
 private:
     bool mVisible = true;
@@ -78,9 +93,13 @@ private:
     QGraphicsTextItem* mStatusLucky;
     QGraphicsTextItem* mStatusAttack;
 
+    ButtonItem* mEndTurnBtn = nullptr;
+    bool mAllowEndTurn = true;
+
     void initHud();
     void initTitleBar();
     void initStatusPanel();
+    void initNextTurnBtn();
 
     QGraphicsDropShadowEffect* createShadow(int offsetX = 5, int offsetY = 5, int blur = 20);
     void deleteItemGroup(QGraphicsItemGroup* group);

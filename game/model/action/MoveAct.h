@@ -12,6 +12,10 @@ class MoveAct : public GameCharAction
 public:
     explicit MoveAct(GameCharacter* actor, QObject *parent = nullptr);
 
+    // GameCharAction interface
+    void reset() override;
+    void cancel() override;
+
 private slots:
     void targetSelected(QPoint pos);
 

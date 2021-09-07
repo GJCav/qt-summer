@@ -7,6 +7,7 @@ class GameCharItem : public QGraphicsObject
 {
     Q_OBJECT
 public:
+    constexpr static int ZValue = 200;
     GameCharItem(QGraphicsObject* parent = nullptr);
     virtual ~GameCharItem(){}
 
@@ -28,6 +29,9 @@ signals:
 protected:
     // remember to call this if subclass overrides this.
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
+private slots:
+    void updateZValue();
 
 };
 

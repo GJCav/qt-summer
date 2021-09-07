@@ -20,7 +20,7 @@ signals:
 
 
 public:
-    constexpr static int ZValue = 200;
+
 
     MeowKnightItem(const QString& color, QGraphicsObject* parent = nullptr);
     ~MeowKnightItem();
@@ -114,10 +114,10 @@ private:
     // animation
     bool mAnimating = false;
 
-    void updateZValue(int y);
+    //void updateZValue(int y); // 相关功能移交给 GameCharItem
 
 private slots:
-    void zChangeSlot();
+    //void zChangeSlot();
 };
 
 #endif // MEOWKNIGHT_H

@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QPoint>
 
-class PropItem : public QObject, public QGraphicsItem
+class PropItem : public QGraphicsObject
 {
     Q_OBJECT
 
@@ -17,7 +17,7 @@ public:
         constexpr static int Magic = 200;
     };
 
-    PropItem(int propType = 0, QGraphicsItem* parent = nullptr, QObject* objParent = nullptr);
+    PropItem(int propType = 0, QGraphicsItem* parent = nullptr);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -33,11 +33,15 @@ private:
     QRect mBoundingRect;
     int mPropType;
 
+private slots:
+    void updateZValue();
+
     // QGraphicsItem interface
 public:
 
     const QPixmap &propTexture() const;
     const QPixmap &shadowTextrue() const;
+
 
     // QGraphicsItem interface
 protected:

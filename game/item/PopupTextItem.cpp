@@ -1,4 +1,5 @@
 #include "PopupTextItem.h"
+#include "model/GameScene.h"
 #include <QtGui>
 
 PopupTextItem::PopupTextItem(const QString& str, const QColor color, QGraphicsObject* parent)
@@ -6,6 +7,8 @@ PopupTextItem::PopupTextItem(const QString& str, const QColor color, QGraphicsOb
 {
     //mText = new QGraphicsTextItem(str, this);
     setDefaultTextColor(color);
+
+    setZValue(GameScene::UIIndicatorZValue);
 
     QFont font;
     font.setFamily("Microsoft YaHei");

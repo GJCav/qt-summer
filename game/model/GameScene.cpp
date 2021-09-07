@@ -42,6 +42,7 @@ void GameScene::addChar(GameCharacter *ch)
     mChars.append(ch);
     ch->setParent(this);
     connect(ch, &GameCharacter::clicked, this, &GameScene::charClick);
+    connect(ch, &GameCharacter::selectedChange, this, &GameScene::charSelectedChange);
 
     addItem(ch->charItem());
 }
@@ -70,7 +71,9 @@ void GameScene::nextTurn()
 
 void GameScene::selectMoveDestination(const QPoint origin, const int len, const int min)
 {
+    deleteItemGroup(mSltIndicate);
     mSltIndicate = new QGraphicsItemGroup();
+    mSltIndicate->setZValue(GroundEffect);
     mSltIndicate->setHandlesChildEvents(false);
     addItem(mSltIndicate);
 
@@ -108,21 +111,23 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
             cellIdr->setColor(Qt::red);
         }
         if(cellIdr != nullptr){
-            connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
-                deleteItemGroup(mSltIndicate);
-                mSltIndicate = nullptr;
-            }, Qt::SingleShotConnection);
+            // do nothing
+//            connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
+//                deleteItemGroup(mSltIndicate);
+//            }, Qt::SingleShotConnection);
             continue;
         }
 
         // come to a new valid pos
-        if(dis[h.y()][h.x()] > min){
+        if(dis[h.y()][h.x()] >= min){
             auto cellIdr = new CellIndicatorItem(h, mSltIndicate);
             cellIdr->setColor(Qt::blue);
+
+            qDebug() << "connect to: " << h;
+
             connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
                 emit moveDestSelected(src->gamePos());
                 deleteItemGroup(mSltIndicate);
-                mSltIndicate = nullptr;
             }, Qt::ConnectionType::SingleShotConnection);
         }
 
@@ -140,6 +145,48 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
     }
 }
 
+void GameScene::selectReachableCharacter(const QPoint origin, const int max, const int min)
+{
+    deleteItemGroup(mSltIndicate);
+    mSltIndicate = new QGraphicsItemGroup();
+    mSltIndicate->setZValue(GroundEffect);
+    mSltIndicate->setHandlesChildEvents(false);
+    addItem(mSltIndicate);
+
+    for(int i = origin.y()-max;i <= origin.y()+max;i++){
+        if(i < 0 || i >= GameHeight) continue;
+        for(int j = origin.x()-max;j <= origin.x()+max;j++){
+            if(j < 0 || j >= GameWidth) continue;
+            const int dis = qAbs(j - origin.x()) + qAbs(i - origin.y());
+            const QPoint h{j, i};
+            if(dis < min || dis > max) continue;
+
+            auto cellIdr = new CellIndicatorItem(h, mSltIndicate);
+
+            GameCharacter* c = charAt(h);
+            if(c != nullptr){
+                cellIdr->setColor(Qt::red);
+                cellIdr->setHightLight(true);
+                connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this, c](CellIndicatorItem* src){
+                    emit charSelected(c);
+                    deleteItemGroup(mSltIndicate);
+                }, Qt::SingleShotConnection);
+            }else{
+                cellIdr->setColor(QColor(240, 138, 140));
+                //do nothing
+//                connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem* src){
+//                    deleteItemGroup(mSltIndicate);
+//                }, Qt::SingleShotConnection);
+            }
+        }
+    }
+}
+
+void GameScene::cancelSelectProcess()
+{
+    deleteItemGroup(mSltIndicate);
+}
+
 void GameScene::charClickedEvent(GameCharacter *src)
 {
     if(mState == 0){
@@ -150,7 +197,7 @@ void GameScene::charClickedEvent(GameCharacter *src)
         hud->setStatusHealth(src->health());
         hud->setStatusSpeed(src->speed());
         hud->setStatusDefensive(src->defensivePower());
-        hud->setStatusAttack("-/-");
+        hud->setStatusAttack(src->attackPower());
         hud->setStatusLucky(src->lucky());
 
         if(src->charRole() == GameCharacter::CharacterRole::Player1){
@@ -159,6 +206,15 @@ void GameScene::charClickedEvent(GameCharacter *src)
             hud->setActBtns({});
         }
     }
+}
+
+void GameScene::endTurnEvent()
+{
+    for(int i = 0;i < mChars.size();i++){
+        mChars[i]->endTurn();
+    }
+    clearSelection();
+    mLastClickChar = nullptr;
 }
 
 void GameScene::init()
@@ -198,12 +254,21 @@ void GameScene::initChars()
     GameCharacter *ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Player1);
     addChar(ch);
     ch->setName("喵");
-    ch->setPos({8, 3});
+    ch->setPos({3, 3});
+
+    meow = new MeowKnightItem("grey");
+    ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Player1);
+    addChar(ch);
+    ch->setName("橘喵");
+    ch->setPos({3, 5});
+    ch->setAttackPower(3);
+    ch->setHealth(50);
+    ch->setDefensivePower(5);
 
     meow = new MeowKnightItem("yellow");
     ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Enemy);
     ch->setName("bad喵");
-    ch->setPos({14, 3});
+    ch->setPos({8, 3});
     ch->setTowards(false);
     addChar(ch);
 }
@@ -211,23 +276,96 @@ void GameScene::initChars()
 void GameScene::initHUD()
 {
     hud = new HUD(this);
+    connect(hud, &HUD::clickedEndTurn, this, &GameScene::endTurn);
 }
 
 void GameScene::charClick(GameCharacter *src)
 {
-    charClickedEvent(src);
-    emit charClicked(src);
+    if(mProcessCharClick){
+        if(mLastClickChar == src){
+            qDebug("click on same character..");
+            return;
+        }
+        mLastClickChar = src;
+        charClickedEvent(src);
+        emit charClicked(src);
+    }
+}
+
+void GameScene::endTurn()
+{
+    endTurnEvent();
+}
+
+void GameScene::charSelectedChange(bool slt)
+{
+    if(mAllowUnselectChar && slt == false){
+        qDebug("cancel selection..");
+
+        hud->setTitle("-/-");
+        hud->setIcons({});
+        hud->setStatusName("-/-");
+        hud->setStatusHealth("-/-");
+        hud->setStatusSpeed("-/-");
+        hud->setStatusDefensive("-/-");
+        hud->setStatusAttack("-/-");
+        hud->setStatusLucky("-/-");
+        hud->setActBtns({});
+
+        mLastClickChar = nullptr;
+    }
+}
+
+bool GameScene::allowOpenHUD() const
+{
+    return mAllowOpenHUD;
+}
+
+void GameScene::setAllowOpenHUD(bool newAllowOpenHUD)
+{
+    mAllowOpenHUD = newAllowOpenHUD;
+}
+
+bool GameScene::allowUnselectChar() const
+{
+    return mAllowUnselectChar;
+}
+
+void GameScene::setAllowUnselectChar(bool newAllowUnselectChar)
+{
+    mAllowUnselectChar = newAllowUnselectChar;
+}
+
+bool GameScene::processCharClick() const
+{
+    return mProcessCharClick;
+}
+
+void GameScene::setProcessCharClick(bool newEnableCharClick)
+{
+    mProcessCharClick = newEnableCharClick;
+}
+
+HUD *GameScene::getHUD() const
+{
+    return hud;
 }
 
 void GameScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_H){
+        if(hud->visible() == false && mAllowOpenHUD == false){
+            qDebug("keyboard tried to open HUD but is stopped.");
+            return;
+        }
         hud->toggleHUD();
+    }else if(event->key() == Qt::Key_Escape){
+        emit escKeyPressed();
     }
     QGraphicsScene::keyPressEvent(event);
 }
 
-void GameScene::deleteItemGroup(QGraphicsItemGroup *group)
+void GameScene::deleteItemGroup(QGraphicsItemGroup *&group)
 {
     if(group == nullptr) return;
     auto list = group->childItems();
@@ -236,6 +374,7 @@ void GameScene::deleteItemGroup(QGraphicsItemGroup *group)
         removeItem(list[i]);
         delete list[i];
     }
+    group = nullptr;
 }
 
 

@@ -5,8 +5,8 @@
 
 using PropType = PropItem::PropType;
 
-PropItem::PropItem(int type, QGraphicsItem* parent, QObject* objParent)
-    : QObject(objParent), QGraphicsItem(parent)
+PropItem::PropItem(int type, QGraphicsItem* parent)
+    : QGraphicsObject(parent)
 {
     setZValue(ZValue);
     setPropType(type);
@@ -15,6 +15,8 @@ PropItem::PropItem(int type, QGraphicsItem* parent, QObject* objParent)
 
     // debug only
     //setFlag(QGraphicsItem::ItemIsMovable);
+
+    connect(this, &PropItem::yChanged, this, &PropItem::updateZValue);
 
 }
 
@@ -49,6 +51,11 @@ void PropItem::setPropType(int newPropType)
     update();
 }
 
+void PropItem::updateZValue()
+{
+    setZValue(ZValue+pos().y());
+}
+
 const QPixmap &PropItem::propTexture() const
 {
     return mPropTexture;
@@ -62,8 +69,8 @@ const QPixmap &PropItem::shadowTextrue() const
 QVariant PropItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if(change == ItemPositionChange && scene()){
-        QPoint newPos = value.toPoint();
-        setZValue(ZValue+newPos.y());
+        //QPoint newPos = value.toPoint();
+        //setZValue(ZValue+newPos.y());
     }
     return QGraphicsItem::itemChange(change, value);
 }

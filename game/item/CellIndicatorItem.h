@@ -23,6 +23,9 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    bool hightLight() const;
+    void setHightLight(bool newHightLight);
+
 signals:
     void clicked(CellIndicatorItem* src);
 
@@ -30,6 +33,7 @@ private:
     QPoint mGamePos;
     QColor mColor;
     bool mMouseHover = false;
+    bool mHightLight = false;
 
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;

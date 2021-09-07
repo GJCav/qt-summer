@@ -48,8 +48,11 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
     mActBtnGroup->setHandlesChildEvents(false);
     for(int i = 0;i < actions.size();i++){
         if(!actions[i]->isEnabled()) continue;
-
         auto btn = new ButtonItem(mActBtnGroup);
+
+        qDebug() << "create action button: " << actions[i]->text() << ", " << actions[i];
+        qDebug() << "       action button at: " << btn;
+
         btn->setBckPixmap(R::BtnPixmap->copy(133, 0, 130, 50));
         btn->setText(actions[i]->text());
         btn->setColor(Qt::white);
@@ -74,14 +77,28 @@ void HUD::toggleHUD()
         mIconGroup->setVisible(false);
         mActBtnGroup->setVisible(false);
         mStatusProxy->setVisible(false);
+        mEndTurnBtn->setVisible(false);
         mVisible = false;
     }else{
         mTitleProxy->setVisible(true);
         mIconGroup->setVisible(true);
         mActBtnGroup->setVisible(true);
         mStatusProxy->setVisible(true);
+        mEndTurnBtn->setVisible(true);
         mVisible = true;
     }
+}
+
+bool HUD::allowEndTurn() const
+{
+    return mAllowEndTurn;
+}
+
+void HUD::setAllowEndTurn(bool newAllowEndTurn)
+{
+    if(mAllowEndTurn == newAllowEndTurn) return;
+    mAllowEndTurn = newAllowEndTurn;
+    mEndTurnBtn->setEnabled(mAllowEndTurn);
 }
 
 void HUD::initHud()
@@ -94,6 +111,7 @@ void HUD::initHud()
 
     initTitleBar();
     initStatusPanel();
+    initNextTurnBtn();
 }
 
 void HUD::initTitleBar()
@@ -249,6 +267,27 @@ void HUD::initStatusPanel()
     mGame->addItem(mStatusProxy);
 }
 
+void HUD::initNextTurnBtn()
+{
+    mEndTurnBtn = new ButtonItem();
+    mEndTurnBtn->setBckPixmap(R::BtnPixmap->copy(0, 55, 163, 62));
+    mEndTurnBtn->setText("回合结束");
+    mEndTurnBtn->setFontPoint(23);
+    mEndTurnBtn->setColor(Qt::white);
+    mEndTurnBtn->setPos(800, 670);
+    mEndTurnBtn->setGraphicsEffect(createShadow(5, 5, 20));
+
+    mGame->addItem(mEndTurnBtn);
+
+    connect(mEndTurnBtn, &ButtonItem::clicked, this, [this](){
+        emit clickedEndTurn();
+        setIcons({});
+        setActBtns({});
+        if(mVisible) toggleHUD();
+    });
+
+}
+
 QGraphicsDropShadowEffect *HUD::createShadow(int offsetX, int offsetY, int blur)
 {
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
@@ -264,6 +303,8 @@ void HUD::deleteItemGroup(QGraphicsItemGroup* group)
     auto list = group->childItems();
     mGame->destroyItemGroup(group);
     for(int i = 0;i < list.size();i++){
+        qDebug() << "remove hud item: " << list[i];
+
         mGame->removeItem(list[i]);
         delete list[i];
     }

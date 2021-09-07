@@ -35,7 +35,7 @@ void CellIndicatorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     painter->setRenderHint(QPainter::Antialiasing);
 
     QPen pen;
-    QColor pc(mColor.red(), mColor.green(), mColor.blue(), 64);
+    QColor pc(mColor.red(), mColor.green(), mColor.blue(), mHightLight ? 128 : 64);
     pen.setWidth(3);
     pen.setCosmetic(true);
     pen.setColor(mColor);
@@ -51,13 +51,23 @@ void CellIndicatorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
         QRadialGradient r(CellSize/2, CellSize/2, CellSize, CellSize/2, CellSize/2);
         r.setColorAt(0, QColor(255, 255, 255, 0));
-        r.setColorAt(0.4, QColor(255, 255, 255, 8));
-        r.setColorAt(1, QColor(255, 255, 255, 16));
+        r.setColorAt(0.4, QColor(255, 255, 255, 16));
+        r.setColorAt(1, QColor(255, 255, 255, 32));
 
         painter->setBrush(QBrush(r));
         painter->drawRect(0, 0, CellSize, CellSize);
     }
 
+}
+
+bool CellIndicatorItem::hightLight() const
+{
+    return mHightLight;
+}
+
+void CellIndicatorItem::setHightLight(bool newHightLight)
+{
+    mHightLight = newHightLight;
 }
 
 const QColor &CellIndicatorItem::color() const

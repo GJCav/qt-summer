@@ -3,6 +3,7 @@
 #include "R.h"
 #include "GameCharAction.h"
 #include "action/MoveAct.h"
+#include "action/AttackAct.h"
 #include <QtGlobal>
 #include <QtCore>
 #include <QtGui>
@@ -17,7 +18,7 @@ GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
     mCharItem = item;
     mCharItem->setScale(3.5);
     mCharItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    connect(mCharItem, &GameCharItem::selectedChange, this, &GameCharacter::selected);
+    connect(mCharItem, &GameCharItem::selectedChange, this, &GameCharacter::selectedChange);
     connect(mCharItem, &GameCharItem::clicked, this, &GameCharacter::click);
 
     initDefaultAction();
@@ -93,15 +94,50 @@ void GameCharacter::setCharRole(const int role)
     mRole = role;
 }
 
-void GameCharacter::selected(bool slt)
+void GameCharacter::attack()
 {
-
+    mCharItem->attack();
 }
+
+//void GameCharacter::selected(bool slt)
+//{
+
+//}
 
 void GameCharacter::click(GameCharItem *src)
 {
     Q_UNUSED(src);
     emit clicked(this);
+}
+
+qreal GameCharacter::attackPower() const
+{
+    return mAttackPower;
+}
+
+void GameCharacter::setAttackPower(qreal newAttackPower)
+{
+    mAttackPower = newAttackPower;
+}
+
+void GameCharacter::setHealth(qreal newHealth)
+{
+    mHealth = newHealth;
+}
+
+void GameCharacter::setSpeed(qreal newSpeed)
+{
+    mSpeed = newSpeed;
+}
+
+void GameCharacter::setDefensivePower(qreal newDefensivePower)
+{
+    mDefensivePower = newDefensivePower;
+}
+
+void GameCharacter::setLucky(qreal newLucky)
+{
+    mLucky = newLucky;
 }
 
 qreal GameCharacter::health() const
@@ -129,15 +165,21 @@ GameScene *GameCharacter::game() const
     return mGame;
 }
 
+void GameCharacter::endTurn()
+{
+    mAttackAct->reset();
+    mMoveAct->reset();
+}
+
 void GameCharacter::initDefaultAction()
 {
     mMoveAct = new MoveAct(this, this);
-    mAttackAct = new GameCharAction(this, this);
-    mAttackAct->setText("攻击");
+    mAttackAct = new AttackAct(this, this);
 }
 
 QVector<GameCharAction *> GameCharacter::requestActionMenu()
 {
+    if(mHealth <= 0) return {};
     return {mMoveAct, mAttackAct};
 }
 

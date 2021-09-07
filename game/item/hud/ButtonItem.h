@@ -64,6 +64,9 @@ private:
 
     void vAlignText();
 
+private slots:
+    void reactEnabledChange();
+
     // QGraphicsItem interface
 protected:
     QRectF boundingRect() const override;
