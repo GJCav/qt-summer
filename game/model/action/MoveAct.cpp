@@ -26,7 +26,17 @@ void MoveAct::process()
         &MoveAct::targetSelected,
         Qt::SingleShotConnection
     );
-    game->selectMoveDestination(mActor->pos(), mActor->speed());
+    game->selectMoveDestination(mActor->pos(), mActor->speed(), speedMin);
+}
+
+int MoveAct::getSpeedMin() const
+{
+    return speedMin;
+}
+
+void MoveAct::setSpeedMin(int newSpeedMin)
+{
+    speedMin = newSpeedMin;
 }
 
 

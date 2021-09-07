@@ -17,7 +17,6 @@ PropItem::PropItem(int type, QGraphicsItem* parent)
     //setFlag(QGraphicsItem::ItemIsMovable);
 
     connect(this, &PropItem::yChanged, this, &PropItem::updateZValue);
-
 }
 
 int PropItem::propType() const
@@ -44,6 +43,16 @@ void PropItem::setPropType(int newPropType)
         mBoundingRect = {0, -52, 32, 52};
         this->setScale(2);
         break;
+
+    case PropType::Stone:{
+        const int r = QRandomGenerator::global()->generate() % 3;
+        mPropTexture = R::Level::PropsPixmap->copy(160-r*32, 480, 32, 32);
+        mShadowTextrue = R::Level::PropsShadowPixmap->copy(160-r*32, 480, 32, 32);
+        mBoundingRect = {0, -32, 32, 32};
+        this->setScale(2);
+        break;
+    }
+
     default:
         Q_ASSERT_X(false, "setPropType", "unsupport prop type");
     }

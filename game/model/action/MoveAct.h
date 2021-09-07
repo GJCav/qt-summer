@@ -16,12 +16,18 @@ public:
     void reset() override;
     void cancel() override;
 
+    int getSpeedMin() const;
+    void setSpeedMin(int newSpeedMin);
+
 private slots:
     void targetSelected(QPoint pos);
 
     // GameCharAction interface
 protected:
     void process() override;
+
+private:
+    int speedMin = 0;
 };
 
 #endif // MOVEACT_H

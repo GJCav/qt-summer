@@ -28,7 +28,12 @@ SOURCES += \
     model/Level.cpp \
     main.cpp \
     model/action/AttackAct.cpp \
+    model/action/HealAct.cpp \
     model/action/MoveAct.cpp \
+    model/special/AthleteMeow.cpp \
+    model/special/BossMeow.cpp \
+    model/special/DoctorMeow.cpp \
+    model/special/OrangeMeow.cpp \
     test/TestWindow.cpp \
     ui/DarkPanel.cpp \
     ui/HUDDesign.cpp \
@@ -59,7 +64,12 @@ HEADERS += \
     model/HUD.h \
     model/Level.h \
     model/action/AttackAct.h \
+    model/action/HealAct.h \
     model/action/MoveAct.h \
+    model/special/AthleteMeow.h \
+    model/special/BossMeow.h \
+    model/special/DoctorMeow.h \
+    model/special/OrangeMeow.h \
     test/TestWindow.h \
     ui/DarkPanel.h \
     ui/HUDDesign.h \

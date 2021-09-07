@@ -5,6 +5,10 @@
 #include "item/CellIndicatorItem.h"
 #include "HUD.h"
 #include "R.h"
+#include "special/OrangeMeow.h"
+#include "special/AthleteMeow.h"
+#include "special/DoctorMeow.h"
+#include "special/BossMeow.h"
 #include <QAction>
 #include <QQueue>
 
@@ -50,6 +54,7 @@ void GameScene::addChar(GameCharacter *ch)
 GameProp *GameScene::propAt(const QPoint h) const
 {
     for(int i = 0;i < mProps.size();i++){
+        qDebug() << mProps[i]->pos() << ", is: " << mProps[i]->propType();
         if(mProps[i]->pos() == h) return mProps[i];
     }
     return nullptr;
@@ -101,12 +106,12 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
 
         // can stand at h?
         GameProp* prop = nullptr;
-        if((prop = propAt(h)) != nullptr){
+        if((prop = propAt(h)) != nullptr && dis[h.y()][h.x()] >= min){
             cellIdr = new CellIndicatorItem(h, mSltIndicate);
             cellIdr->setColor(Qt::red);
         }
         GameCharacter* gc = nullptr;
-        if((gc = charAt(h)) != nullptr && gc->pos() != origin){
+        if((gc = charAt(h)) != nullptr && gc->pos() != origin && dis[h.y()][h.x()] >= min){
             cellIdr = new CellIndicatorItem(h, mSltIndicate);
             cellIdr->setColor(Qt::red);
         }
@@ -237,15 +242,17 @@ void GameScene::initLevel()
 
 void GameScene::initPropItems()
 {
-    auto chestItem = new PropItem(PropItem::PropType::Chest);
-    auto chestProp = new GameProp(chestItem, this, GameProp::PropType::Chest);
+    auto chestProp = new GameProp(this, GameProp::PropType::Chest);
     chestProp->setPos({3, 4});
     addProp(chestProp);
 
-    auto magicItem = new PropItem(PropItem::PropType::Magic);
-    auto magicProp = new GameProp(magicItem, this, GameProp::PropType::Magic);
+    auto magicProp = new GameProp(this, GameProp::PropType::Magic);
     magicProp->setPos({1, 6});
     addProp(magicProp);
+
+    auto stoneProp = new GameProp(this, GameProp::PropType::Stone);
+    stoneProp->setPos(8, 8);
+    addProp(stoneProp);
 }
 
 void GameScene::initChars()
@@ -253,21 +260,24 @@ void GameScene::initChars()
     MeowKnightItem *meow = new MeowKnightItem("grey");
     GameCharacter *ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Player1);
     addChar(ch);
-    ch->setName("喵");
     ch->setPos({3, 3});
 
     meow = new MeowKnightItem("grey");
-    ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Player1);
+    ch = new OrangeMeow(meow, this, GameCharacter::CharacterRole::Player1);
     addChar(ch);
-    ch->setName("橘喵");
-    ch->setPos({3, 5});
-    ch->setAttackPower(3);
-    ch->setHealth(50);
-    ch->setDefensivePower(5);
+    ch->setPos({6, 6});
 
-    meow = new MeowKnightItem("yellow");
-    ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Enemy);
-    ch->setName("bad喵");
+    meow = new MeowKnightItem("grey");
+    ch = new AthleteMeow(meow, this, GameCharacter::CharacterRole::Player1);
+    addChar(ch);
+    ch->setPos({6, 2});
+
+    meow = new MeowKnightItem("grey");
+    ch = new DoctorMeow(meow, this, GameCharacter::CharacterRole::Player1);
+    addChar(ch);
+    ch->setPos({4, 2});
+
+    ch = new BossMeow(this);
     ch->setPos({8, 3});
     ch->setTowards(false);
     addChar(ch);

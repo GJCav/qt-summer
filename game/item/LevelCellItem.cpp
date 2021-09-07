@@ -23,7 +23,7 @@ void LevelCellItem::setCellType(int type)
         setTexture(R::Level::GrassTextureProvider->subPixmapAt(QRandomGenerator::global()->generate()%64));
         break;
     case CellType::Stone:
-        setTexture(R::Level::GrassWithStoneTextureProvider->subPixmapAt(QRandomGenerator::global()->generate()%64));
+        setTexture(R::Level::GrassWithStoneTextureProvider->subPixmapAt(QRandomGenerator::global()->generate()%16));
         break;
     case CellType::WallTopLeft:
         setTexture(R::Level::WallPixmap->copy(400, 64, 16, 16));

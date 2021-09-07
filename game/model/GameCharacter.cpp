@@ -4,6 +4,7 @@
 #include "GameCharAction.h"
 #include "action/MoveAct.h"
 #include "action/AttackAct.h"
+#include "model/GameProp.h"
 #include <QtGlobal>
 #include <QtCore>
 #include <QtGui>
@@ -22,6 +23,8 @@ GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
     connect(mCharItem, &GameCharItem::clicked, this, &GameCharacter::click);
 
     initDefaultAction();
+
+    setName("喵");
 }
 
 void GameCharacter::attacked(const qreal power)
@@ -147,6 +150,10 @@ qreal GameCharacter::health() const
 
 qreal GameCharacter::speed() const
 {
+    const auto p = pos();
+    if(game()->cellAt(p)->cellType() == LevelCellItem::CellType::Stone){
+        return mSpeed * 0.6;
+    }
     return mSpeed;
 }
 
@@ -169,6 +176,25 @@ void GameCharacter::endTurn()
 {
     mAttackAct->reset();
     mMoveAct->reset();
+
+    const static int dirX[] = {0, 1, 0, -1};
+    const static int dirY[] = {1, 0, -1, 0};
+
+    const auto p = pos();
+    int totHeal = 0;
+    for(int i = 0;i < 4;i++){
+        const QPoint sp{p.x()+dirX[i], p.y()+dirY[i]};
+        qDebug()<<sp;
+        if(!game()->validGamePos(sp)) continue;
+        auto prop = game()->propAt(sp);
+        if(prop == nullptr) continue;
+        if(prop->propType() == GameProp::PropType::Magic){
+            totHeal += 5;
+        }
+    }
+    if(totHeal > 0){
+        healed(totHeal);
+    }
 }
 
 void GameCharacter::initDefaultAction()

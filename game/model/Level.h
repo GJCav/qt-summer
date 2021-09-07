@@ -23,6 +23,18 @@ public:
     inline int levelWidth() {return mCellRows[0].size();}
     inline int levelHeight() {return mCellRows.size();}
     inline bool isEmpty() {return mCellRows[0][0] == nullptr;}
+    inline bool canPlaceGameModel(QPoint p){
+        if(mCellRows.empty()) return false;
+        if(mCellRows[0].empty()) return false;
+        if(mCellRows[0][0] == nullptr) return false;
+        if(p.x() < 0 || p.x() >= mCellRows[0].size()) return false;
+        if(p.y() < 0 || p.y() >= mCellRows.size()) return false;
+        switch(mCellRows[p.y()][p.x()]->cellType()){
+        case LevelCellItem::CellType::Grass: return true;
+        case LevelCellItem::CellType::Stone: return true;
+        }
+        return false;
+    }
 
     void load(const QJsonArray& arr);
 

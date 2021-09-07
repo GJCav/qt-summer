@@ -15,6 +15,7 @@ public:
         constexpr static int None = 0;
         constexpr static int Chest = 100;
         constexpr static int Magic = 200;
+        constexpr static int Stone = 300;
     };
 
     PropItem(int propType = 0, QGraphicsItem* parent = nullptr);

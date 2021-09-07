@@ -50,17 +50,19 @@ public:
     virtual QVector<QPixmap> requestIcons();
     virtual QVector<GameCharAction*> requestActionMenu();
 
+    // game position
     inline const QPoint pos() const { return mPos; }
     GameCharItem *charItem() const;
 
     // property getter and setter
+    // use getter as default, because it will calculate special effects.
     const QString &name() const;
     void setName(const QString &newName);
-    qreal health() const;
-    qreal speed() const;
-    qreal defensivePower() const;
-    qreal lucky() const;
-    qreal attackPower() const;
+    virtual qreal health() const;
+    virtual qreal speed() const;
+    virtual qreal defensivePower() const;
+    virtual qreal lucky() const;
+    virtual qreal attackPower() const;
     void setAttackPower(qreal newAttackPower);
     void setHealth(qreal newHealth);
     void setSpeed(qreal newSpeed);
@@ -78,11 +80,11 @@ signals:
     void clicked(GameCharacter* self);
     void selectedChange(bool slt);
 
-private:
+protected:
     QString mName;
     qreal mRole = CharacterRole::None;
     qreal mHealth = 30;
-    qreal mSpeed = 2;
+    qreal mSpeed = 4;
     qreal mDefensivePower = 0;
     qreal mAttackPower = 5; // this is default attack power;
     qreal mLucky = 5; // mLucky / 100 == dodge(miss) percentage
@@ -94,6 +96,9 @@ private:
     // default actions
     MoveAct* mMoveAct;
     AttackAct* mAttackAct;
+
+private:
+
 
     void initDefaultAction();
 

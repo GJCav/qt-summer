@@ -36,6 +36,8 @@ public:
 
     GameProp* propAt(const QPoint h) const;
     GameCharacter* charAt(const QPoint h) const;
+    inline LevelCellItem* cellAt(const QPoint h) const {return mLevel->cellRows()[h.y()][h.x()];}
+    inline LevelCellItem* cellAt(int x, int y) const {return cellAt({x, y});}
 
     //inline int curTurn() {return mTurn;}
 
@@ -63,6 +65,11 @@ public:
 
     bool allowOpenHUD() const;
     void setAllowOpenHUD(bool newAllowOpenHUD);
+
+    inline bool validGamePos(const QPoint p){
+        return !(p.x() < 0 || p.x() >= GameWidth || p.y() < 0 || p.y() >= GameHeight);
+    }
+    inline bool validGamePos(int x, int y) { return validGamePos({x, y});}
 
 
 

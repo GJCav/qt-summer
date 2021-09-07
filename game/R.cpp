@@ -43,7 +43,7 @@ void initLevelResource(){
 
     GrassTexture = new QPixmap(GrassPixmap->copy(0, 0, 8*16, 8*16));
     GrassWithStoneTextureProvider = new QPixmapGirdSplitter();
-    GrassWithStoneTextureProvider->setPixmap(GrassPixmap->copy(0, 128, 8*16, 8*16));
+    GrassWithStoneTextureProvider->setPixmap(GrassPixmap->copy(0, 176, 4*16, 4*16));
     GrassWithStoneTextureProvider->setWidth(16);
     GrassWithStoneTextureProvider->setHeight(16);
 

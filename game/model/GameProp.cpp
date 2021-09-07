@@ -1,11 +1,13 @@
 #include "GameProp.h"
 
-GameProp::GameProp(PropItem *item,  GameScene *game, int type)
-    : QObject(game), mGame(game), mPropItem(item)
+GameProp::GameProp(GameScene *game, int type)
+    : QObject(game), mGame(game)
 {
     mPropType = type;
+
+    mPropItem = new PropItem(type);
     mPropItem->setParent(this);
-    connect(item, &PropItem::clicked, this, &GameProp::clickOn);
+    connect(mPropItem, &PropItem::clicked, this, &GameProp::clickOn);
     setPos({0, 0});
 }
 
@@ -23,6 +25,11 @@ void GameProp::setPos(QPoint newPos)
 PropItem *GameProp::propItem() const
 {
     return mPropItem;
+}
+
+int GameProp::propType() const
+{
+    return mPropType;
 }
 
 void GameProp::clickOn(PropItem *item)
