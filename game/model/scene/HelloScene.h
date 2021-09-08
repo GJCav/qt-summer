@@ -20,6 +20,7 @@ protected:
     void initLevel() override;
 
 
+private:
 
     // QGraphicsScene interface
 protected:

@@ -44,7 +44,7 @@ void BaseAI::nextAction()
         for(int i = 0;i < acted.size();i++){
             if(acted[i])continue;
             acted[i] = true;
-            if(enemies[i]->health() <= 0) QTimer::singleShot(0, this, &BaseAI::nextAction);
+            if(enemies[i]->health() <= 0) continue;;
             enemy = enemies[i];
             break;
         }

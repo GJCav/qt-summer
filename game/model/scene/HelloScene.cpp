@@ -1,5 +1,7 @@
 #include "HelloScene.h"
 #include "FirstScene.h"
+#include "SecondScene.h"
+#include "ThirdScene.h"
 #include "model/HUD.h"
 #include "model/GameProp.h"
 #include "item/MeowKnightItem.h"
@@ -74,6 +76,20 @@ void HelloScene::initChore()
         auto first = new FirstScene();
         first->init();
         view->setScene(first);
+        this->deleteLater();
+    });
+    connect(b2, &ButtonItem::clicked, this, [this](){
+        auto view = this->views()[0];
+        auto second = new SecondScene();
+        second->init();
+        view->setScene(second);
+        this->deleteLater();
+    });
+    connect(b3, &ButtonItem::clicked, this, [this](){
+        auto view = this->views()[0];
+        auto third = new ThirdScene();
+        third->init();
+        view->setScene(third);
         this->deleteLater();
     });
 

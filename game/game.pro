@@ -36,6 +36,8 @@ SOURCES += \
     model/ai/BaseAI.cpp \
     model/scene/FirstScene.cpp \
     model/scene/HelloScene.cpp \
+    model/scene/SecondScene.cpp \
+    model/scene/ThirdScene.cpp \
     model/special/AthleteMeow.cpp \
     model/special/BossMeow.cpp \
     model/special/DoctorMeow.cpp \
@@ -78,6 +80,8 @@ HEADERS += \
     model/ai/BaseAI.h \
     model/scene/FirstScene.h \
     model/scene/HelloScene.h \
+    model/scene/SecondScene.h \
+    model/scene/ThirdScene.h \
     model/special/AthleteMeow.h \
     model/special/BossMeow.h \
     model/special/DoctorMeow.h \

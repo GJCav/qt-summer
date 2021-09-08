@@ -16,7 +16,7 @@ BossMeow::BossMeow(GameCharItem *item, GameScene *game, int role)
     setHealth(100);
     setDefensivePower(2);
     setAttackPower(10);
-    setSpeed(2);
+    setSpeed(5);
 }
 
 

@@ -8,5 +8,5 @@ OrangeMeow::OrangeMeow(GameCharItem *item, GameScene *game, int role)
     setHealth(50);
     setDefensivePower(3);
     setAttackPower(2);
-    setSpeed(2);
+    setSpeed(3);
 }
