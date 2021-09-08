@@ -3,6 +3,7 @@
 #include "GameCharacter.h"
 #include "item/MeowKnightItem.h"
 #include "item/CellIndicatorItem.h"
+#include "item/TextBoxItem.h"
 #include "HUD.h"
 #include "EnemyAI.h"
 #include "ai/BaseAI.h"
@@ -274,6 +275,13 @@ void GameScene::endTurnEvent()
     clearSelection();
     mLastClickChar = nullptr;
 
+    auto code = successOrFailed();
+    if(code == 1){
+        gameSuccess();
+    }else if(code == 2){
+        gameFailed();
+    }
+
     // now is AI's turn.
     beginAITurn();
 }
@@ -290,6 +298,13 @@ void GameScene::beginAITurn()
 
 void GameScene::endAITurn()
 {
+    auto code = successOrFailed();
+    if(code == 1){
+        gameSuccess();
+    }else if(code == 2){
+        gameFailed();
+    }
+
     mState = 0;
     hud->setAllowEndTurn(true);
     hud->setActBtnVisible(true);
@@ -302,6 +317,7 @@ void GameScene::init()
     initChars();
     initHUD();
     initAI();
+    initChore();
 }
 
 
@@ -316,55 +332,33 @@ void GameScene::initLevel()
 
 void GameScene::initPropItems()
 {
-    auto chestProp = new GameProp(this, GameProp::PropType::Chest);
-    chestProp->setPos({3, 4});
-    addProp(chestProp);
+//    auto chestProp = new GameProp(this, GameProp::PropType::Chest);
+//    chestProp->setPos({3, 4});
+//    addProp(chestProp);
 
-    auto magicProp = new GameProp(this, GameProp::PropType::Magic);
-    magicProp->setPos({1, 6});
-    addProp(magicProp);
+//    auto magicProp = new GameProp(this, GameProp::PropType::Magic);
+//    magicProp->setPos({1, 6});
+//    addProp(magicProp);
 
-    auto stoneProp = new GameProp(this, GameProp::PropType::Stone);
-    stoneProp->setPos(8, 8);
-    addProp(stoneProp);
+//    auto stoneProp = new GameProp(this, GameProp::PropType::Stone);
+//    stoneProp->setPos(8, 8);
+//    addProp(stoneProp);
 
-    auto vase = new GameProp(this, GameProp::PropType::Vase);
-    vase->setPos(9, 8);
-    addProp(vase);
+//    auto vase = new GameProp(this, GameProp::PropType::Vase);
+//    vase->setPos(9, 8);
+//    addProp(vase);
 }
 
 void GameScene::initChars()
 {
-    auto ch = createPlayerChar<GameCharacter>();
-    addChar(ch);
-    ch->setPos({3, 3});
+//    auto ch = createPlayerChar<GameCharacter>();
+//    addChar(ch);
+//    ch->setPos({3, 3});
 
-    ch = createPlayerChar<OrangeMeow>();
-    addChar(ch);
-    ch->setPos({6, 6});
-
-    ch = createPlayerChar<AthleteMeow>();
-    addChar(ch);
-    ch->setPos({6, 2});
-
-    ch = createPlayerChar<DoctorMeow>();
-    addChar(ch);
-    ch->setPos({4, 2});
-
-    ch = createEnemyChar<BossMeow>();
-    ch->setPos({8, 3});
-    ch->setTowards(false);
-    addChar(ch);
-
-    ch = createEnemyChar<GameCharacter>();
-    ch->setPos({8, 4});
-    ch->setTowards(false);
-    addChar(ch);
-
-    ch = createEnemyChar<GameCharacter>();
-    ch->setPos({9, 2});
-    ch->setTowards(false);
-    addChar(ch);
+//    ch = createEnemyChar<BossMeow>();
+//    ch->setPos({8, 3});
+//    ch->setTowards(false);
+//    addChar(ch);
 }
 
 void GameScene::initHUD()
@@ -377,6 +371,11 @@ void GameScene::initAI()
 {
     mAI = new BaseAI(this);
     connect(mAI, &EnemyAI::AITurnFinished, this, &GameScene::endAITurn);
+}
+
+void GameScene::initChore()
+{
+    // nothing here
 }
 
 void GameScene::charClick(GameCharacter *src)
@@ -429,6 +428,46 @@ bool GameScene::allowOpenHUD() const
 void GameScene::setAllowOpenHUD(bool newAllowOpenHUD)
 {
     mAllowOpenHUD = newAllowOpenHUD;
+}
+
+int GameScene::successOrFailed()
+{
+    bool hasPlayer = false;
+    bool hasEnemy = false;
+    auto chs = chars();
+    for(int i = 0;i < chs.size();i++){
+        auto c = chs[i];
+        if(c->charRole() == GameCharacter::CharacterRole::Player1 && c->health() > 0){
+            hasPlayer = true;
+        }
+        if(c->charRole() == GameCharacter::CharacterRole::Enemy && c->health() > 0){
+            hasEnemy = true;
+        }
+        if(hasPlayer && hasEnemy) break;
+    }
+    if(!hasPlayer) return 2;
+    if(!hasEnemy) return 1;
+    return 0;
+}
+
+void GameScene::gameSuccess()
+{
+    TextBoxItem *box = new TextBoxItem();
+    box->setFontPointSize(24);
+    box->setSize(450, 300);
+    box->setPos(200, 160);
+    box->setHtml("恭喜你，<br><strong>胜利啦!!</strong>");
+    addItem(box);
+}
+
+void GameScene::gameFailed()
+{
+    TextBoxItem *box = new TextBoxItem();
+    box->setFontPointSize(24);
+    box->setSize(450, 300);
+    box->setPos(200, 160);
+    box->setHtml("惜败，<br>再接再厉吧。");
+    addItem(box);
 }
 
 bool GameScene::allowUnselectChar() const

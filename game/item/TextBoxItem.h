@@ -24,8 +24,6 @@ public:
         mTextItem->setFont(f);
     }
 
-    int autoCloseTime() const;
-    void setAutoCloseTime(int newAutoCloseTime);
     const QRect &size() const;
     void setSize(const int w, const int h);
 
@@ -33,7 +31,6 @@ public:
 
 
 private:
-    int mAutoCloseTime = -1;
     QGraphicsTextItem *mTextItem;
     QRect mBdnRect;
 
@@ -46,7 +43,6 @@ signals:
 
 public slots:
     void close();
-    void show();
 
     // QGraphicsItem interface
 public:

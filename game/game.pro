@@ -34,6 +34,8 @@ SOURCES += \
     model/action/HealAct.cpp \
     model/action/MoveAct.cpp \
     model/ai/BaseAI.cpp \
+    model/scene/FirstScene.cpp \
+    model/scene/HelloScene.cpp \
     model/special/AthleteMeow.cpp \
     model/special/BossMeow.cpp \
     model/special/DoctorMeow.cpp \
@@ -74,6 +76,8 @@ HEADERS += \
     model/action/HealAct.h \
     model/action/MoveAct.h \
     model/ai/BaseAI.h \
+    model/scene/FirstScene.h \
+    model/scene/HelloScene.h \
     model/special/AthleteMeow.h \
     model/special/BossMeow.h \
     model/special/DoctorMeow.h \
@@ -92,7 +96,8 @@ HEADERS += \
 
 FORMS += \
     test/TestWindow.ui \
-    ui/HUDDesign.ui
+    ui/HUDDesign.ui \
+    ui/HelloSceneDesign.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

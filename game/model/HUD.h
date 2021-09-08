@@ -3,6 +3,7 @@
 
 #include "item/hud/IconItem.h"
 #include "item/hud/ButtonItem.h"
+#include "item/TextBoxItem.h"
 #include "ui/LightWoodPanel.h"
 #include "GameScene.h"
 #include "model/GameCharAction.h"
@@ -77,6 +78,8 @@ private:
     QGraphicsProxyWidget* mTitleProxy;
     LightWoodPanel* mTitlePanel;
     QLabel *mTitleLabel;
+    //TextBoxItem *mInfoPanel; 写不动了，告辞
+
 
     QGraphicsItemGroup *mIconGroup = nullptr;
     QVector<QPixmap> mIconPixmaps;

@@ -4,8 +4,7 @@
 TextBoxItem::TextBoxItem(QGraphicsItem* parent)
     : QGraphicsObject(parent)
 {
-
-    this->setZValue(3200);
+    this->setZValue(4000);
 
     mProxy = new QGraphicsProxyWidget(this);
     mProxy->setParent(this);
@@ -22,16 +21,6 @@ TextBoxItem::TextBoxItem(QGraphicsItem* parent)
 
     setSize(100, 60);
     this->setHandlesChildEvents(true);
-}
-
-int TextBoxItem::autoCloseTime() const
-{
-    return mAutoCloseTime;
-}
-
-void TextBoxItem::setAutoCloseTime(int newAutoCloseTime)
-{
-    mAutoCloseTime = newAutoCloseTime;
 }
 
 const QRect &TextBoxItem::size() const
@@ -62,14 +51,6 @@ void TextBoxItem::setEnableShadow(bool v)
 void TextBoxItem::close()
 {
     this->setVisible(false);
-}
-
-void TextBoxItem::show()
-{
-    this->setVisible(true);
-    if(mAutoCloseTime != -1){
-        QTimer::singleShot(mAutoCloseTime, this, &TextBoxItem::close);
-    }
 }
 
 

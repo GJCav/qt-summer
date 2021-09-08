@@ -30,7 +30,7 @@ public:
 
     explicit GameScene(QObject *parent = nullptr);
 
-    void init(); //remember to call this;
+    void init(); //remember to call this
 
     Level *level() const;
     const QVector<GameCharacter *> &chars() const;
@@ -154,6 +154,12 @@ protected:
     // 其他开关
     bool mAllowOpenHUD = true;
 
+    // 在点击结束回合和AI操作结束后调用，根据结果决定下一步行为
+    // return 0: 继续回合, 1: 胜利，2: 失败
+    virtual int successOrFailed();
+    virtual void gameSuccess();// 成功后调用
+    virtual void gameFailed(); // 失败后调用
+
     virtual void charClickedEvent(GameCharacter* src);
 
     virtual void endTurnEvent();
@@ -165,6 +171,7 @@ protected:
     virtual void initChars();
     virtual void initHUD();
     virtual void initAI();
+    virtual void initChore(); // 杂项初始化
 
     // QGraphicsScene interface
 protected:
