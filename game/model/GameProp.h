@@ -16,6 +16,7 @@ public:
         constexpr static int Chest = 100;
         constexpr static int Magic = 200;
         constexpr static int Stone = 300;
+        constexpr static int Vase = 400;
     };
 
     constexpr static int CellSize = LevelCellItem::CellSize;

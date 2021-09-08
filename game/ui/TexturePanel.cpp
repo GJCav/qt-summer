@@ -7,6 +7,9 @@
 TexturePanel::TexturePanel(QWidget *parent) : QWidget(parent)
 {
     //this->setLayout(new QVBoxLayout);
+    auto p = this->palette();
+    p.setColor(QPalette::Window, QColor(0, 0, 0, 0));
+    this->setPalette(p);
 }
 
 const QPixmap &TexturePanel::cnrLeftTop() const

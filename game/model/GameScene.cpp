@@ -327,32 +327,42 @@ void GameScene::initPropItems()
     auto stoneProp = new GameProp(this, GameProp::PropType::Stone);
     stoneProp->setPos(8, 8);
     addProp(stoneProp);
+
+    auto vase = new GameProp(this, GameProp::PropType::Vase);
+    vase->setPos(9, 8);
+    addProp(vase);
 }
 
 void GameScene::initChars()
 {
-    MeowKnightItem *meow = new MeowKnightItem("grey");
-    GameCharacter *ch = new GameCharacter(meow, this, GameCharacter::CharacterRole::Player1);
+    auto ch = createPlayerChar<GameCharacter>();
     addChar(ch);
     ch->setPos({3, 3});
 
-    meow = new MeowKnightItem("grey");
-    ch = new OrangeMeow(meow, this, GameCharacter::CharacterRole::Player1);
+    ch = createPlayerChar<OrangeMeow>();
     addChar(ch);
     ch->setPos({6, 6});
 
-    meow = new MeowKnightItem("grey");
-    ch = new AthleteMeow(meow, this, GameCharacter::CharacterRole::Player1);
+    ch = createPlayerChar<AthleteMeow>();
     addChar(ch);
     ch->setPos({6, 2});
 
-    meow = new MeowKnightItem("grey");
-    ch = new DoctorMeow(meow, this, GameCharacter::CharacterRole::Player1);
+    ch = createPlayerChar<DoctorMeow>();
     addChar(ch);
     ch->setPos({4, 2});
 
-    ch = new BossMeow(this);
+    ch = createEnemyChar<BossMeow>();
     ch->setPos({8, 3});
+    ch->setTowards(false);
+    addChar(ch);
+
+    ch = createEnemyChar<GameCharacter>();
+    ch->setPos({8, 4});
+    ch->setTowards(false);
+    addChar(ch);
+
+    ch = createEnemyChar<GameCharacter>();
+    ch->setPos({9, 2});
     ch->setTowards(false);
     addChar(ch);
 }
@@ -471,5 +481,3 @@ void GameScene::deleteItemGroup(QGraphicsItemGroup *&group)
     }
     group = nullptr;
 }
-
-

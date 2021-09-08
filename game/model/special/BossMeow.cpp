@@ -1,9 +1,16 @@
 #include "BossMeow.h"
 #include "item/MeowKnightItem.h"
 #include "model/Level.h"
+#include "model/GameScene.h"
 
 BossMeow::BossMeow(GameScene *game)
-    : GameCharacter(new MeowKnightItem("yellow"), game, GameCharacter::CharacterRole::Enemy)
+    : BossMeow(new MeowKnightItem("yellow"), game, GameCharacter::CharacterRole::Enemy)
+{
+
+}
+
+BossMeow::BossMeow(GameCharItem *item, GameScene *game, int role)
+    : GameCharacter(item, game, role)
 {
     setName("Boss 喵~");
     setHealth(100);

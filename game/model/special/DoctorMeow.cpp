@@ -43,6 +43,7 @@ void DoctorMeow::heal(GameCharacter *target)
             charItem()
         );
         popIcon->setPos(2, -8);
+        popIcon->setScale(0.5);
         popIcon->popup();
         QTimer::singleShot(200, [target](){target->healed(10);});
     }else{
@@ -51,6 +52,7 @@ void DoctorMeow::heal(GameCharacter *target)
             charItem()
         );
         popIcon->setPos(2, -8);
+        popIcon->setScale(0.5);
         popIcon->popup();
         QTimer::singleShot(200, [target](){target->attacked(10);});
     }

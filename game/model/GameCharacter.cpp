@@ -5,6 +5,7 @@
 #include "action/MoveAct.h"
 #include "action/AttackAct.h"
 #include "model/GameProp.h"
+#include "GameScene.h"
 #include <QtGlobal>
 #include <QtCore>
 #include <QtGui>
@@ -125,6 +126,16 @@ void GameCharacter::click(GameCharItem *src)
     emit clicked(this);
 }
 
+AttackAct *GameCharacter::attackAct() const
+{
+    return mAttackAct;
+}
+
+MoveAct *GameCharacter::moveAct() const
+{
+    return mMoveAct;
+}
+
 qreal GameCharacter::attackPower() const
 {
     return mAttackPower;
@@ -194,6 +205,7 @@ void GameCharacter::endTurn()
 
     const auto p = pos();
     int totHeal = 0;
+    int totHurt = 0;
     for(int i = 0;i < 4;i++){
         const QPoint sp{p.x()+dirX[i], p.y()+dirY[i]};
         //qDebug()<<sp;
@@ -203,9 +215,15 @@ void GameCharacter::endTurn()
         if(prop->propType() == GameProp::PropType::Magic){
             totHeal += 5;
         }
+        if(prop->propType() == GameProp::PropType::Vase){
+            totHurt += 5;
+        }
     }
     if(totHeal > 0){
         healed(totHeal);
+    }
+    if(totHurt){
+        attacked(totHurt);
     }
 }
 

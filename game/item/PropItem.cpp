@@ -52,6 +52,12 @@ void PropItem::setPropType(int newPropType)
         this->setScale(2);
         break;
     }
+    case PropType::Vase:
+        mPropTexture = R::Level::PropsPixmap->copy(160, 288, 32, 32);
+        mShadowTextrue = R::Level::PropsShadowPixmap->copy(160, 288, 32, 32);
+        mBoundingRect = {0, -32, 32, 32};
+        this->setScale(2);
+        break;
 
     default:
         Q_ASSERT_X(false, "setPropType", "unsupport prop type");

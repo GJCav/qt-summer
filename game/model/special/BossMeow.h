@@ -8,8 +8,7 @@ class BossMeow : public GameCharacter
     Q_OBJECT
 public:
     BossMeow(GameScene* game);
-
-
+    BossMeow(GameCharItem* item, GameScene* game, int role = CharacterRole::None);
 
     // GameCharacter interface
 public:

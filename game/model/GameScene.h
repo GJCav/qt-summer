@@ -4,13 +4,14 @@
 #include "Level.h"
 #include "item/PropItem.h"
 #include "item/LevelCellItem.h"
+#include "item/MeowKnightItem.h"
+#include "GameCharacter.h"
 #include <QGraphicsScene>
 #include <QObject>
 #include <QVector>
 #include <tuple>
 
 class GameProp;
-class GameCharacter;
 class HUD;
 class EnemyAI;
 
@@ -24,7 +25,7 @@ public:
     constexpr static int CellSize = LevelCellItem::CellSize;
     constexpr static int GameWidth = 16;
     constexpr static int GameHeight = 12;
-    constexpr static int GroundEffect = 3000; // 太低会让点击时间传递到character
+    constexpr static int GroundEffect = 3000; // 太低会让点击事件传递到character
     constexpr static int UIIndicatorZValue = 3000;
 
     explicit GameScene(QObject *parent = nullptr);
@@ -37,6 +38,27 @@ public:
 
     void addProp(GameProp* item);
     void addChar(GameCharacter* ch);
+
+    template<typename MeowType>
+    typename std::enable_if<
+        std::is_base_of<GameCharacter, MeowType>::value,
+        MeowType*
+    >::type createPlayerChar(){
+        MeowKnightItem *meow = new MeowKnightItem("grey");
+        MeowType *ch = new MeowType(meow, this, GameCharacter::CharacterRole::Player1);
+        return ch;
+    }
+
+    template<typename MeowType>
+    typename std::enable_if<
+        std::is_base_of<GameCharacter, MeowType>::value,
+        MeowType*
+    >::type createEnemyChar(){
+        MeowKnightItem *meow = new MeowKnightItem("yellow");
+        MeowType *ch = new MeowType(meow, this, GameCharacter::CharacterRole::Enemy);
+        return ch;
+    }
+
 
     GameProp* propAt(const QPoint h) const;
     GameCharacter* charAt(const QPoint h) const;

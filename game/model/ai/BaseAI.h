@@ -3,6 +3,8 @@
 
 #include "model/EnemyAI.h"
 #include "model/GameScene.h"
+#include "model/GameCharacter.h"
+#include "QVector"
 #include <QObject>
 
 class BaseAI : public EnemyAI
@@ -12,10 +14,20 @@ public:
     BaseAI(GameScene *game);
 
     // EnemyAI interface
-protected:
-    QVector<function<void ()> > makeStrategy() override;
+    void start() override;
 
 private:
+    QVector<GameCharacter*> enemies;
+    QVector<bool> acted;
+    int stage = 0;
+    GameCharacter* moreTryEnemy = nullptr;
+
+    bool tryAttack(GameCharacter* enemy);
+    bool tryMove(GameCharacter* enemy);
+
+private slots:
+    void nextAction();
+
 
 };
 

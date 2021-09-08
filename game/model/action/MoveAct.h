@@ -19,6 +19,8 @@ public:
     int getSpeedMin() const;
     void setSpeedMin(int newSpeedMin);
 
+    inline int getSpeedMax() const { return mActor->speed(); }
+
 private slots:
     void targetSelected(QPoint pos);
 

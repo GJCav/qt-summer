@@ -2,7 +2,6 @@
 #define GAMECHARACTER_H
 
 #include "item/GameCharItem.h"
-#include "GameScene.h"
 
 #include <QObject>
 #include <QVector>
@@ -10,6 +9,7 @@
 #include <QPoint>
 #include <QAction>
 
+class GameScene;
 class GameCharAction;
 class MoveAct;
 class AttackAct;
@@ -71,6 +71,10 @@ public:
 
     GameScene *game() const;
     virtual void endTurn();
+
+    MoveAct *moveAct() const;
+
+    AttackAct *attackAct() const;
 
 public slots:
     //virtual void selected(bool slt);

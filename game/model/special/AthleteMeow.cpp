@@ -9,6 +9,7 @@ AthleteMeow::AthleteMeow(GameCharItem *item, GameScene *game, int role)
     setDefensivePower(0);
     setAttackPower(10);
     setSpeed(8);
+    setLucky(20);
     mMoveAct->setSpeedMin(4);
 }
 

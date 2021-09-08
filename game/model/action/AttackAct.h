@@ -15,6 +15,11 @@ public:
     void reset() override;
     void cancel() override;
 
+
+
+    int attackRangeMin() const;
+    int attackRangeMax() const;
+
 private:
     // TODO: 把GameCharacter的attack属性套上property，然后自动更新
     // 不用这么做了

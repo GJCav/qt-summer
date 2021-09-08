@@ -19,6 +19,7 @@ SOURCES += \
     item/PopupTextItem.cpp \
     item/PropItem.cpp \
     item/SelectIndicatorItem.cpp \
+    item/TextBoxItem.cpp \
     item/hud/ButtonItem.cpp \
     item/hud/IconItem.cpp \
     model/EnemyAI.cpp \
@@ -59,6 +60,7 @@ HEADERS += \
     item/PopupTextItem.h \
     item/PropItem.h \
     item/SelectIndicatorItem.h \
+    item/TextBoxItem.h \
     item/hud/ButtonItem.h \
     item/hud/IconItem.h \
     model/EnemyAI.h \

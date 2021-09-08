@@ -52,3 +52,13 @@ void AttackAct::cancel()
 {
     mActor->game()->cancelSelectProcess();
 }
+
+int AttackAct::attackRangeMin() const
+{
+    return mAttackRangeMin;
+}
+
+int AttackAct::attackRangeMax() const
+{
+    return mAttackRangeMax;
+}
