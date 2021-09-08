@@ -46,19 +46,19 @@ void GameCharAction::setAllowCancel(bool newAllowCancel)
 
 void GameCharAction::begin()
 {
-    qDebug() << "CharAction: "<< text() << ", at: " << this;
+    //qDebug() << "CharAction: "<< text() << ", at: " << this;
 
     auto game = mActor->game();
 
     auto hud = game->getHUD();
 
     // 阻止选择一个操作后点击另一个操作，否则将导致mButtonItem被释放
-    qDebug() << "CharAction: "<< text() << ", at: " << this << ", close HUD";
+    //qDebug() << "CharAction: "<< text() << ", at: " << this << ", close HUD";
     hud->setActBtnVisible(false);
 
     game->setAllowOpenHUD(false); // 阻止键盘打开HUD
 
-    qDebug() << "CharAction: "<< text() << ", at: " << this << ", disallow end turn.";
+    //qDebug() << "CharAction: "<< text() << ", at: " << this << ", disallow end turn.";
     hud->setAllowEndTurn(false);
 
     game->setProcessCharClick(false); // 阻止选择另一个角色，否则将导致mButtonItem被释放

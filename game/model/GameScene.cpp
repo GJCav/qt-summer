@@ -254,8 +254,6 @@ void GameScene::endAITurn()
     mState = 0;
     hud->setAllowEndTurn(true);
     hud->setActBtnVisible(true);
-
-    qDebug("yes..");
 }
 
 void GameScene::init()

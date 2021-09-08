@@ -196,7 +196,7 @@ void GameCharacter::endTurn()
     int totHeal = 0;
     for(int i = 0;i < 4;i++){
         const QPoint sp{p.x()+dirX[i], p.y()+dirY[i]};
-        qDebug()<<sp;
+        //qDebug()<<sp;
         if(!game()->validGamePos(sp)) continue;
         auto prop = game()->propAt(sp);
         if(prop == nullptr) continue;
