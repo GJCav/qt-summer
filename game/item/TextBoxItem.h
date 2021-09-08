@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QGraphicsProxyWidget>
 #include <QFont>
+#include <QParallelAnimationGroup>
 
 class TextBoxItem : public QGraphicsObject
 {
@@ -29,6 +30,9 @@ public:
 
     void setEnableShadow(bool v);
 
+    bool useAnimation() const;
+    void setUseAnimation(bool newUseAnimation);
+
 
 private:
     QGraphicsTextItem *mTextItem;
@@ -37,17 +41,23 @@ private:
     QGraphicsProxyWidget *mProxy;
     LightWoodPanel* mPanel;
 
+    bool mUseAnimation = false;
+    QParallelAnimationGroup *mAni = nullptr;
+
 
 signals:
     void clicked();
 
 public slots:
+    void show();
     void close();
 
     // QGraphicsItem interface
 public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

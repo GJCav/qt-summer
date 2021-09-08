@@ -5,6 +5,7 @@
 #include "item/PropItem.h"
 #include "item/LevelCellItem.h"
 #include "item/MeowKnightItem.h"
+#include "item/TextBoxItem.h"
 #include "GameCharacter.h"
 #include <QGraphicsScene>
 #include <QObject>
@@ -20,7 +21,6 @@ using std::tuple;
 class GameScene : public QGraphicsScene
 {
     Q_OBJECT;
-
 public:
     constexpr static int CellSize = LevelCellItem::CellSize;
     constexpr static int GameWidth = 16;
@@ -118,6 +118,8 @@ public:
         return !(p.x() < 0 || p.x() >= GameWidth || p.y() < 0 || p.y() >= GameHeight);
     }
     inline bool validGamePos(int x, int y) { return validGamePos({x, y});}
+
+    void txtBoxSeries(QVector<TextBoxItem*> arr);
 
 public slots:
     //void nextTurn(); //用endTurn代替

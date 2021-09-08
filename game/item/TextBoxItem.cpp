@@ -48,9 +48,57 @@ void TextBoxItem::setEnableShadow(bool v)
     }
 }
 
+void TextBoxItem::show()
+{
+    setVisible(true);
+    if(mUseAnimation){
+        mAni->setDirection(mAni->Forward);
+        mAni->start();
+    }
+}
+
+bool TextBoxItem::useAnimation() const
+{
+    return mUseAnimation;
+}
+
+void TextBoxItem::setUseAnimation(bool newUseAnimation)
+{
+    mUseAnimation = newUseAnimation;
+    if(mUseAnimation){
+        auto floatAni = new QPropertyAnimation(this);
+        floatAni->setTargetObject(this);
+        floatAni->setPropertyName("y");
+        floatAni->setDuration(600);
+        floatAni->setStartValue(y() - 20);
+        floatAni->setEndValue(y());
+        floatAni->setEasingCurve(QEasingCurve::InOutQuad);
+
+        auto opacityAni = new QPropertyAnimation(this);
+        opacityAni->setTargetObject(this);
+        opacityAni->setPropertyName("opacity");
+        opacityAni->setDuration(600);
+        opacityAni->setStartValue(0);
+        opacityAni->setEndValue(1);
+        opacityAni->setEasingCurve(QEasingCurve::InOutQuad);
+
+        mAni = new QParallelAnimationGroup(this);
+        mAni->addAnimation(floatAni);
+        mAni->addAnimation(opacityAni);
+    }
+
+}
+
 void TextBoxItem::close()
 {
-    this->setVisible(false);
+    //this->setVisible(false);
+    if(mUseAnimation){
+        mAni->setDirection(mAni->Backward);
+        mAni->start();
+        connect(mAni, &QParallelAnimationGroup::finished, this, [this](){
+            this->setVisible(false);
+        });
+    }
 }
 
 

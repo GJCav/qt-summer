@@ -56,6 +56,7 @@ void GameCharacter::healed(const qreal power)
 
 void GameCharacter::moveTo(const QPoint newPos)
 {
+    if(mHealth <= 0) return;
     const QPoint dest = {newPos.x() * 64, newPos.y() * 64};
     mPos = newPos;
     mCharItem->moveTo(dest);
@@ -76,6 +77,7 @@ void GameCharacter::die()
 
 void GameCharacter::dodge()
 {
+    if(mHealth <= 0) return;
     mCharItem->dodge();
 }
 
@@ -112,6 +114,7 @@ void GameCharacter::setCharRole(const int role)
 
 void GameCharacter::attack()
 {
+    if(mHealth <= 0) return;
     mCharItem->attack();
 }
 

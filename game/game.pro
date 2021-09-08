@@ -97,7 +97,8 @@ HEADERS += \
 FORMS += \
     test/TestWindow.ui \
     ui/HUDDesign.ui \
-    ui/HelloSceneDesign.ui
+    ui/HelloSceneDesign.ui \
+    ui/TextPreview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

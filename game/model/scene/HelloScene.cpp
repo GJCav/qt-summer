@@ -1,4 +1,5 @@
 #include "HelloScene.h"
+#include "FirstScene.h"
 #include "model/HUD.h"
 #include "model/GameProp.h"
 #include "item/MeowKnightItem.h"
@@ -68,6 +69,13 @@ void HelloScene::initChore()
     addItem(b2);
     addItem(b3);
     // 这里连接到各个对应关卡
+    connect(b1, &ButtonItem::clicked, this, [this](){
+        auto view = this->views()[0];
+        auto first = new FirstScene();
+        first->init();
+        view->setScene(first);
+        this->deleteLater();
+    });
 
     auto m1 = new MeowKnightItem("grey");
     const int mscale = 5;
@@ -108,7 +116,8 @@ void HelloScene::initLevel()
 
 void HelloScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << event->scenePos();
+    //qDebug() << event->scenePos();
+    GameScene::mouseReleaseEvent(event);
 }
 
 

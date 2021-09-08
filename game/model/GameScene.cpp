@@ -12,6 +12,7 @@
 #include "special/AthleteMeow.h"
 #include "special/DoctorMeow.h"
 #include "special/BossMeow.h"
+#include "scene/HelloScene.h"
 #include <QAction>
 #include <QQueue>
 
@@ -100,6 +101,9 @@ GameScene::listMoveDestination(const QPoint origin, const int max, const int min
 
         // can stand at h?
         GameProp* prop = nullptr;
+        if(!mLevel->canPlaceGameModel(h)){
+            destType = MoveDestType::Invalid;
+        }
         if((prop = propAt(h)) != nullptr && dis[h.y()][h.x()] >= min){
             destType = MoveDestType::Invalid;
         }
@@ -283,7 +287,8 @@ void GameScene::endTurnEvent()
     }
 
     // now is AI's turn.
-    beginAITurn();
+    if(code == 0)
+        beginAITurn();
 }
 
 void GameScene::beginAITurn()
@@ -305,9 +310,11 @@ void GameScene::endAITurn()
         gameFailed();
     }
 
-    mState = 0;
-    hud->setAllowEndTurn(true);
-    hud->setActBtnVisible(true);
+    if(code == 0){
+        mState = 0;
+        hud->setAllowEndTurn(true);
+        hud->setActBtnVisible(true);
+    }
 }
 
 void GameScene::init()
@@ -325,7 +332,7 @@ void GameScene::initLevel()
 {
     mLevel = new Level();
     mLevel->initLevel(GameWidth, GameHeight);
-    mLevel->setStonePath(QRect(1, 2, 5, 4));
+    //mLevel->setStonePath(QRect(1, 2, 5, 4));
     mLevel->setWallRect(QRect(0, 0, 16, 12));
     mLevel->setScene(this);
 }
@@ -430,6 +437,18 @@ void GameScene::setAllowOpenHUD(bool newAllowOpenHUD)
     mAllowOpenHUD = newAllowOpenHUD;
 }
 
+void GameScene::txtBoxSeries(QVector<TextBoxItem *> arr)
+{
+    if(arr.empty()) return;
+    arr[0]->setUseAnimation(true);
+    connect(arr[0], &TextBoxItem::clicked, arr[0], &TextBoxItem::close);
+    for(int i = 1;i < arr.size();i++){
+        arr[i]->setUseAnimation(true);
+        connect(arr[i], &TextBoxItem::clicked, arr[i], &TextBoxItem::close);
+        connect(arr[i-1], &TextBoxItem::clicked, arr[i], &TextBoxItem::show);
+    }
+}
+
 int GameScene::successOrFailed()
 {
     bool hasPlayer = false;
@@ -456,8 +475,25 @@ void GameScene::gameSuccess()
     box->setFontPointSize(24);
     box->setSize(450, 300);
     box->setPos(200, 160);
-    box->setHtml("恭喜你，<br><strong>胜利啦!!</strong>");
+    box->setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\
+    <html>\
+    <head></head>\
+    <body style=\" font-family:'Microsoft YaHei UI';\">\
+    <p style=\"margin-left:100px; font-size: 50px\">~~胜利啦~~</p>\
+    <p style=\"margin-left:10px; \">恭喜~恭喜~</p>\
+    </body></html>");
+    box->setVisible(false);
+    box->setUseAnimation(true);
     addItem(box);
+
+    box->show();
+    connect(box, &TextBoxItem::clicked, this, [this](){
+        auto view = this->views()[0];
+        HelloScene *s = new HelloScene();
+        s->init();
+        view->setScene(s);
+        this->deleteLater();
+    });
 }
 
 void GameScene::gameFailed()
@@ -466,8 +502,25 @@ void GameScene::gameFailed()
     box->setFontPointSize(24);
     box->setSize(450, 300);
     box->setPos(200, 160);
-    box->setHtml("惜败，<br>再接再厉吧。");
+    box->setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\
+    <html>\
+    <head></head>\
+    <body style=\" font-family:'Microsoft YaHei UI';\">\
+    <p style=\"margin-left:100px; font-size: 50px\">惜败 QAQ</p>\
+    <p style=\"margin-left:10px; \">再接再厉吧。</p>\
+    </body></html>");
+    box->setVisible(false);
+    box->setUseAnimation(true);
     addItem(box);
+
+    box->show();
+    connect(box, &TextBoxItem::clicked, this, [this](){
+        auto view = this->views()[0];
+        HelloScene *s = new HelloScene();
+        s->init();
+        view->setScene(s);
+        this->deleteLater();
+    });
 }
 
 bool GameScene::allowUnselectChar() const
