@@ -19,5 +19,6 @@
         <file>asset/Witch/B_witch.json</file>
         <file>asset/Witch/B_witch.png</file>
         <file>asset/Meow Knight/yellow.png</file>
+        <file>asset/sound/background.m4a</file>
     </qresource>
 </RCC>
