@@ -61,11 +61,16 @@ public:
         const int min=0
     ); // min < dest <= max
 
-//    QVector<tuple<QPoint, int>> listReachableCharacterPos(
-//        const QPoint origin,
-//        const int max,
-//        const int min=0
-//    );
+    enum class ReachCharType : int {
+        Unreachable = 0,
+        Invalid = 1,
+        Valid = 2
+    };
+    QVector<tuple<QPoint, ReachCharType>> listReachableCharacterPos(
+        const QPoint origin,
+        const int max,
+        const int min=0
+    );
     void selectReachableCharacter(
         const QPoint origin,
         const int max,

@@ -161,6 +161,38 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
     }
 }
 
+QVector<tuple<QPoint, GameScene::ReachCharType> > GameScene::listReachableCharacterPos(
+    const QPoint origin,
+    const int max,
+    const int min
+)
+{
+    QVector<tuple<QPoint, ReachCharType> > rst;
+
+    for(int i = origin.y()-max;i <= origin.y()+max;i++){
+        if(i < 0 || i >= GameHeight) continue;
+        for(int j = origin.x()-max;j <= origin.x()+max;j++){
+            if(j < 0 || j >= GameWidth) continue;
+            const int dis = qAbs(j - origin.x()) + qAbs(i - origin.y());
+            const QPoint h{j, i};
+            if(dis < min || dis > max) continue;
+
+            auto type = ReachCharType::Invalid;
+
+            GameCharacter* c = charAt(h);
+            if(c != nullptr){
+                type = ReachCharType::Valid;
+            }else{
+                type = ReachCharType::Invalid;
+            }
+
+            rst.append({{j, i}, type});
+        }
+    }
+
+    return rst;
+}
+
 void GameScene::selectReachableCharacter(
     const QPoint origin,
     const int max,
@@ -175,31 +207,22 @@ void GameScene::selectReachableCharacter(
     mSltIndicate->setHandlesChildEvents(false);
     addItem(mSltIndicate);
 
-    for(int i = origin.y()-max;i <= origin.y()+max;i++){
-        if(i < 0 || i >= GameHeight) continue;
-        for(int j = origin.x()-max;j <= origin.x()+max;j++){
-            if(j < 0 || j >= GameWidth) continue;
-            const int dis = qAbs(j - origin.x()) + qAbs(i - origin.y());
-            const QPoint h{j, i};
-            if(dis < min || dis > max) continue;
+    auto list = listReachableCharacterPos(origin, max, min);
+    for(int i = 0;i < list.size();i++){
+        QPoint p; ReachCharType type;
+        std::tie(p, type) = list[i];
 
-            auto cellIdr = new CellIndicatorItem(h, mSltIndicate);
-
-            GameCharacter* c = charAt(h);
-            if(c != nullptr){
-                cellIdr->setColor(targetColor);
-                cellIdr->setHightLight(true);
-                connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this, c](CellIndicatorItem* src){
-                    emit charSelected(c);
-                    deleteItemGroup(mSltIndicate);
-                }, Qt::SingleShotConnection);
-            }else{
-                cellIdr->setColor(lightColor);
-                //do nothing
-//                connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem* src){
-//                    deleteItemGroup(mSltIndicate);
-//                }, Qt::SingleShotConnection);
-            }
+        auto cellIdr = new CellIndicatorItem(p, mSltIndicate);
+        if(type == ReachCharType::Invalid){
+            cellIdr->setColor(lightColor);
+        }else if(type == ReachCharType::Valid){
+            cellIdr->setColor(targetColor);
+            cellIdr->setHightLight(true);
+            auto c = charAt(p);
+            connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this, c](CellIndicatorItem* src){
+                emit charSelected(c);
+                deleteItemGroup(mSltIndicate);
+            }, Qt::SingleShotConnection);
         }
     }
 }
