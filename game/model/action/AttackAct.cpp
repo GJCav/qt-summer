@@ -8,7 +8,7 @@ AttackAct::AttackAct(GameCharacter* actor, QObject *parent)
     : GameCharAction(actor, parent)
 {
     this->setText("攻击");
-    mAttackPower = actor->attackPower();
+    //mAttackPower = actor->attackPower();
 }
 
 void AttackAct::targetSelected(GameCharacter *target)
@@ -16,7 +16,7 @@ void AttackAct::targetSelected(GameCharacter *target)
     mActor->setTowards(target->pos().x() >= mActor->pos().x());
     mActor->attack();
     QTimer::singleShot(200, this, [this, target](){
-        target->attacked(mAttackPower);
+        target->attacked(mActor->attackPower());
     });
 
     if(mButtonItem != nullptr) mButtonItem->hide();

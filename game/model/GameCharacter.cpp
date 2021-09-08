@@ -86,8 +86,20 @@ void GameCharacter::setTowards(bool towardRight)
 QVector<QPixmap> GameCharacter::requestIcons()
 {
     QVector<QPixmap> rtn;
-    for(int i = 0;i < 5;i++){
-        rtn.append(R::IconPixmap->copy(32*i, 0, 32, 32));
+//    for(int i = 0;i < 5;i++){
+//        rtn.append(R::IconPixmap->copy(32*i, 0, 32, 32));
+//    }
+    if(mRole == CharacterRole::Enemy){
+        rtn.append(R::IconPixmap->copy(32*4, 0, 32, 32));
+    }
+    if(health() <= 0){
+        rtn.append(R::IconPixmap->copy(0, 0, 32, 32));
+    }
+    if(speed() < mSpeed){
+        rtn.append(R::IconPixmap->copy(416, 96, 32, 32));
+    }
+    if(defensivePower() > 0){
+        rtn.append(R::IconPixmap->copy(32, 224, 32, 32));
     }
     return rtn;
 }

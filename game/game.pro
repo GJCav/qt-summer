@@ -20,6 +20,7 @@ SOURCES += \
     item/SelectIndicatorItem.cpp \
     item/hud/ButtonItem.cpp \
     item/hud/IconItem.cpp \
+    model/EnemyAI.cpp \
     model/GameCharAction.cpp \
     model/GameCharacter.cpp \
     model/GameProp.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     item/SelectIndicatorItem.h \
     item/hud/ButtonItem.h \
     item/hud/IconItem.h \
+    model/EnemyAI.h \
     model/GameCharAction.h \
     model/GameCharacter.h \
     model/GameProp.h \

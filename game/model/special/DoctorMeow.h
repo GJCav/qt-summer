@@ -17,11 +17,13 @@ private:
     // GameCharacter interface
 public:
     QVector<GameCharAction *> requestActionMenu() override;
+    QVector<QPixmap> requestIcons() override;
 
 
     // GameCharacter interface
 public:
     void endTurn() override;
+
 };
 
 #endif // DOCTORMEOW_H

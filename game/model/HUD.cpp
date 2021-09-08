@@ -50,8 +50,8 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
         if(!actions[i]->isEnabled()) continue;
         auto btn = new ButtonItem(mActBtnGroup);
 
-        qDebug() << "create action button: " << actions[i]->text() << ", " << actions[i];
-        qDebug() << "       action button at: " << btn;
+        //qDebug() << "create action button: " << actions[i]->text() << ", " << actions[i];
+        //qDebug() << "       action button at: " << btn;
 
         btn->setBckPixmap(R::BtnPixmap->copy(133, 0, 130, 50));
         btn->setText(actions[i]->text());
@@ -134,7 +134,7 @@ void HUD::initTitleBar()
     mTitlePanel->setPalette(pal);
 
     mTitleLabel = new QLabel();
-    mTitleLabel->setText("标题栏");
+    mTitleLabel->setText("-/-");
 
     lyt->addWidget(mTitleLabel);
 
@@ -182,7 +182,7 @@ void HUD::initStatusPanel()
     mStatusLucky = new QGraphicsTextItem(mStatusProxy);
     mStatusAttack = new QGraphicsTextItem(mStatusProxy);
 
-    mStatusName->setPlainText("Name");
+    mStatusName->setPlainText("-/-");
     mStatusName->setPos(30, 30);
     mStatusName->setFont(font);
     mStatusName->setDefaultTextColor(Qt::white);
@@ -199,7 +199,7 @@ void HUD::initStatusPanel()
         item->setFont(font);
         item->setDefaultTextColor(Qt::white);
         item->setGraphicsEffect(createShadow(0, 3, 5));
-        item->setPlainText("100");
+        item->setPlainText("-/-");
     }
 
     _arr = {
@@ -212,7 +212,7 @@ void HUD::initStatusPanel()
         item->setFont(font);
         item->setDefaultTextColor(Qt::white);
         item->setGraphicsEffect(createShadow(0, 3, 5));
-        item->setPlainText("100");
+        item->setPlainText("-/-");
     }
 
     const int gapY = 42;
@@ -303,7 +303,7 @@ void HUD::deleteItemGroup(QGraphicsItemGroup* group)
     auto list = group->childItems();
     mGame->destroyItemGroup(group);
     for(int i = 0;i < list.size();i++){
-        qDebug() << "remove hud item: " << list[i];
+        //qDebug() << "remove hud item: " << list[i];
 
         mGame->removeItem(list[i]);
         delete list[i];

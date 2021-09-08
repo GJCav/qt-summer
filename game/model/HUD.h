@@ -63,7 +63,7 @@ public:
     bool allowEndTurn() const;
     void setAllowEndTurn(bool newAllowEndTurn);
     inline bool endTurnVisible() {return mEndTurnBtn->isVisible();}
-    inline void ssetEndTurnVisible(bool v) {mEndTurnBtn->setVisible(v);}
+    inline void setEndTurnVisible(bool v) {mEndTurnBtn->setVisible(v);}
 
 signals:
     void clickedEndTurn();

@@ -17,7 +17,8 @@ public:
 
 private:
     // TODO: 把GameCharacter的attack属性套上property，然后自动更新
-    int mAttackPower;
+    // 不用这么做了
+    //int mAttackPower;
     int mAttackRangeMin = 0; // min <= target <= max
     int mAttackRangeMax = 1;
 

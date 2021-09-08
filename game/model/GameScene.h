@@ -11,6 +11,7 @@
 class GameProp;
 class GameCharacter;
 class HUD;
+class EnemyAI;
 
 class GameScene : public QGraphicsScene
 {
@@ -50,7 +51,9 @@ public:
     void selectReachableCharacter(
         const QPoint origin,
         const int max,
-        const int min=0
+        const int min=0,
+        QColor targetColor = {Qt::red},
+        QColor lightColor = {240, 138, 140}
     );
 
     void cancelSelectProcess(); // 取消 selectMoveDestination 和 selectReachableCharacter 的显示
@@ -71,15 +74,8 @@ public:
     }
     inline bool validGamePos(int x, int y) { return validGamePos({x, y});}
 
-
-
 public slots:
-    void nextTurn();
-
-private slots:
-    void charClick(GameCharacter* src);
-    void endTurn();
-    void charSelectedChange(bool slt); // 用于取消选择角色
+    //void nextTurn(); //用endTurn代替
 
 signals:
     void charClicked(GameCharacter* target);
@@ -92,12 +88,13 @@ protected:
     QVector<GameProp*> mProps;
     QVector<GameCharacter*> mChars;
     HUD *hud = nullptr;
+    EnemyAI *mAI = nullptr;
 
 //    /**
 //     * @brief mState
 //     *   0: 普通状态。选择人物，显示其属性，弹出HUD，右侧显示操作按钮。
-//     *   1: 操作状态。操作按钮显示“确认\取消”，清空原有选择，显示辅助地标。
-//     *   2: 操作确认。播放动画，忽略所有鼠标动作。
+//     *   //1: 操作状态。操作按钮显示“确认\取消”，清空原有选择，显示辅助地标。 弃用
+//     *   //2: 操作确认。播放动画，忽略所有鼠标动作。  弃用
 //     *   3: 敌方回合。不显示右侧操作按钮。
 //     */
     int mState = 0;
@@ -115,11 +112,14 @@ protected:
     virtual void charClickedEvent(GameCharacter* src);
 
     virtual void endTurnEvent();
+    virtual void beginAITurn(); // call manually if override
+    virtual void endAITurn();// call manually if override
 
     virtual void initLevel();
     virtual void initPropItems();
     virtual void initChars();
     virtual void initHUD();
+    virtual void initAI();
 
     // QGraphicsScene interface
 protected:
@@ -129,6 +129,12 @@ private:
     QGraphicsItemGroup* mSltIndicate = nullptr;
 
     void deleteItemGroup(QGraphicsItemGroup* &group);
+
+private slots:
+    void charClick(GameCharacter* src);
+    void endTurn();
+    void AITurnEnded();
+    void charSelectedChange(bool slt); // 用于取消选择角色
 };
 
 #endif // GAMESCENE_H

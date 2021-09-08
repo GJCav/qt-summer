@@ -23,7 +23,7 @@ void HealAct::process()
         &HealAct::targetSelected,
         Qt::SingleShotConnection
     );
-    game->selectReachableCharacter(mActor->pos(), 2);
+    game->selectReachableCharacter(mActor->pos(), 2, 0, Qt::green, QColor(Qt::green).lighter());
 }
 
 void HealAct::cancel()

@@ -4,6 +4,7 @@
 #include "item/MeowKnightItem.h"
 #include "item/CellIndicatorItem.h"
 #include "HUD.h"
+#include "EnemyAI.h"
 #include "R.h"
 #include "special/OrangeMeow.h"
 #include "special/AthleteMeow.h"
@@ -54,7 +55,7 @@ void GameScene::addChar(GameCharacter *ch)
 GameProp *GameScene::propAt(const QPoint h) const
 {
     for(int i = 0;i < mProps.size();i++){
-        qDebug() << mProps[i]->pos() << ", is: " << mProps[i]->propType();
+        //qDebug() << mProps[i]->pos() << ", is: " << mProps[i]->propType();
         if(mProps[i]->pos() == h) return mProps[i];
     }
     return nullptr;
@@ -66,12 +67,6 @@ GameCharacter *GameScene::charAt(const QPoint h) const
         if(mChars[i]->pos() == h) return mChars[i];
     }
     return nullptr;
-}
-
-void GameScene::nextTurn()
-{
-    mTurn++;
-    // todo: 敌方AI
 }
 
 void GameScene::selectMoveDestination(const QPoint origin, const int len, const int min)
@@ -128,7 +123,7 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
             auto cellIdr = new CellIndicatorItem(h, mSltIndicate);
             cellIdr->setColor(Qt::blue);
 
-            qDebug() << "connect to: " << h;
+            //qDebug() << "connect to: " << h;
 
             connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
                 emit moveDestSelected(src->gamePos());
@@ -150,7 +145,13 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
     }
 }
 
-void GameScene::selectReachableCharacter(const QPoint origin, const int max, const int min)
+void GameScene::selectReachableCharacter(
+    const QPoint origin,
+    const int max,
+    const int min,
+    QColor targetColor,
+    QColor lightColor
+)
 {
     deleteItemGroup(mSltIndicate);
     mSltIndicate = new QGraphicsItemGroup();
@@ -170,14 +171,14 @@ void GameScene::selectReachableCharacter(const QPoint origin, const int max, con
 
             GameCharacter* c = charAt(h);
             if(c != nullptr){
-                cellIdr->setColor(Qt::red);
+                cellIdr->setColor(targetColor);
                 cellIdr->setHightLight(true);
                 connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this, c](CellIndicatorItem* src){
                     emit charSelected(c);
                     deleteItemGroup(mSltIndicate);
                 }, Qt::SingleShotConnection);
             }else{
-                cellIdr->setColor(QColor(240, 138, 140));
+                cellIdr->setColor(lightColor);
                 //do nothing
 //                connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem* src){
 //                    deleteItemGroup(mSltIndicate);
@@ -210,16 +211,51 @@ void GameScene::charClickedEvent(GameCharacter *src)
         }else{
             hud->setActBtns({});
         }
+    }else if(mState == 3){
+        if(!hud->visible()) hud->toggleHUD();
+        hud->setTitle(src->name());
+        hud->setIcons(src->requestIcons());
+        hud->setStatusName(src->name());
+        hud->setStatusHealth(src->health());
+        hud->setStatusSpeed(src->speed());
+        hud->setStatusDefensive(src->defensivePower());
+        hud->setStatusAttack(src->attackPower());
+        hud->setStatusLucky(src->lucky());
+
+        hud->setActBtns({});
     }
 }
 
 void GameScene::endTurnEvent()
 {
+    mTurn++;
     for(int i = 0;i < mChars.size();i++){
         mChars[i]->endTurn();
     }
     clearSelection();
     mLastClickChar = nullptr;
+
+    // now is AI's turn.
+    beginAITurn();
+}
+
+void GameScene::beginAITurn()
+{
+    mState = 3;
+    hud->setAllowEndTurn(false);
+    hud->setActBtns({});
+    hud->setActBtnVisible(false);
+
+    mAI->start();
+}
+
+void GameScene::endAITurn()
+{
+    mState = 0;
+    hud->setAllowEndTurn(true);
+    hud->setActBtnVisible(true);
+
+    qDebug("yes..");
 }
 
 void GameScene::init()
@@ -228,6 +264,7 @@ void GameScene::init()
     initPropItems();
     initChars();
     initHUD();
+    initAI();
 }
 
 
@@ -289,11 +326,17 @@ void GameScene::initHUD()
     connect(hud, &HUD::clickedEndTurn, this, &GameScene::endTurn);
 }
 
+void GameScene::initAI()
+{
+    mAI = new EnemyAI(this);
+    connect(mAI, &EnemyAI::AITurnFinished, this, &GameScene::endAITurn);
+}
+
 void GameScene::charClick(GameCharacter *src)
 {
     if(mProcessCharClick){
         if(mLastClickChar == src){
-            qDebug("click on same character..");
+            //qDebug("click on same character..");
             return;
         }
         mLastClickChar = src;
@@ -307,10 +350,15 @@ void GameScene::endTurn()
     endTurnEvent();
 }
 
+void GameScene::AITurnEnded()
+{
+    endAITurn();
+}
+
 void GameScene::charSelectedChange(bool slt)
 {
     if(mAllowUnselectChar && slt == false){
-        qDebug("cancel selection..");
+        //qDebug("cancel selection..");
 
         hud->setTitle("-/-");
         hud->setIcons({});
@@ -365,7 +413,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_H){
         if(hud->visible() == false && mAllowOpenHUD == false){
-            qDebug("keyboard tried to open HUD but is stopped.");
+            //qDebug("keyboard tried to open HUD but is stopped.");
             return;
         }
         hud->toggleHUD();
