@@ -17,7 +17,7 @@ public:
     inline const QParallelAnimationGroup* animation() { return mAniGroup;}
 
 private:
-    QParallelAnimationGroup* mAniGroup;
+    QParallelAnimationGroup* mAniGroup = nullptr;
 };
 
 #endif // POPUPTEXTITEM_H

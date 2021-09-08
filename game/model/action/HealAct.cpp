@@ -1,4 +1,5 @@
 #include "HealAct.h"
+#include "model/special/DoctorMeow.h"
 #include <QRandomGenerator>
 
 HealAct::HealAct(GameCharacter* actor, QObject *parent)
@@ -33,11 +34,9 @@ void HealAct::cancel()
 
 void HealAct::targetSelected(GameCharacter *c)
 {
-    bool isHead = (QRandomGenerator::global()->generate() % 10) < 7;
-    if(isHead > 0){
-        c->healed(10);
-    }else{
-        c->attacked(10);
+    auto src = dynamic_cast<DoctorMeow*>(mActor);
+    if(src != nullptr){
+        src->heal(c);
     }
 
     if(mButtonItem != nullptr) mButtonItem->hide();

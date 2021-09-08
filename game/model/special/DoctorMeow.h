@@ -19,6 +19,8 @@ public:
     QVector<GameCharAction *> requestActionMenu() override;
     QVector<QPixmap> requestIcons() override;
 
+    void heal(GameCharacter* target);
+
 
     // GameCharacter interface
 public:

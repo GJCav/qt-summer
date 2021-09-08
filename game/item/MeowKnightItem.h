@@ -11,7 +11,7 @@
 class MeowKnightItem : public GameCharItem
 {
     Q_OBJECT
-    Q_PROPERTY(bool animating READ animating WRITE setAnimating NOTIFY animatingChanged)
+    //Q_PROPERTY(bool animating READ animating WRITE setAnimating NOTIFY animatingChanged)
     Q_PROPERTY(bool enableSelectIndicator MEMBER mEnableSelectIndicator)
 
 signals:
@@ -55,12 +55,12 @@ public:
     void setPlaying(bool newPlaying);
 
     // Animation
-    inline bool animating() const { return mAnimating;}
-    inline void setAnimating(const bool a) {
-        if(a == mAnimating) return;
-        mAnimating = a;
-        emit animatingChanged(mAnimating);
-    }
+//    inline bool animating() const { return mAnimating;}
+//    inline void setAnimating(const bool a) {
+//        if(a == mAnimating) return;
+//        mAnimating = a;
+//        emit animatingChanged(mAnimating);
+//    }
 
     constexpr static int MOVE_DURATION = 800;
     bool idle() override;
@@ -112,7 +112,7 @@ private:
     const char* nextAnimation();
 
     // animation
-    bool mAnimating = false;
+    // bool mAnimating = false;
 
     //void updateZValue(int y); // 相关功能移交给 GameCharItem
 

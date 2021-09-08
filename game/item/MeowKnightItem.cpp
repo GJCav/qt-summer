@@ -80,14 +80,14 @@ void MeowKnightItem::setPlaying(bool newPlaying)
 
 bool MeowKnightItem::idle()
 {
-    if(animating()) return false;
+    //if(animating()) return false;
     playAnimation(AnimationName::Idle);
     return true;
 }
 
 bool MeowKnightItem::moveTo(const QPointF target)
 {
-    if(mAnimating) return false;
+    //if(mAnimating) return false;
     QPointF curPos = pos();
     mTowardRight = target.x() >= curPos.x();
 
@@ -113,11 +113,11 @@ bool MeowKnightItem::moveTo(const QPointF target)
     group->addAnimation(mMoveXAnimation);
     group->addAnimation(mMoveYAnimation);
     connect(group, &QAnimationGroup::finished, [this, group](){
-        this->setAnimating(false);
+        //this->setAnimating(false);
         group->deleteLater();
         this->playAnimation(AnimationName::Idle);
     });
-    setAnimating(true);
+    //setAnimating(true);
     playAnimation(AnimationName::Run);
     group->start();
 
@@ -126,7 +126,7 @@ bool MeowKnightItem::moveTo(const QPointF target)
 
 bool MeowKnightItem::dodge()
 {
-    if(animating()) return false;
+    //if(animating()) return false;
 
     QGraphicsTextItem *miss = new QGraphicsTextItem("miss", this);
     miss->setDefaultTextColor(Qt::yellow);
@@ -160,11 +160,11 @@ bool MeowKnightItem::dodge()
     auto group = new QParallelAnimationGroup(this);
     group->addAnimation(moveAni);
     group->addAnimation(opacityAni);
-    connect(group, &QParallelAnimationGroup::finished, [this, group](){
+    connect(group, &QParallelAnimationGroup::finished, [group](){
         group->deleteLater();
-        setAnimating(false);
+        //setAnimating(false);
     });
-    setAnimating(true);
+    //setAnimating(true);
     group->start();
     playAnimation(AnimationName::Dodge);
 
@@ -173,22 +173,22 @@ bool MeowKnightItem::dodge()
 
 bool MeowKnightItem::attack()
 {
-    if(animating()) return false;
-    setAnimating(true);
-    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
-        setAnimating(false);
-    }, Qt::SingleShotConnection);
+    //if(animating()) return false;
+    //setAnimating(true);
+//    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
+//        setAnimating(false);
+//    }, Qt::SingleShotConnection);
     playAnimation(AnimationName::Attack);
     return true;
 }
 
 bool MeowKnightItem::takeDamage(const qreal hurt)
 {
-    if(animating()) return false;
-    setAnimating(true);
-    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
-        setAnimating(false);
-    }, Qt::SingleShotConnection);
+    //if(animating()) return false;
+    //setAnimating(true);
+//    connect(this, &MeowKnightItem::animationAutoStopped, this, [this](){
+//        setAnimating(false);
+//    }, Qt::SingleShotConnection);
 
     auto popTxt = new PopupTextItem(QString::number(-hurt), Qt::red, this);
     popTxt->setPos(0, -8);
@@ -200,14 +200,14 @@ bool MeowKnightItem::takeDamage(const qreal hurt)
 
 bool MeowKnightItem::healed(const qreal heal)
 {
-    if(animating()) return false;
-    setAnimating(true);
+    //if(animating()) return false;
+    //setAnimating(true);
 
     auto popTxt = new PopupTextItem(QString::number(heal), Qt::green, this);
-    auto ani = popTxt->animation();
-    connect(ani, &QParallelAnimationGroup::finished, this, [this](){
-        this->setAnimating(false);
-    });
+//    auto ani = popTxt->animation();
+//    connect(ani, &QParallelAnimationGroup::finished, this, [this](){
+//        this->setAnimating(false);
+//    });
     popTxt->setPos(0, -8);
     popTxt->start();
     return true;
@@ -215,12 +215,12 @@ bool MeowKnightItem::healed(const qreal heal)
 
 bool MeowKnightItem::death()
 {
-    if(animating()) return false;
-    setAnimating(true);
+    //if(animating()) return false;
+    //setAnimating(true);
     playAnimation(AnimationName::Death);
-    QTimer::singleShot(mAseObj->getAnimationTime(AnimationName::Death), this, [this](){
-        setAnimating(false);
-    });
+//    QTimer::singleShot(mAseObj->getAnimationTime(AnimationName::Death), this, [this](){
+//        setAnimating(false);
+//    });
     return true;
 }
 

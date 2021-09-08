@@ -9,5 +9,7 @@ BaseAI::BaseAI(GameScene *game)
 
 QVector<EnemyAI::function<void ()> > BaseAI::makeStrategy()
 {
+    QVector<function<void()>> rst;
+
     return {};
 }

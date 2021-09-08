@@ -1,24 +1,29 @@
-#include "PopupTextItem.h"
-#include "model/GameScene.h"
+#include "PopupPixmapItem.h"
+#include <QtWidgets>
 #include <QtGui>
 
-PopupTextItem::PopupTextItem(const QString& str, const QColor color, QGraphicsObject* parent)
-    : QGraphicsTextItem(str, parent)
+PopupPixmapItem::PopupPixmapItem(const QPixmap& pix, QGraphicsItem*parent)
+    : QGraphicsObject(parent)
 {
-    //mText = new QGraphicsTextItem(str, this);
-    setDefaultTextColor(color);
-
-    setZValue(GameScene::UIIndicatorZValue);
-
-    QFont font;
-    font.setFamily("Microsoft YaHei");
-    font.setPointSizeF(4);
-    setFont(font);
+    setPixmap(pix);
 }
 
-void PopupTextItem::start()
+const QPixmap &PopupPixmapItem::pixmap() const
 {
-    mAniGroup = new QParallelAnimationGroup();
+    return mPixmap;
+}
+
+void PopupPixmapItem::setPixmap(const QPixmap &newPixmap)
+{
+    mPixmap = newPixmap;
+    prepareGeometryChange();
+}
+
+void PopupPixmapItem::popup()
+{
+
+    mAniGroup = new QParallelAnimationGroup(this);
+
     auto floatUp = new QPropertyAnimation();
     floatUp->setTargetObject(this);
     floatUp->setPropertyName("y");
@@ -43,4 +48,17 @@ void PopupTextItem::start()
     });
 
     mAniGroup->start();
+}
+
+
+QRectF PopupPixmapItem::boundingRect() const
+{
+    return mPixmap.rect();
+}
+
+void PopupPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    painter->drawPixmap(0, 0, mPixmap);
 }
