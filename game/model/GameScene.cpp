@@ -5,6 +5,7 @@
 #include "item/CellIndicatorItem.h"
 #include "HUD.h"
 #include "EnemyAI.h"
+#include "ai/BaseAI.h"
 #include "R.h"
 #include "special/OrangeMeow.h"
 #include "special/AthleteMeow.h"
@@ -67,6 +68,69 @@ GameCharacter *GameScene::charAt(const QPoint h) const
         if(mChars[i]->pos() == h) return mChars[i];
     }
     return nullptr;
+}
+
+QVector<tuple<QPoint, int>>
+GameScene::listMoveDestination(const QPoint origin, const int max, const int min)
+{
+    QVector<tuple<QPoint, int>> rst;
+
+    QVector<QVector<int>> dis;
+
+    for(int i = 0;i < GameHeight;i++){
+        dis.append(QVector<int>{});
+        for(int j = 0;j < GameWidth;j++){
+            dis[i].append(-1); // -1: unreached
+        }
+    }
+
+    QPoint h = origin;
+    QQueue<QPoint> que;
+    que.append(h);
+    dis[h.y()][h.x()] = 0;
+
+    constexpr static int dirX[] = {-1, 0, 1, 0};
+    constexpr static int dirY[] = {0, -1, 0, 1};
+
+    while(que.size()){
+        h = que.dequeue();
+
+        int destType = 0; // 0 不可达，1 可达但不能站立，2可达且可站立
+
+        // can stand at h?
+        GameProp* prop = nullptr;
+        if((prop = propAt(h)) != nullptr && dis[h.y()][h.x()] >= min){
+            destType = 1;
+        }
+        GameCharacter* gc = nullptr;
+        if((gc = charAt(h)) != nullptr && gc->pos() != origin && dis[h.y()][h.x()] >= min){
+            destType = 1;
+        }
+        if(destType == 1){
+            rst.append({h, destType});
+            continue;
+        }
+
+        // come to a new valid pos
+        if(dis[h.y()][h.x()] >= min){
+            destType = 2;
+            rst.append({h, destType});
+        }
+
+        const int newDis = dis[h.y()][h.x()] + 1;
+        if(newDis > max) continue;
+        for(int i = 0;i < 4;i++){
+            QPoint newPos = {h.x()+dirX[i], h.y()+dirY[i]};
+            if(newPos.x() < 0 || newPos.x() >= GameWidth) continue;
+            if(newPos.y() < 0 || newPos.y() >= GameHeight) continue;
+
+            if(dis[newPos.y()][newPos.x()] != -1) continue;
+            dis[newPos.y()][newPos.x()] = newDis;
+            que.enqueue(newPos);
+        }
+    }
+
+    return rst;
 }
 
 void GameScene::selectMoveDestination(const QPoint origin, const int len, const int min)
@@ -326,7 +390,7 @@ void GameScene::initHUD()
 
 void GameScene::initAI()
 {
-    mAI = new EnemyAI(this);
+    mAI = new BaseAI(this);
     connect(mAI, &EnemyAI::AITurnFinished, this, &GameScene::endAITurn);
 }
 

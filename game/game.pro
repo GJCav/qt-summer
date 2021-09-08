@@ -31,6 +31,7 @@ SOURCES += \
     model/action/AttackAct.cpp \
     model/action/HealAct.cpp \
     model/action/MoveAct.cpp \
+    model/ai/BaseAI.cpp \
     model/special/AthleteMeow.cpp \
     model/special/BossMeow.cpp \
     model/special/DoctorMeow.cpp \
@@ -68,6 +69,7 @@ HEADERS += \
     model/action/AttackAct.h \
     model/action/HealAct.h \
     model/action/MoveAct.h \
+    model/ai/BaseAI.h \
     model/special/AthleteMeow.h \
     model/special/BossMeow.h \
     model/special/DoctorMeow.h \

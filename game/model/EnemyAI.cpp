@@ -10,5 +10,13 @@ EnemyAI::EnemyAI(GameScene *game)
 
 void EnemyAI::start()
 {
-
+    const auto list = makeStrategy();
+    if(list.isEmpty()) return;
+    auto future = QtConcurrent::run(list[0]);
+    for(int i = 1;i < list.size();i++){
+        future.then(list[i]);
+    }
+    future.then([this](){
+        emit AITurnFinished();
+    });
 }

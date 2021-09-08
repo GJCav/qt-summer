@@ -7,11 +7,14 @@
 #include <QGraphicsScene>
 #include <QObject>
 #include <QVector>
+#include <tuple>
 
 class GameProp;
 class GameCharacter;
 class HUD;
 class EnemyAI;
+
+using std::tuple;
 
 class GameScene : public QGraphicsScene
 {
@@ -42,12 +45,22 @@ public:
 
     //inline int curTurn() {return mTurn;}
 
+    QVector<tuple<QPoint, int>> listMoveDestination(
+        const QPoint origin,
+        const int max,
+        const int min=0
+    );
     void selectMoveDestination(
         const QPoint origin,
         const int max,
         const int min=0
     ); // min < dest <= max
 
+    QVector<tuple<QPoint, int>> listReachableCharacterPos(
+        const QPoint origin,
+        const int max,
+        const int min=0
+    );
     void selectReachableCharacter(
         const QPoint origin,
         const int max,
