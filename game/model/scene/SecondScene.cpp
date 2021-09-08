@@ -87,7 +87,7 @@ void SecondScene::initChore()
     this->hud->toggleHUD();
 
     TextBoxItem *box = new TextBoxItem();
-    box->setFontPointSize(20);
+    box->setFontPointSize(17);
     box->setSize(450, 300);
     box->setPos(200, 160);
     box->setVisible(false);
@@ -98,10 +98,11 @@ void SecondScene::initChore()
     <body style=\" font-family:'Microsoft YaHei UI';\">\
     <p style=\"margin-left:100px; font-size: 50px\">第二关：大橘为重</p>\
     <p style=\"margin-left:80px; font-size: 20px\">————十个橘猫九个胖，还有一个特别胖</p>\
-    <p style=\"margin-left:10px; \">敌方出动的大橘，更是重量级猫猫<br>\
-    我们不甘示弱，派出了运动员猫猫。<br>\
-    请你展示：四两拨千斤，讲究个化劲儿~~<br><br>\
-    温馨提示：小心花瓶。</p>\
+    <p style=\"margin-left:10px; \">敌方出动的大橘，更是重量级猫猫</p>\
+    <p style=\"margin-left:10px; \">我们不甘示弱，派出了运动员猫猫。</p>\
+    <p style=\"margin-left:10px; \">请你展示：四两拨千斤，讲究个化劲儿~~</p><br>\
+    <p style=\"margin-left:10px; \">温馨提示a：小心花瓶。</p>\
+    <p style=\"margin-left:10px; \">温馨提示b：运动员猫猫需要一小段助跑。</p>\
     </body></html>");
     addItem(box);
 
