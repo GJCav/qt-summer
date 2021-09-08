@@ -70,10 +70,10 @@ GameCharacter *GameScene::charAt(const QPoint h) const
     return nullptr;
 }
 
-QVector<tuple<QPoint, int>>
+QVector<tuple<QPoint, GameScene::MoveDestType>>
 GameScene::listMoveDestination(const QPoint origin, const int max, const int min)
 {
-    QVector<tuple<QPoint, int>> rst;
+    QVector<tuple<QPoint, MoveDestType>> rst;
 
     QVector<QVector<int>> dis;
 
@@ -95,25 +95,25 @@ GameScene::listMoveDestination(const QPoint origin, const int max, const int min
     while(que.size()){
         h = que.dequeue();
 
-        int destType = 0; // 0 不可达，1 可达但不能站立，2可达且可站立
+        MoveDestType destType = MoveDestType::Unreachable;
 
         // can stand at h?
         GameProp* prop = nullptr;
         if((prop = propAt(h)) != nullptr && dis[h.y()][h.x()] >= min){
-            destType = 1;
+            destType = MoveDestType::Invalid;
         }
         GameCharacter* gc = nullptr;
         if((gc = charAt(h)) != nullptr && gc->pos() != origin && dis[h.y()][h.x()] >= min){
-            destType = 1;
+            destType = MoveDestType::Invalid;
         }
-        if(destType == 1){
+        if(destType == MoveDestType::Invalid){
             rst.append({h, destType});
             continue;
         }
 
         // come to a new valid pos
         if(dis[h.y()][h.x()] >= min){
-            destType = 2;
+            destType = MoveDestType::Valid;
             rst.append({h, destType});
         }
 
@@ -141,70 +141,22 @@ void GameScene::selectMoveDestination(const QPoint origin, const int len, const 
     mSltIndicate->setHandlesChildEvents(false);
     addItem(mSltIndicate);
 
-    QVector<QVector<int>> dis;
+    auto list = listMoveDestination(origin, len, min);
+    for(int i = 0;i < list.size();i++){
+        QPoint p;
+        MoveDestType type;
+        std::tie(p, type) = list[i];
 
-    for(int i = 0;i < GameHeight;i++){
-        dis.append(QVector<int>{});
-        for(int j = 0;j < GameWidth;j++){
-            dis[i].append(-1); // -1: unreached
-        }
-    }
-
-    QPoint h = origin;
-    QQueue<QPoint> que;
-    que.append(h);
-    dis[h.y()][h.x()] = 0;
-
-    constexpr static int dirX[] = {-1, 0, 1, 0};
-    constexpr static int dirY[] = {0, -1, 0, 1};
-
-    while(que.size()){
-        h = que.dequeue();
-
-        CellIndicatorItem *cellIdr = nullptr;
-
-        // can stand at h?
-        GameProp* prop = nullptr;
-        if((prop = propAt(h)) != nullptr && dis[h.y()][h.x()] >= min){
-            cellIdr = new CellIndicatorItem(h, mSltIndicate);
+        if(type == MoveDestType::Invalid){
+            auto cellIdr = new CellIndicatorItem(p, mSltIndicate);
             cellIdr->setColor(Qt::red);
-        }
-        GameCharacter* gc = nullptr;
-        if((gc = charAt(h)) != nullptr && gc->pos() != origin && dis[h.y()][h.x()] >= min){
-            cellIdr = new CellIndicatorItem(h, mSltIndicate);
-            cellIdr->setColor(Qt::red);
-        }
-        if(cellIdr != nullptr){
-            // do nothing
-//            connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
-//                deleteItemGroup(mSltIndicate);
-//            }, Qt::SingleShotConnection);
-            continue;
-        }
-
-        // come to a new valid pos
-        if(dis[h.y()][h.x()] >= min){
-            auto cellIdr = new CellIndicatorItem(h, mSltIndicate);
+        }else if(type == MoveDestType::Valid){
+            auto cellIdr = new CellIndicatorItem(p, mSltIndicate);
             cellIdr->setColor(Qt::blue);
-
-            //qDebug() << "connect to: " << h;
-
             connect(cellIdr, &CellIndicatorItem::clicked, cellIdr, [this](CellIndicatorItem*src){
                 emit moveDestSelected(src->gamePos());
                 deleteItemGroup(mSltIndicate);
-            }, Qt::ConnectionType::SingleShotConnection);
-        }
-
-        const int newDis = dis[h.y()][h.x()] + 1;
-        if(newDis > len) continue;
-        for(int i = 0;i < 4;i++){
-            QPoint newPos = {h.x()+dirX[i], h.y()+dirY[i]};
-            if(newPos.x() < 0 || newPos.x() >= GameWidth) continue;
-            if(newPos.y() < 0 || newPos.y() >= GameHeight) continue;
-
-            if(dis[newPos.y()][newPos.x()] != -1) continue;
-            dis[newPos.y()][newPos.x()] = newDis;
-            que.enqueue(newPos);
+            }, Qt::SingleShotConnection);
         }
     }
 }

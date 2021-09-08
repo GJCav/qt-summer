@@ -45,7 +45,12 @@ public:
 
     //inline int curTurn() {return mTurn;}
 
-    QVector<tuple<QPoint, int>> listMoveDestination(
+    enum class MoveDestType : int{
+        Unreachable = 0,
+        Invalid = 1,
+        Valid = 2
+    };
+    QVector<tuple<QPoint, MoveDestType>> listMoveDestination(
         const QPoint origin,
         const int max,
         const int min=0
@@ -56,11 +61,11 @@ public:
         const int min=0
     ); // min < dest <= max
 
-    QVector<tuple<QPoint, int>> listReachableCharacterPos(
-        const QPoint origin,
-        const int max,
-        const int min=0
-    );
+//    QVector<tuple<QPoint, int>> listReachableCharacterPos(
+//        const QPoint origin,
+//        const int max,
+//        const int min=0
+//    );
     void selectReachableCharacter(
         const QPoint origin,
         const int max,
