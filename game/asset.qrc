@@ -25,5 +25,9 @@
         <file>asset/sound/friend.wav</file>
         <file>asset/sound/enemy.wav</file>
         <file>asset/sound/gethurt.wav</file>
+        <file>asset/sound/fail.wav</file>
+        <file>asset/sound/openhud.wav</file>
+        <file>asset/sound/healed.wav</file>
+        <file>asset/sound/Sword.wav</file>
     </qresource>
 </RCC>

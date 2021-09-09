@@ -54,19 +54,49 @@ void initLevelResource(){
 }
 }
 
+namespace Sound{
+static QAudioOutput DefaultAudioOutput;
+QMediaPlayer BkgMusic;
+QSoundEffect Clicked;
+QSoundEffect Enemy;
+QSoundEffect Friend;
+QSoundEffect Sword;
+QSoundEffect TakeDamage;
+QSoundEffect Healed;
+QSoundEffect Success;
+QSoundEffect Fail;
+QSoundEffect ToggleHUD;
+
+void initSound(){
+    BkgMusic.setAudioOutput(&DefaultAudioOutput);
+    BkgMusic.setSource(QUrl("qrc:/asset/sound/background.m4a"));
+    QObject::connect(&BkgMusic, &QMediaPlayer::mediaStatusChanged, &BkgMusic, [](QMediaPlayer::MediaStatus s){
+        if(s == QMediaPlayer::EndOfMedia){
+            BkgMusic.play();
+        }
+    });
+
+    Clicked.setSource(QUrl("qrc:/asset/sound/click.wav"));
+    Enemy.setSource(QUrl("qrc:/asset/sound/enemy.wav"));
+    Friend.setSource(QUrl("qrc:/asset/sound/friend.wav"));
+    Sword.setSource(QUrl("qrc:/asset/sound/Sword.wav"));
+    TakeDamage.setSource(QUrl("qrc:/asset/sound/gethurt.wav"));
+    Healed.setSource(QUrl("qrc:/asset/sound/healed.wav"));
+    Success.setSource(QUrl("qrc:/asset/sound/success.wav"));
+    Fail.setSource(QUrl("qrc:/asset/sound/fail.wav"));
+    ToggleHUD.setSource(QUrl("qrc:/asset/sound/openhud.wav"));
+}
+}
+
 void initResource()
 {
-    defaultScene = new QGraphicsScene();
-    defaultView = new QGraphicsView();
-
-    defaultView->setScene(defaultScene);
-    defaultView->setSceneRect(0, 0, 800, 600);
 
     GUIPixmap = new QPixmap(":/asset/ui/GUI.png");
     BtnPixmap = new QPixmap(":/asset/ui/Button.png");
     IconPixmap = new QPixmap(":/asset/icon/Transparent Icons.png");
 
     Level::initLevelResource();
+    Sound::initSound();
 }
 
 QGraphicsView *gameView()

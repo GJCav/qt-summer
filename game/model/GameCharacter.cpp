@@ -41,6 +41,7 @@ void GameCharacter::attacked(const qreal power)
     const qreal hurt = qMax(power - mDefensivePower, (qreal)0);
     mHealth -= hurt;
     mCharItem->takeDamage(hurt);
+    R::Sound::TakeDamage.play();
 
     if(mHealth <= 0){
         QTimer::singleShot(500, this, &GameCharacter::die);
@@ -52,6 +53,7 @@ void GameCharacter::healed(const qreal power)
     if(mHealth <= 0) return;
     mHealth += power;
     mCharItem->healed(power);
+    R::Sound::Healed.play();
 }
 
 void GameCharacter::moveTo(const QPoint newPos)
@@ -116,6 +118,7 @@ void GameCharacter::attack()
 {
     if(mHealth <= 0) return;
     mCharItem->attack();
+    R::Sound::Sword.play();
 }
 
 //void GameCharacter::selected(bool slt)
@@ -126,6 +129,11 @@ void GameCharacter::attack()
 void GameCharacter::click(GameCharItem *src)
 {
     Q_UNUSED(src);
+    if(charRole() == CharacterRole::Enemy){
+        R::Sound::Enemy.play();
+    }else if(charRole() == CharacterRole::Player1){
+        R::Sound::Friend.play();
+    }
     emit clicked(this);
 }
 

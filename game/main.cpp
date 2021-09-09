@@ -14,48 +14,21 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     R::initResource();
 
-//    GameScene *game = new HelloScene();
-//    game->init();
+    R::Sound::BkgMusic.play();
 
-//    QGraphicsView view;
-//    view.setScene(game);
-//    view.setSceneRect({0, 0, 1024, 768});
-//    view.show();
+    GameScene *game = new HelloScene();
+    game->init();
 
-//    view.setFixedSize(view.size());
-//    view.show();
-
-//    QMediaPlayer player;
-//    QAudioOutput audioOutput; // chooses the default audio routing
-//    player.setAudioOutput(&audioOutput);
-//    player.setSource(QUrl("qrc:/asset/sound/background.m4a"));
-//    player.play();
-
-//    //player.setPosition(player.duration() / 2);
-
-//    QObject::connect(&player, &QMediaPlayer::durationChanged, [&player](qint64 v){
-//        qDebug()<<v;
-//        //player.setPosition(player.duration() / 2);
-//    });
-
-//    QObject::connect(&player, &QMediaPlayer::positionChanged, [&player](qint64 v){
-//        qDebug()<< "posi " <<v;
-//        //player.setPosition(player.duration() / 2);
-//    });
+    QGraphicsView view;
+    view.setScene(game);
+    view.setSceneRect({0, 0, 1024, 768});
+    view.setFixedSize(1024, 768);
+    view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.show();
 
 
-//    QObject::connect(&player, &QMediaPlayer::mediaStatusChanged, [&player](QMediaPlayer::MediaStatus v){
-//        qDebug()<< "state " <<v;
-//        if(v == QMediaPlayer::MediaStatus::EndOfMedia);
-//        player.play();
-//        //player.setPosition(player.duration() / 2);
-//    });
 
-    QSoundEffect effect;
-    effect.setSource(QUrl("qrc:/asset/sound/click.wav"));
-    effect.setLoopCount(QSoundEffect::Infinite);
-    effect.setVolume(0.25f);
-    effect.play();
 
 
     return a.exec();

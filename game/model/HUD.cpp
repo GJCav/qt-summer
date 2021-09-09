@@ -72,6 +72,7 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
 
 void HUD::toggleHUD()
 {
+    R::Sound::ToggleHUD.play();
     if(mVisible){
         mTitleProxy->setVisible(false);
         mIconGroup->setVisible(false);
