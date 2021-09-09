@@ -32,16 +32,16 @@ void initLevelResource();
 }
 
 namespace Sound{
-extern QMediaPlayer BkgMusic;
-extern QSoundEffect Clicked;
-extern QSoundEffect Enemy;
-extern QSoundEffect Friend;
-extern QSoundEffect Sword;
-extern QSoundEffect TakeDamage;
-extern QSoundEffect Healed;
-extern QSoundEffect Success;
-extern QSoundEffect Fail;
-extern QSoundEffect ToggleHUD;
+extern QMediaPlayer *BkgMusic;
+//extern QSoundEffect *Clicked;
+//extern QSoundEffect *Enemy;
+//extern QSoundEffect *Friend;
+//extern QSoundEffect *Sword;
+//extern QSoundEffect *TakeDamage;
+//extern QSoundEffect *Healed;
+//extern QSoundEffect *Success;
+//extern QSoundEffect *Fail;
+//extern QSoundEffect *ToggleHUD;
 
 void initSound();
 }

@@ -26,6 +26,18 @@ GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
     initDefaultAction();
 
     setName("喵");
+
+    mTakeDamageSound = new QSoundEffect(this);
+    mFriendSound = new QSoundEffect(this);
+    mEnemySound = new QSoundEffect(this);
+    mHealedSound = new QSoundEffect(this);
+    mSwordSound = new QSoundEffect(this);
+
+    mTakeDamageSound->setSource(QUrl("qrc:/asset/sound/gethurt.wav"));
+    mFriendSound->setSource(QUrl("qrc:/asset/sound/friend.wav"));
+    mEnemySound->setSource(QUrl("qrc:/asset/sound/enemy.wav"));
+    mHealedSound->setSource(QUrl("qrc:/asset/sound/healed.wav"));
+    mSwordSound->setSource(QUrl("qrc:/asset/sound/Sword.wav"));
 }
 
 void GameCharacter::attacked(const qreal power)
@@ -41,7 +53,7 @@ void GameCharacter::attacked(const qreal power)
     const qreal hurt = qMax(power - mDefensivePower, (qreal)0);
     mHealth -= hurt;
     mCharItem->takeDamage(hurt);
-    R::Sound::TakeDamage.play();
+    mTakeDamageSound->play();
 
     if(mHealth <= 0){
         QTimer::singleShot(500, this, &GameCharacter::die);
@@ -53,7 +65,7 @@ void GameCharacter::healed(const qreal power)
     if(mHealth <= 0) return;
     mHealth += power;
     mCharItem->healed(power);
-    R::Sound::Healed.play();
+    mHealedSound->play();
 }
 
 void GameCharacter::moveTo(const QPoint newPos)
@@ -118,7 +130,7 @@ void GameCharacter::attack()
 {
     if(mHealth <= 0) return;
     mCharItem->attack();
-    R::Sound::Sword.play();
+    mSwordSound->play();
 }
 
 //void GameCharacter::selected(bool slt)
@@ -130,9 +142,9 @@ void GameCharacter::click(GameCharItem *src)
 {
     Q_UNUSED(src);
     if(charRole() == CharacterRole::Enemy){
-        R::Sound::Enemy.play();
+        mEnemySound->play();
     }else if(charRole() == CharacterRole::Player1){
-        R::Sound::Friend.play();
+        mFriendSound->play();
     }
     emit clicked(this);
 }

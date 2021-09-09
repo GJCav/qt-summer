@@ -55,36 +55,50 @@ void initLevelResource(){
 }
 
 namespace Sound{
-static QAudioOutput DefaultAudioOutput;
-QMediaPlayer BkgMusic;
-QSoundEffect Clicked;
-QSoundEffect Enemy;
-QSoundEffect Friend;
-QSoundEffect Sword;
-QSoundEffect TakeDamage;
-QSoundEffect Healed;
-QSoundEffect Success;
-QSoundEffect Fail;
-QSoundEffect ToggleHUD;
+QAudioOutput *DefaultAudioOutput;
+QMediaPlayer *BkgMusic;
+//QSoundEffect *Clicked;
+//QSoundEffect *Enemy;
+//QSoundEffect *Friend;
+//QSoundEffect *Sword;
+//QSoundEffect *TakeDamage;
+//QSoundEffect *Healed;
+//QSoundEffect *Success;
+//QSoundEffect *Fail;
+//QSoundEffect *ToggleHUD;
 
 void initSound(){
-    BkgMusic.setAudioOutput(&DefaultAudioOutput);
-    BkgMusic.setSource(QUrl("qrc:/asset/sound/background.m4a"));
-    QObject::connect(&BkgMusic, &QMediaPlayer::mediaStatusChanged, &BkgMusic, [](QMediaPlayer::MediaStatus s){
+    DefaultAudioOutput = new QAudioOutput;
+
+    BkgMusic = new QMediaPlayer;
+//    Clicked = new QSoundEffect(DefaultAudioOutput);
+//    Enemy = new QSoundEffect(DefaultAudioOutput);
+//    Friend = new QSoundEffect(DefaultAudioOutput);
+//    Sword = new QSoundEffect(DefaultAudioOutput);
+//    TakeDamage = new QSoundEffect(DefaultAudioOutput);
+//    Healed = new QSoundEffect(DefaultAudioOutput);
+//    Success = new QSoundEffect(DefaultAudioOutput);
+//    Fail = new QSoundEffect(DefaultAudioOutput);
+//    ToggleHUD = new QSoundEffect(DefaultAudioOutput);
+
+    BkgMusic->setAudioOutput(DefaultAudioOutput);
+    BkgMusic->setSource(QUrl("qrc:/asset/sound/background.m4a"));
+    QObject::connect(BkgMusic, &QMediaPlayer::mediaStatusChanged, BkgMusic, [](QMediaPlayer::MediaStatus s){
         if(s == QMediaPlayer::EndOfMedia){
-            BkgMusic.play();
+            R::Sound::BkgMusic->play();
         }
     });
 
-    Clicked.setSource(QUrl("qrc:/asset/sound/click.wav"));
-    Enemy.setSource(QUrl("qrc:/asset/sound/enemy.wav"));
-    Friend.setSource(QUrl("qrc:/asset/sound/friend.wav"));
-    Sword.setSource(QUrl("qrc:/asset/sound/Sword.wav"));
-    TakeDamage.setSource(QUrl("qrc:/asset/sound/gethurt.wav"));
-    Healed.setSource(QUrl("qrc:/asset/sound/healed.wav"));
-    Success.setSource(QUrl("qrc:/asset/sound/success.wav"));
-    Fail.setSource(QUrl("qrc:/asset/sound/fail.wav"));
-    ToggleHUD.setSource(QUrl("qrc:/asset/sound/openhud.wav"));
+
+//    Clicked->setSource(QUrl("qrc:/asset/sound/click.wav"));
+//    Enemy->setSource(QUrl("qrc:/asset/sound/enemy.wav"));
+//    Friend->setSource(QUrl("qrc:/asset/sound/friend.wav"));
+//    Sword->setSource(QUrl("qrc:/asset/sound/Sword.wav"));
+//    TakeDamage->setSource(QUrl("qrc:/asset/sound/gethurt.wav"));
+//    Healed->setSource(QUrl("qrc:/asset/sound/healed.wav"));
+//    Success->setSource(QUrl("qrc:/asset/sound/success.wav"));
+//    Fail->setSource(QUrl("qrc:/asset/sound/fail.wav"));
+//    ToggleHUD->setSource(QUrl("qrc:/asset/sound/openhud.wav"));
 }
 }
 

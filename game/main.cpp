@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     R::initResource();
 
-    R::Sound::BkgMusic.play();
+    R::Sound::BkgMusic->play();
 
     GameScene *game = new HelloScene();
     game->init();
@@ -26,9 +26,6 @@ int main(int argc, char *argv[])
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.show();
-
-
-
 
 
     return a.exec();

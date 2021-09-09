@@ -70,9 +70,34 @@ void HUD::setActBtns(const QVector<GameCharAction *>& actions)
     mGame->addItem(mActBtnGroup);
 }
 
+void HUD::setStatusName(const QString &s) {mStatusName->setPlainText(s);}
+
+void HUD::setStatusHealth(const QString &s) {mStatusHealth->setPlainText(s);}
+
+void HUD::setStatusSpeed(const QString &s) {mStatusSpeed->setPlainText(s);}
+
+void HUD::setStatusDefensive(const QString &s){mStatusDefensive->setPlainText(s);}
+
+void HUD::setStatusLucky(const QString &s) {mStatusLucky->setPlainText(s);}
+
+void HUD::setStatusAttack(const QString &s) {mStatusAttack->setPlainText(s);}
+
+void HUD::setStatusName(int n) {setStatusName(QString::number(n));}
+
+void HUD::setStatusHealth(int n) {setStatusHealth(QString::number(n));}
+
+void HUD::setStatusSpeed(int n) {setStatusSpeed(QString::number(n));}
+
+void HUD::setStatusDefensive(int n) {setStatusDefensive(QString::number(n));}
+
+void HUD::setStatusLucky(int n) { setStatusLucky(QString::number(n));}
+
+void HUD::setStatusAttack(int n) { setStatusAttack(QString::number(n));}
+
 void HUD::toggleHUD()
 {
-    R::Sound::ToggleHUD.play();
+    //R::Sound::ToggleHUD->play();
+    mToggleHUDSound->play();
     if(mVisible){
         mTitleProxy->setVisible(false);
         mIconGroup->setVisible(false);
@@ -104,6 +129,9 @@ void HUD::setAllowEndTurn(bool newAllowEndTurn)
 
 void HUD::initHud()
 {
+    mToggleHUDSound = new QSoundEffect(this);
+    mToggleHUDSound->setSource(QUrl("qrc:/asset/sound/openhud.wav"));
+
     mActBtnGroup = new QGraphicsItemGroup();
     mGame->addItem(mActBtnGroup);
 

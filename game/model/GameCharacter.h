@@ -8,6 +8,7 @@
 #include <QGraphicsObject>
 #include <QPoint>
 #include <QAction>
+#include <QSoundEffect>
 
 class GameScene;
 class GameCharAction;
@@ -17,6 +18,7 @@ class AttackAct;
 class GameCharacter : public QObject
 {
     Q_OBJECT
+
 public:
     struct CharacterRole {
         constexpr static int None = 0;
@@ -102,6 +104,11 @@ protected:
     AttackAct* mAttackAct;
 
 private:
+    QSoundEffect* mTakeDamageSound;
+    QSoundEffect* mFriendSound;
+    QSoundEffect* mEnemySound;
+    QSoundEffect* mHealedSound;
+    QSoundEffect* mSwordSound;
 
 
     void initDefaultAction();

@@ -319,6 +319,11 @@ void GameScene::endAITurn()
 
 void GameScene::init()
 {
+    mSuccessSound = new QSoundEffect(this);
+    mSuccessSound->setSource(QUrl("qrc:/asset/sound/success.wav"));
+    mFailSound = new QSoundEffect(this);
+    mFailSound->setSource(QUrl("qrc:/asset/sound/fail.wav"));
+
     initLevel();
     initPropItems();
     initChars();
@@ -494,6 +499,8 @@ void GameScene::gameSuccess()
         view->setScene(s);
         this->deleteLater();
     });
+
+    mSuccessSound->play();
 }
 
 void GameScene::gameFailed()
@@ -521,6 +528,8 @@ void GameScene::gameFailed()
         view->setScene(s);
         this->deleteLater();
     });
+
+    mFailSound->play();
 }
 
 bool GameScene::allowUnselectChar() const

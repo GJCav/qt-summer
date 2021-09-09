@@ -7,11 +7,13 @@
 #include "ui/LightWoodPanel.h"
 #include "GameScene.h"
 #include "model/GameCharAction.h"
+#include "GameCharacter.h"
 #include <QObject>
 #include <QVector>
 #include <QLabel>
 #include <QGraphicsItemGroup>
 #include <QGraphicsDropShadowEffect>
+#include <QSoundEffect>
 
 class HUD : public QObject
 {
@@ -33,19 +35,6 @@ public:
     void setIcons(const QVector<QPixmap>& iconPixmaps);
     void setActBtns(const QVector<GameCharAction*>& actions);
 
-    inline void setStatusName(const QString& s) {mStatusName->setPlainText(s);}
-    inline void setStatusHealth(const QString& s) {mStatusHealth->setPlainText(s);}
-    inline void setStatusSpeed(const QString& s) {mStatusSpeed->setPlainText(s);}
-    inline void setStatusDefensive(const QString& s){mStatusDefensive->setPlainText(s);}
-    inline void setStatusLucky(const QString& s) {mStatusLucky->setPlainText(s);}
-    inline void setStatusAttack(const QString& s) {mStatusAttack->setPlainText(s);}
-    inline void setStatusName(int n) {setStatusName(QString::number(n));}
-    inline void setStatusHealth(int n) {setStatusHealth(QString::number(n));}
-    inline void setStatusSpeed(int n) {setStatusSpeed(QString::number(n));}
-    inline void setStatusDefensive(int n) {setStatusDefensive(QString::number(n));}
-    inline void setStatusLucky(int n) { setStatusLucky(QString::number(n));}
-    inline void setStatusAttack(int n) { setStatusAttack(QString::number(n));}
-
     void toggleHUD();
     inline bool visible() const { return mVisible;}
     inline bool actActBtnVisible() const {return mActBtnVisible;}
@@ -65,6 +54,21 @@ public:
     void setAllowEndTurn(bool newAllowEndTurn);
     inline bool endTurnVisible() {return mEndTurnBtn->isVisible();}
     inline void setEndTurnVisible(bool v) {mEndTurnBtn->setVisible(v);}
+
+public slots:
+    void setStatusName(const QString& s);
+    void setStatusHealth(const QString& s);
+    void setStatusSpeed(const QString& s);
+    void setStatusDefensive(const QString& s);
+    void setStatusLucky(const QString& s);
+    void setStatusAttack(const QString& s);
+
+    void setStatusName(int n);
+    void setStatusHealth(int n);
+    void setStatusSpeed(int n);
+    void setStatusDefensive(int n);
+    void setStatusLucky(int n);
+    void setStatusAttack(int n);
 
 signals:
     void clickedEndTurn();
@@ -98,6 +102,8 @@ private:
 
     ButtonItem* mEndTurnBtn = nullptr;
     bool mAllowEndTurn = true;
+
+    QSoundEffect* mToggleHUDSound;
 
     void initHud();
     void initTitleBar();

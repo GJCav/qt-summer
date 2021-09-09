@@ -182,6 +182,9 @@ protected:
 private:
     QGraphicsItemGroup* mSltIndicate = nullptr;
 
+    QSoundEffect *mFailSound;
+    QSoundEffect *mSuccessSound;
+
     void deleteItemGroup(QGraphicsItemGroup* &group);
 
 private slots:
