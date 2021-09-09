@@ -122,6 +122,24 @@ QGraphicsScene *gameScene()
 {
     return defaultScene;
 }
+
+void ensureSoundEffectIsReady(QVector<const QSoundEffect*> sounds)
+{
+    while(true){
+        bool allReady = true;
+        for(int i = 0;i < sounds.size();i++){
+            if(!sounds[i]->isLoaded()){
+                //Q_ASSERT_X(false, "ensureSoundEffectIsReady", "fucking loading the sounds");
+                //allReady = false;
+                //QThread::msleep(200);
+                qDebug()<<"ensure unload " << sounds[i]->source();
+            }
+        }
+        if(allReady)
+            break;
+    }
+}
+
 }
 
 

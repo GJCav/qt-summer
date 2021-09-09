@@ -47,6 +47,8 @@ void initSound();
 }
 
 void initResource();
+
+void ensureSoundEffectIsReady(QVector<const QSoundEffect*> sounds);
 }
 
 #endif // R_H

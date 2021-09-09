@@ -500,7 +500,8 @@ void GameScene::gameSuccess()
         this->deleteLater();
     });
 
-    mSuccessSound->play();
+    if(mSuccessSound->isLoaded())
+        mSuccessSound->play();
 }
 
 void GameScene::gameFailed()
@@ -529,7 +530,8 @@ void GameScene::gameFailed()
         this->deleteLater();
     });
 
-    mFailSound->play();
+    if(mFailSound->isLoaded())
+        mFailSound->play();
 }
 
 bool GameScene::allowUnselectChar() const

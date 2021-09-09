@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     R::initResource();
 
-    R::Sound::BkgMusic->play();
+    //R::Sound::BkgMusic->play();
+
 
     GameScene *game = new HelloScene();
     game->init();

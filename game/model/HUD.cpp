@@ -97,7 +97,12 @@ void HUD::setStatusAttack(int n) { setStatusAttack(QString::number(n));}
 void HUD::toggleHUD()
 {
     //R::Sound::ToggleHUD->play();
-    mToggleHUDSound->play();
+    if(mToggleHUDSound->isLoaded()){
+        mToggleHUDSound->play();
+    }else{
+        qDebug() << "toggleHUD, try to play sound before loaded.";
+        //QMessage::critical(nullptr, "Sound Error", "toggleHUD, try to play sound before loaded.");
+    }
     if(mVisible){
         mTitleProxy->setVisible(false);
         mIconGroup->setVisible(false);
@@ -131,6 +136,7 @@ void HUD::initHud()
 {
     mToggleHUDSound = new QSoundEffect(this);
     mToggleHUDSound->setSource(QUrl("qrc:/asset/sound/openhud.wav"));
+    //R::ensureSoundEffectIsReady({mToggleHUDSound});
 
     mActBtnGroup = new QGraphicsItemGroup();
     mGame->addItem(mActBtnGroup);

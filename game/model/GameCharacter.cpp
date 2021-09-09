@@ -38,6 +38,14 @@ GameCharacter::GameCharacter(GameCharItem* item, GameScene* game, int role)
     mEnemySound->setSource(QUrl("qrc:/asset/sound/enemy.wav"));
     mHealedSound->setSource(QUrl("qrc:/asset/sound/healed.wav"));
     mSwordSound->setSource(QUrl("qrc:/asset/sound/Sword.wav"));
+
+//    R::ensureSoundEffectIsReady({
+//        mTakeDamageSound,
+//        mFriendSound,
+//        mEnemySound,
+//        mHealedSound,
+//        mSwordSound
+//    });
 }
 
 void GameCharacter::attacked(const qreal power)
@@ -53,7 +61,12 @@ void GameCharacter::attacked(const qreal power)
     const qreal hurt = qMax(power - mDefensivePower, (qreal)0);
     mHealth -= hurt;
     mCharItem->takeDamage(hurt);
-    mTakeDamageSound->play();
+    if(mTakeDamageSound->isLoaded()){
+        mTakeDamageSound->play();
+    }else{
+        qDebug() << "attacked, try to play sound before loaded.";
+        //QMessageBox::critical(nullptr, "Sound Error", "attacked, try to play sound before loaded.");
+    }
 
     if(mHealth <= 0){
         QTimer::singleShot(500, this, &GameCharacter::die);
@@ -65,7 +78,12 @@ void GameCharacter::healed(const qreal power)
     if(mHealth <= 0) return;
     mHealth += power;
     mCharItem->healed(power);
-    mHealedSound->play();
+    if(mHealedSound->isLoaded()){
+        mHealedSound->play();
+    }else{
+        qDebug() << "healed, try to play sound before loaded.";
+        //QMessageBox::critical(nullptr, "Sound Error", "healed, try to play sound before loaded.");
+    }
 }
 
 void GameCharacter::moveTo(const QPoint newPos)
@@ -130,7 +148,12 @@ void GameCharacter::attack()
 {
     if(mHealth <= 0) return;
     mCharItem->attack();
-    mSwordSound->play();
+    if(mSwordSound->isLoaded()){
+        mSwordSound->play();
+    }else{
+        qDebug() << "attack, try to play sound before loaded.";
+        //QMessageBox::critical(nullptr, "Sound Error", "attack, try to play sound before loaded.");
+    }
 }
 
 //void GameCharacter::selected(bool slt)
@@ -142,9 +165,19 @@ void GameCharacter::click(GameCharItem *src)
 {
     Q_UNUSED(src);
     if(charRole() == CharacterRole::Enemy){
-        mEnemySound->play();
+        if(mEnemySound->isLoaded()){
+            mEnemySound->play();
+        }else{
+            qDebug() << "click, try to play sound before loaded.";
+            //QMessageBox::critical(nullptr, "Sound Error", "click, try to play enemy sound before loaded.");
+        }
     }else if(charRole() == CharacterRole::Player1){
-        mFriendSound->play();
+        if(mFriendSound->isLoaded()){
+            mFriendSound->play();
+        }else{
+            qDebug() << "click, try to play sound before loaded.";
+            //QMessageBox::critical(nullptr, "Sound Error", "click, try to play friend sound before loaded.");
+        }
     }
     emit clicked(this);
 }
