@@ -456,11 +456,13 @@ void GameScene::txtBoxSeries(QVector<TextBoxItem *> arr)
 
 int GameScene::successOrFailed()
 {
+    qDebug() << "enter success or failed.";
     bool hasPlayer = false;
     bool hasEnemy = false;
     auto chs = chars();
     for(int i = 0;i < chs.size();i++){
         auto c = chs[i];
+        qDebug() << "at " << i << ", tot: " << chs.size();
         if(c->charRole() == GameCharacter::CharacterRole::Player1 && c->health() > 0){
             hasPlayer = true;
         }
